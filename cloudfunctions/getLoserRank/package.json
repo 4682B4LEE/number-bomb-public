@@ -1,0 +1,9 @@
+{
+  "name": "getLoserRank",
+  "version": "1.0.0",
+  "description": "获取洗碗王榜",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

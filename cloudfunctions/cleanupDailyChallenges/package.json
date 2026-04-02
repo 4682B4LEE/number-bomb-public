@@ -1,0 +1,9 @@
+{
+  "name": "cleanupDailyChallenges",
+  "version": "1.0.0",
+  "description": "定时清理每日挑战历史记录",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

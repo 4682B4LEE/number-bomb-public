@@ -1,0 +1,9 @@
+{
+  "name": "getDailyRank",
+  "version": "1.0.0",
+  "description": "获取每日排行榜",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

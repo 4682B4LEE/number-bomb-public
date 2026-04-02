@@ -1,0 +1,91 @@
+<!-- 猜颜色游戏模式选择页 -->
+<view class="container bg-pattern">
+  <!-- 游戏模式选择卡片 -->
+  <view class="card nintendo-card">
+    <!-- 返回按钮 -->
+    <view class="back-btn" bindtap="goBack">
+      <view class="back-arrow">
+        <view class="arrow-line"></view>
+        <view class="arrow-head"></view>
+      </view>
+      <text class="back-text">返回</text>
+    </view>
+
+    <text class="card-title">颜色模式</text>
+    <view class="mode-grid">
+      <!-- 颜色可重复 -->
+      <view
+        class="mode-btn {{colorMode === 'repeat' ? 'active' : ''}}"
+        bindtap="selectColorMode"
+        data-mode="repeat"
+      >
+        <view class="mode-icon-box">
+          <!-- 2x2 网格，展示有重复颜色 -->
+          <view class="mode-color-grid">
+            <view class="mode-dot dot-red"></view>
+            <view class="mode-dot dot-green"></view>
+            <view class="mode-dot dot-red"></view>
+            <view class="mode-dot dot-blue"></view>
+          </view>
+        </view>
+        <text class="mode-label">颜色可重复</text>
+        <text class="mode-desc">最多一个颜色相同</text>
+      </view>
+      <!-- 颜色不重复 -->
+      <view
+        class="mode-btn {{colorMode === 'unique' ? 'active' : ''}}"
+        bindtap="selectColorMode"
+        data-mode="unique"
+      >
+        <view class="mode-icon-box">
+          <!-- 2x2 网格，展示无重复颜色 -->
+          <view class="mode-color-grid">
+            <view class="mode-dot dot-red"></view>
+            <view class="mode-dot dot-green"></view>
+            <view class="mode-dot dot-blue"></view>
+            <view class="mode-dot dot-yellow"></view>
+          </view>
+        </view>
+        <text class="mode-label">颜色不重复</text>
+        <text class="mode-desc">四个颜色都不同</text>
+      </view>
+    </view>
+
+    <!-- 游戏玩法模式选择区域 -->
+    <view class="play-mode-section">
+      <text class="play-mode-title">游戏模式</text>
+      <view class="play-mode-buttons">
+        <!-- 本地双人模式 -->
+        <view
+          class="play-mode-btn {{playMode === 'local' ? 'active' : ''}}"
+          bindtap="selectPlayMode"
+          data-mode="local"
+        >
+          <view class="play-mode-icon">
+            <view class="icon-local">
+              <view class="local-person person-left"></view>
+              <view class="local-person person-right"></view>
+            </view>
+          </view>
+          <text class="play-mode-text">本地双人</text>
+        </view>
+        <!-- 单人模式 -->
+        <view
+          class="play-mode-btn {{playMode === 'single' ? 'active' : ''}}"
+          bindtap="selectPlayMode"
+          data-mode="single"
+        >
+          <view class="play-mode-icon">
+            <view class="icon-single">
+              <view class="single-person"></view>
+            </view>
+          </view>
+          <text class="play-mode-text">单人模式</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 开始按钮 -->
+  <button class="start-btn btn-3d" bindtap="startColorGame">开始游戏</button>
+</view>

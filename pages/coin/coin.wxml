@@ -1,0 +1,65 @@
+<!-- 抛硬币决定先手页面 -->
+<view class="container">
+  <!-- 背景装饰 -->
+  <view class="bg-pattern"></view>
+
+  <!-- 标题 -->
+  <view class="header">
+    <text class="title">谁先手?</text>
+    <text class="subtitle">抛硬币决定</text>
+  </view>
+
+  <!-- 3D 硬币场景 -->
+  <view class="coin-scene">
+    <!-- 硬币包装器：负责跳跃动画 -->
+    <view class="coin-wrapper {{isFlipping ? 'animate-jump' : ''}}">
+      <!-- 硬币：负责旋转动画 -->
+      <view class="coin" style="transform: rotateX({{rotation}}deg);">
+        <!-- 正面：玩家 1 -->
+        <view class="coin-face coin-front">
+          <text class="coin-text">?</text>
+        </view>
+
+        <!-- 背面：玩家 2 -->
+        <view class="coin-face coin-back">
+          <text class="coin-text">?</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 地面阴影 -->
+    <view class="coin-shadow {{isFlipping ? 'animate-shadow' : ''}}"></view>
+  </view>
+
+  <!-- 控制与结果区 -->
+  <view class="control-area">
+    <!-- 初始状态：显示抛硬币按钮 -->
+    <block wx:if="{{!winner && !isFlipping}}">
+      <button class="toss-btn nintendo-btn-primary" bindtap="handleToss">
+        <view class="btn-icon">
+          <view class="play-icon"></view>
+        </view>
+        <text>抛硬币</text>
+      </button>
+    </block>
+
+    <!-- 抛硬币中 -->
+    <block wx:if="{{isFlipping}}">
+      <view class="flipping-text">FLIPPING...</view>
+    </block>
+
+    <!-- 显示结果 -->
+    <block wx:if="{{winner && !isFlipping}}">
+      <view class="result-card animate-bounce-in {{isP1Winner ? 'result-p1' : 'result-p2'}}">
+        <text class="result-label">先手玩家</text>
+        <text class="result-name {{isP1Winner ? 'text-p1' : 'text-p2'}}">{{isP1Winner ? p1Name : p2Name}}</text>
+        <button class="start-btn {{isP1Winner ? 'btn-p1' : 'btn-p2'}}" bindtap="startGame">
+          <text>开始游戏</text>
+          <view class="arrow-icon"></view>
+        </button>
+      </view>
+    </block>
+  </view>
+
+
+</view>

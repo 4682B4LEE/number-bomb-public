@@ -1,0 +1,9 @@
+{
+  "name": "fixUserStatsAvatar",
+  "version": "1.0.0",
+  "description": "修复 user_stats 集合中的头像数据",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

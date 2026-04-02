@@ -1,0 +1,512 @@
+/* 游戏进行页样式 */
+.bg-p1 {
+  background-color: #FFF1F2;
+}
+
+.bg-p2 {
+  background-color: #F0F9FF;
+}
+
+/* 顶部信息栏 */
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+  padding-top: 20rpx;
+}
+
+.player-badge {
+  padding: 16rpx 40rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: 900;
+  color: white;
+}
+
+.badge-p1 {
+  background-color: #E60012;
+}
+
+.badge-p2 {
+  background-color: #00B3E6;
+}
+
+.turn-text {
+  font-size: 32rpx;
+  color: #6B7280;
+  margin-left: 16rpx;
+  font-weight: 700;
+}
+
+/* 提示按钮 */
+.hint-btn {
+  position: absolute;
+  right: 32rpx;
+  display: flex;
+  align-items: center;
+  padding: 12rpx 24rpx;
+  background: #F3F4F6;
+  border-radius: 32rpx;
+  transition: all 0.2s ease;
+  box-shadow: 0 4rpx 0 #D1D5DB;
+}
+
+.hint-btn:active {
+  transform: translateY(4rpx);
+  box-shadow: 0 0 0 #D1D5DB;
+}
+
+.hint-btn.hint-active {
+  background: linear-gradient(135deg, #FFE066 0%, #FFC800 100%);
+  box-shadow: 0 4rpx 0 #CC9A00;
+}
+
+.hint-btn.hint-active:active {
+  box-shadow: 0 0 0 #CC9A00;
+}
+
+.hint-icon {
+  font-size: 28rpx;
+  margin-right: 8rpx;
+}
+
+.hint-text {
+  font-size: 26rpx;
+  color: #6B7280;
+  font-weight: 700;
+}
+
+.hint-btn.hint-active .hint-text {
+  color: #1F2937;
+}
+
+/* 历史记录区域 */
+.history-section {
+  flex: 1;
+  width: 100%;
+  max-width: 680rpx;
+  background: white;
+  border-radius: 32rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.history-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6B7280;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+
+.history-list {
+  flex: 1;
+}
+
+/* 单人模式：显示3条的高度 (约 320rpx) */
+.history-list.single-mode {
+  height: 320rpx;
+  max-height: 320rpx;
+}
+
+/* 多人/联机模式：显示4条的高度 (约 424rpx) */
+.history-list.multi-mode {
+  height: 424rpx;
+  max-height: 424rpx;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 2rpx solid #F3F4F6;
+}
+
+.guess-number {
+  width: 80rpx;
+  font-size: 24rpx;
+  color: #9CA3AF;
+  font-weight: 700;
+}
+
+.guess-digits {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 16rpx;
+}
+
+.history-digit {
+  width: 56rpx;
+  height: 64rpx;
+  background: #F3F4F6;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #374151;
+  transition: all 0.2s ease;
+}
+
+/* 提示模式下猜对的数字高亮 */
+.history-digit.digit-correct {
+  background: linear-gradient(135deg, #4dd0e1 0%, #00c3e3 100%);
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(0, 195, 227, 0.4);
+  animation: correctPulse 1s ease-in-out infinite;
+}
+
+@keyframes correctPulse {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4rpx 12rpx rgba(0, 195, 227, 0.4);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6rpx 20rpx rgba(0, 195, 227, 0.6);
+  }
+}
+
+.guess-score {
+  width: 100rpx;
+  display: flex;
+  align-items: baseline;
+  justify-content: flex-end;
+}
+
+.score-num {
+  font-size: 40rpx;
+  font-weight: 900;
+  color: #E60012;
+}
+
+.score-total {
+  font-size: 24rpx;
+  color: #9CA3AF;
+  font-weight: 700;
+}
+
+.score-perfect .score-num {
+  color: #2ECC71;
+}
+
+.empty-history {
+  text-align: center;
+  padding: 80rpx 0;
+  color: #9CA3AF;
+  font-size: 28rpx;
+}
+
+.view-more-btn {
+  text-align: center;
+  padding: 32rpx 0;
+  margin-top: 16rpx;
+  border-top: 2rpx solid #F3F4F6;
+}
+
+.view-more-btn text {
+  font-size: 28rpx;
+  color: #3B82F6;
+  font-weight: 600;
+}
+
+/* 输入区域 */
+.input-section {
+  margin-bottom: 32rpx;
+}
+
+.digits-display {
+  display: flex;
+  justify-content: center;
+  gap: 24rpx;
+}
+
+.digit-box {
+  width: 100rpx;
+  height: 120rpx;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  font-weight: 900;
+}
+
+.digit-box-empty {
+  background: white;
+  border: 4rpx solid #E5E7EB;
+  color: #D1D5DB;
+}
+
+.digit-box-filled {
+  background: white;
+  border: 4rpx solid #374151;
+  color: #374151;
+  box-shadow: 0 8rpx 0 #E5E7EB;
+  position: relative;
+}
+
+/* 编辑状态样式 */
+.digit-box-editing {
+  background: #FFF1F2;
+  border: 4rpx solid #E60012;
+  box-shadow: 0 8rpx 0 #E60012, 0 0 20rpx rgba(230, 0, 18, 0.3);
+  animation: editPulse 1s ease infinite;
+}
+
+@keyframes editPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* 编辑指示器 */
+.edit-indicator {
+  position: absolute;
+  bottom: 8rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 32rpx;
+  height: 4rpx;
+  background: #E60012;
+  border-radius: 2rpx;
+}
+
+.digit-text {
+  font-family: 'Varela Round', 'Nunito', sans-serif;
+}
+
+/* 数字键盘 */
+.keypad {
+  width: 100%;
+  max-width: 640rpx;
+  padding: 0 32rpx 48rpx;
+}
+
+.keypad-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.key {
+  width: 140rpx;
+  height: 112rpx;
+  background: white;
+  border-radius: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #374151;
+  box-shadow: 0 8rpx 0 #E5E7EB;
+  transition: all 0.1s;
+}
+
+.key:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #E5E7EB;
+}
+
+.key-clear {
+  background: #FFE4E6;
+  color: #F43F5E;
+  box-shadow: 0 8rpx 0 #FECDD3;
+}
+
+.key-clear:active {
+  box-shadow: 0 0 0 #FECDD3;
+}
+
+.key-delete {
+  background: #F3F4F6;
+  color: #6B7280;
+  box-shadow: 0 8rpx 0 #D1D5DB;
+}
+
+.key-delete:active {
+  box-shadow: 0 0 0 #D1D5DB;
+}
+
+.confirm-btn {
+  width: 100%;
+  height: 112rpx;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20rpx;
+  border: none;
+  font-size: 36rpx;
+  font-weight: 900;
+  color: white;
+  box-shadow: 0 8rpx 0 rgba(0,0,0,0.2);
+  transition: all 0.1s;
+}
+
+.confirm-btn::after {
+  border: none;
+}
+
+.confirm-btn:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 rgba(0,0,0,0.2);
+}
+
+.btn-p1 {
+  background-color: #E60012;
+  box-shadow: 0 8rpx 0 #99000C;
+}
+
+.btn-p1:active {
+  box-shadow: 0 0 0 #99000C;
+}
+
+.btn-p2 {
+  background-color: #00B3E6;
+  box-shadow: 0 8rpx 0 #0088B3;
+}
+
+.btn-p2:active {
+  box-shadow: 0 0 0 #0088B3;
+}
+
+.btn-disabled {
+  background-color: #E5E7EB;
+  color: #9CA3AF;
+  box-shadow: 0 8rpx 0 #D1D5DB;
+}
+
+/* 单人模式胜利弹窗 */
+.win-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.win-modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8rpx);
+}
+
+.win-modal-content {
+  position: relative;
+  width: 80%;
+  max-width: 560rpx;
+  background: white;
+  border-radius: 48rpx;
+  padding: 64rpx 48rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 24rpx 80rpx rgba(0, 0, 0, 0.3);
+  animation: winModalShow 0.3s ease-out;
+}
+
+@keyframes winModalShow {
+  0% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.win-icon {
+  font-size: 80rpx;
+  margin-bottom: 24rpx;
+  animation: trophyBounce 1s ease-in-out infinite;
+}
+
+@keyframes trophyBounce {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-10rpx) rotate(-5deg); }
+  75% { transform: translateY(-10rpx) rotate(5deg); }
+}
+
+.win-title {
+  font-size: 48rpx;
+  font-weight: 900;
+  color: #E60012;
+  margin-bottom: 32rpx;
+}
+
+.win-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 48rpx;
+}
+
+.win-text {
+  font-size: 32rpx;
+  color: #6B7280;
+  margin-bottom: 16rpx;
+}
+
+.win-secret {
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1F2937;
+  background: #F3F4F6;
+  padding: 16rpx 32rpx;
+  border-radius: 16rpx;
+}
+
+.win-buttons {
+  display: flex;
+  gap: 24rpx;
+  width: 100%;
+}
+
+.win-btn {
+  flex: 1;
+  height: 96rpx;
+  border-radius: 24rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  box-shadow: 0 8rpx 0 rgba(0, 0, 0, 0.1);
+  transition: all 0.1s;
+}
+
+.win-btn::after {
+  border: none;
+}
+
+.win-btn:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.1);
+}
+
+.btn-home {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+.btn-again {
+  background: linear-gradient(135deg, #4dd0e1 0%, #00c3e3 100%);
+  color: white;
+}

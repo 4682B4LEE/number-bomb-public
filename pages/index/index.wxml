@@ -1,0 +1,1241 @@
+<!-- 首页：难度选择 -->
+<view class="container bg-pattern">
+  <!-- 更新公告栏 - 简约现代风格 -->
+  <view class="announcement-bar" wx:if="{{announcement.show}}">
+    <view class="announcement-inner">
+      <view class="announcement-tag">NEW</view>
+      <view class="announcement-content-wrapper" bindtap="onAnnouncementTap">
+        <text class="announcement-text">{{announcement.text}}</text>
+      </view>
+      <view class="announcement-close" bindtap="onCloseAnnouncement">
+        <view class="close-line close-line-1"></view>
+        <view class="close-line close-line-2"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 用户登录区域 -->
+  <view class="user-login-section">
+    <!-- 【合规改造】统一显示用户资料 -->
+    <view class="user-profile-section">
+      <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+      <text class="user-nickname">{{userInfo.nickName}}</text>
+    </view>
+  </view>
+
+  <!-- 昵称输入弹窗 -->
+  <view wx:if="{{showNickNameInput}}" class="nickname-modal">
+    <view class="modal-mask" bindtap="closeNickNameInput"></view>
+    <view class="modal-content">
+      <text class="modal-title">设置昵称</text>
+      <text class="modal-desc">请设置一个昵称用于游戏显示</text>
+      <input 
+        class="nickname-input" 
+        type="nickname" 
+        placeholder="请输入昵称" 
+        value="{{tempNickName}}"
+        bindinput="onNickNameInput"
+        bindblur="onNickNameBlur"
+      />
+      <view class="modal-buttons">
+        <button class="modal-btn btn-cancel" bindtap="closeNickNameInput">取消</button>
+        <button class="modal-btn btn-confirm" bindtap="confirmNickName">确定</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 修改资料按钮 - 设置按钮左边 药丸形游戏风格 -->
+  <button class="game-settings-pill edit-profile-pill" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+    <image class="game-settings-pill-icon" src="/icons/revise.svg" mode="aspectFit"/>
+    <text class="game-settings-pill-text">修改资料</text>
+  </button>
+
+  <!-- 设置按钮 - 右上角 药丸形游戏风格 -->
+  <view class="game-settings-pill" bindtap="showSettingsModal" hover-class="game-settings-pill-active">
+    <image class="game-settings-pill-icon" src="/icons/set.svg" mode="aspectFit"/>
+    <text class="game-settings-pill-text">设置</text>
+  </view>
+
+  <!-- 设置弹窗 - 游戏化3D风格 -->
+  <view wx:if="{{showSettingsModal}}" class="game-settings-modal">
+    <view class="game-modal-mask" bindtap="closeSettingsModal"></view>
+    <view class="game-modal-container">
+      <!-- 标题 -->
+      <text class="game-modal-title">设 置</text>
+      
+      <!-- 设置列表 -->
+      <view class="game-settings-list">
+        <!-- BGM -->
+        <view class="game-settings-row">
+          <view class="game-settings-row-left">
+            <view class="game-settings-icon-box bgm-icon-box">
+              <image class="game-settings-icon-img" src="/icons/bgm.svg" mode="aspectFit"/>
+            </view>
+            <text class="game-settings-row-text">BGM</text>
+          </view>
+          <view class="game-toggle {{bgmEnabled ? 'game-toggle-on' : 'game-toggle-off'}}" bindtap="toggleBGMGame">
+            <view class="game-toggle-knob"></view>
+          </view>
+        </view>
+        
+        <!-- 震动 -->
+        <view class="game-settings-row">
+          <view class="game-settings-row-left">
+            <view class="game-settings-icon-box vibe-icon-box">
+              <image class="game-settings-icon-img" src="/icons/vibrate.svg" mode="aspectFit"/>
+            </view>
+            <text class="game-settings-row-text">震动</text>
+          </view>
+          <view class="game-toggle {{vibrationEnabled ? 'game-toggle-on' : 'game-toggle-off'}}" bindtap="toggleVibrationGame">
+            <view class="game-toggle-knob"></view>
+          </view>
+        </view>
+        
+        <!-- 按钮音效 -->
+        <view class="game-settings-row">
+          <view class="game-settings-row-left">
+            <view class="game-settings-icon-box sound-icon-box">
+              <image class="game-settings-icon-img" src="/icons/music.svg" mode="aspectFit"/>
+            </view>
+            <text class="game-settings-row-text">按钮音效</text>
+          </view>
+          <view class="game-toggle {{soundEffectEnabled ? 'game-toggle-on' : 'game-toggle-off'}}" bindtap="toggleSoundEffectGame">
+            <view class="game-toggle-knob"></view>
+          </view>
+        </view>
+
+        <!-- 清除异常状态 -->
+        <view class="game-settings-row" bindtap="clearAbnormalState">
+          <view class="game-settings-row-left">
+            <view class="game-settings-icon-box clear-icon-box">
+              <image class="game-settings-icon-img" src="/icons/clear.svg" mode="aspectFit"/>
+            </view>
+            <text class="game-settings-row-text">清除异常状态</text>
+          </view>
+          <view class="game-settings-arrow">›</view>
+        </view>
+      </view>
+      
+      <!-- 3D关闭按钮 -->
+      <view class="game-modal-close-btn" bindtap="closeSettingsModal" hover-class="game-modal-close-btn-active">
+        <text class="game-modal-close-text">关闭</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 标题区域 -->
+  <view class="header-section {{showModeSelect ? '' : 'hidden'}}">
+    <view id="step-rule" class="logo-box" bindtap="goToPuzzleGame">
+      <text class="logo-text">?</text>
+    </view>
+    <text class="title">谁输谁洗碗</text>
+    <view class="header-actions">
+      <view class="subtitle-box feedback-box" bindtap="goToFeedback">
+        <text class="subtitle">问题反馈</text>
+        <view wx:if="{{hasUnreadFeedback}}" class="feedback-badge"></view>
+      </view>
+      <view class="subtitle-box" bindtap="goToRules">
+        <text class="subtitle">游戏规则</text>
+      </view>
+      <view id="step-history" class="subtitle-box" bindtap="goToRecords">
+        <text class="subtitle">对局记录</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 游戏模式选择区域 -->
+  <view id="step-modes" class="game-mode-section {{showModeSelect ? '' : 'hidden'}}">
+    <text class="section-title">选择游戏模式</text>
+    <text class="section-subtitle" bindtap="copyWechatId"></text>
+    <view class="mode-buttons">
+      <!-- 单机模式 - 点击弹出选择框 -->
+      <view class="mode-btn mode-local" bindtap="showSinglePlayerModal">
+        <view class="mode-icon">
+          <view class="icon-local">
+            <view class="local-person person-left"></view>
+            <view class="local-person person-right"></view>
+          </view>
+        </view>
+        <text class="mode-text">单机模式</text>
+      </view>
+      <!-- 残局模式 - 可点击 -->
+      <view class="mode-btn mode-puzzle" bindtap="enterPuzzleMode">
+        <view class="mode-icon">
+          <image class="icon-puzzle-img" src="/icons/lock.svg" mode="aspectFit"/>
+        </view>
+        <text class="mode-text">残局模式</text>
+      </view>
+      <!-- 联机对战 -->
+      <view class="mode-btn mode-online" bindtap="enterOnlineMode">
+        <view class="mode-icon">
+          <view class="icon-online">
+            <view class="online-globe">
+              <view class="globe-line globe-line-1"></view>
+              <view class="globe-line globe-line-2"></view>
+              <view class="globe-line globe-line-3"></view>
+            </view>
+          </view>
+        </view>
+        <text class="mode-text">联机对战</text>
+      </view>
+
+    </view>
+  </view>
+
+  <!-- 单机模式选择弹窗 -->
+  <view wx:if="{{showSinglePlayerModal}}" class="single-player-modal">
+    <view class="modal-mask" bindtap="closeSinglePlayerModal"></view>
+    <view class="modal-content">
+      <text class="modal-title">选择单机游戏</text>
+      <view class="single-mode-options">
+        <!-- 猜数字 -->
+        <view class="single-mode-btn mode-guess-number" bindtap="selectLocalMode">
+          <view class="single-mode-icon">
+            <view class="icon-local">
+              <view class="local-person person-left"></view>
+              <view class="local-person person-right"></view>
+            </view>
+          </view>
+          <text class="single-mode-text">猜数字</text>
+        </view>
+        <!-- 猜颜色 -->
+        <view class="single-mode-btn mode-guess-color" bindtap="selectColorMode">
+          <view class="single-mode-icon">
+            <view class="icon-color">
+              <view class="color-grid">
+                <view class="color-dot dot-red"></view>
+                <view class="color-dot dot-green"></view>
+                <view class="color-dot dot-blue"></view>
+                <view class="color-dot dot-purple"></view>
+              </view>
+            </view>
+          </view>
+          <text class="single-mode-text">猜颜色</text>
+        </view>
+      </view>
+      <view class="modal-close-btn" bindtap="closeSinglePlayerModal">取消</view>
+    </view>
+  </view>
+
+  <!-- 难度选择卡片 -->
+  <view class="card nintendo-card {{showModeSelect ? 'hidden' : ''}}">
+    <!-- 返回按钮 -->
+    <view class="back-btn" bindtap="backToModeSelect">
+      <view class="back-arrow">
+        <view class="arrow-line"></view>
+        <view class="arrow-head"></view>
+      </view>
+      <text class="back-text">返回</text>
+    </view>
+  
+    <text class="card-title">位数选择</text>
+    <view class="difficulty-grid">
+      <view 
+        class="difficulty-btn {{digitCount === 3 ? 'active' : ''}}" 
+        bindtap="selectDifficulty"
+        data-count="3"
+      >
+        <text class="difficulty-num">3</text>
+      </view>
+      <view 
+        class="difficulty-btn {{digitCount === 4 ? 'active' : ''}}" 
+        bindtap="selectDifficulty"
+        data-count="4"
+      >
+        <text class="difficulty-num">4</text>
+      </view>
+      <view 
+        class="difficulty-btn {{digitCount === 5 ? 'active' : ''}}" 
+        bindtap="selectDifficulty"
+        data-count="5"
+      >
+        <text class="difficulty-num">5</text>
+      </view>
+    </view>
+
+    <!-- 游戏模式选择区域 -->
+    <view class="play-mode-section">
+      <text class="play-mode-title">游戏模式</text>
+      <view class="play-mode-buttons">
+        <!-- 本地双人模式 -->
+        <view 
+          class="play-mode-btn {{playMode === 'local' ? 'active' : ''}}" 
+          bindtap="selectPlayMode"
+          data-mode="local"
+        >
+          <view class="play-mode-icon">
+            <view class="icon-local">
+              <view class="local-person person-left"></view>
+              <view class="local-person person-right"></view>
+            </view>
+          </view>
+          <text class="play-mode-text">本地双人</text>
+        </view>
+        <!-- 单人模式主按钮 -->
+        <view 
+          wx:if="{{!showSingleSubModes}}"
+          class="play-mode-btn {{playMode === 'single' ? 'active' : ''}}" 
+          bindtap="onSingleModeTap"
+        >
+          <view class="play-mode-icon">
+            <view class="icon-single">
+              <view class="single-person"></view>
+            </view>
+          </view>
+          <text class="play-mode-text">单人模式</text>
+        </view>
+        <!-- 单人模式子选项 -->
+        <view wx:if="{{showSingleSubModes}}" class="single-sub-modes">
+          <view 
+            class="sub-mode-btn {{singleDigitMode === 'repeat' ? 'active' : ''}}" 
+            bindtap="selectSingleDigitMode"
+            data-mode="repeat"
+          >
+            <text class="sub-mode-text">数字可重复</text>
+          </view>
+          <view 
+            class="sub-mode-btn {{singleDigitMode === 'unique' ? 'active' : ''}}" 
+            bindtap="selectSingleDigitMode"
+            data-mode="unique"
+          >
+            <text class="sub-mode-text">数字不重复</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 开始按钮 -->
+  <button class="start-btn btn-3d {{showModeSelect ? 'hidden' : ''}}" bindtap="startGame">开始游戏</button>
+
+  <!-- 联机对战模块 - 全屏卡片模式 -->
+  <view wx:if="{{showOnlineMode}}" class="online-fullscreen">
+    <!-- 返回按钮 - 猜颜色游戏进行页面不显示 -->
+    <view wx:if="{{!(onlineState === 'playing' && roomInfo && roomInfo.gameType === 'color')}}" class="online-back-btn" bindtap="exitOnlineMode">
+      <view class="online-back-arrow">
+        <view class="online-arrow-line"></view>
+        <view class="online-arrow-head"></view>
+      </view>
+      <text class="online-back-text">返回</text>
+    </view>
+
+      <!-- 1. 匹配大厅 -->
+      <view wx:if="{{onlineState === 'hall'}}" class="online-hall">
+        <!-- 标题 -->
+        <text class="hall-title">联机对战</text>
+
+        <!-- 游戏设置区域 -->
+        <view class="game-settings-card">
+          <text class="settings-title">游戏设置</text>
+          
+          <!-- 游戏类型选择（新增） -->
+          <view class="settings-row">
+            <text class="settings-label">游戏</text>
+            <view class="settings-options">
+              <view 
+                class="setting-btn {{onlineGameType === 'number' ? 'active' : ''}}" 
+                bindtap="selectOnlineGameType"
+                data-type="number"
+              >
+                <text class="setting-btn-text">猜数字</text>
+              </view>
+              <view 
+                class="setting-btn {{onlineGameType === 'color' ? 'active' : ''}}" 
+                bindtap="selectOnlineGameType"
+                data-type="color"
+              >
+                <text class="setting-btn-text">猜颜色</text>
+              </view>
+            </view>
+          </view>
+          
+          <!-- 猜数字设置 -->
+          <block wx:if="{{onlineGameType === 'number'}}">
+            <!-- 位数选择 -->
+            <view class="settings-row">
+              <text class="settings-label">位数</text>
+              <view class="settings-options">
+                <view 
+                  class="setting-btn {{digitCount === 3 ? 'active' : ''}}" 
+                  bindtap="selectDigitCount"
+                  data-count="3"
+                >
+                  <text class="setting-btn-text">3位</text>
+                </view>
+                <view 
+                  class="setting-btn {{digitCount === 4 ? 'active' : ''}}" 
+                  bindtap="selectDigitCount"
+                  data-count="4"
+                >
+                  <text class="setting-btn-text">4位</text>
+                </view>
+                <view 
+                  class="setting-btn {{digitCount === 5 ? 'active' : ''}}" 
+                  bindtap="selectDigitCount"
+                  data-count="5"
+                >
+                  <text class="setting-btn-text">5位</text>
+                </view>
+              </view>
+            </view>
+            
+            <!-- 规则选择 -->
+            <view class="settings-row">
+              <text class="settings-label">规则</text>
+              <view class="settings-options">
+                <view 
+                  class="setting-btn {{digitRule === 'repeat' ? 'active' : ''}}" 
+                  bindtap="selectDigitRule"
+                  data-rule="repeat"
+                >
+                  <text class="setting-btn-text">可重复</text>
+                </view>
+                <view 
+                  class="setting-btn {{digitRule === 'unique' ? 'active' : ''}}" 
+                  bindtap="selectDigitRule"
+                  data-rule="unique"
+                >
+                  <text class="setting-btn-text">不重复</text>
+                </view>
+              </view>
+            </view>
+            
+            <!-- 时间选择 -->
+            <view class="settings-row">
+              <text class="settings-label">时间</text>
+              <view class="settings-options">
+                <view 
+                  class="setting-btn {{timeLimit === 10 ? 'active' : ''}}" 
+                  bindtap="selectTimeLimit"
+                  data-limit="10"
+                >
+                  <text class="setting-btn-text">10分钟</text>
+                </view>
+                <view 
+                  class="setting-btn {{timeLimit === 15 ? 'active' : ''}}" 
+                  bindtap="selectTimeLimit"
+                  data-limit="15"
+                >
+                  <text class="setting-btn-text">15分钟</text>
+                </view>
+                <view 
+                  class="setting-btn {{timeLimit === 0 ? 'active' : ''}}" 
+                  bindtap="selectTimeLimit"
+                  data-limit="0"
+                >
+                  <text class="setting-btn-text">不限</text>
+                </view>
+              </view>
+            </view>
+            
+            <!-- 对决模式 -->
+            <view class="settings-row quick-draw-row">
+              <text class="settings-label">对决</text>
+              <view class="quick-draw-toggle" bindtap="toggleQuickDrawMode">
+                <view class="toggle-switch {{quickDrawMode ? 'active' : ''}}">
+                  <view class="toggle-circle"></view>
+                </view>
+                <text class="quick-draw-desc">每轮10秒作答时间，超时直接判负</text>
+              </view>
+            </view>
+          </block>
+          
+          <!-- 猜颜色设置（新增） -->
+          <block wx:if="{{onlineGameType === 'color'}}">
+            <!-- 模式选择 -->
+            <view class="settings-row">
+              <text class="settings-label">模式</text>
+              <view class="settings-options">
+                <view 
+                  class="setting-btn {{colorMode === 'repeat' ? 'active' : ''}}" 
+                  bindtap="selectOnlineColorMode"
+                  data-mode="repeat"
+                >
+                  <text class="setting-btn-text">可重复</text>
+                </view>
+                <view 
+                  class="setting-btn {{colorMode === 'unique' ? 'active' : ''}}" 
+                  bindtap="selectOnlineColorMode"
+                  data-mode="unique"
+                >
+                  <text class="setting-btn-text">不重复</text>
+                </view>
+              </view>
+            </view>
+            
+            <!-- 先手选择 -->
+            <view class="settings-row">
+              <text class="settings-label">先手</text>
+              <view class="settings-options">
+                <view 
+                  class="setting-btn {{colorFirstPlayer === 'host' ? 'active' : ''}}" 
+                  bindtap="selectFirstPlayer"
+                  data-player="host"
+                >
+                  <text class="setting-btn-text">房主先手</text>
+                </view>
+                <view 
+                  class="setting-btn {{colorFirstPlayer === 'guest' ? 'active' : ''}}" 
+                  bindtap="selectFirstPlayer"
+                  data-player="guest"
+                >
+                  <text class="setting-btn-text">房主后手</text>
+                </view>
+              </view>
+            </view>
+            
+            <!-- 时间选择 -->
+            <view class="settings-row">
+              <text class="settings-label">时间</text>
+              <view class="settings-options">
+                <view
+                  class="setting-btn {{timeLimit === 10 ? 'active' : ''}}"
+                  bindtap="selectColorTimeLimit"
+                  data-limit="10"
+                >
+                  <text class="setting-btn-text">10分钟</text>
+                </view>
+                <view
+                  class="setting-btn {{timeLimit === 20 ? 'active' : ''}}"
+                  bindtap="selectColorTimeLimit"
+                  data-limit="20"
+                >
+                  <text class="setting-btn-text">20分钟</text>
+                </view>
+              </view>
+            </view>
+            
+            <!-- 对决模式 -->
+            <view class="settings-row quick-draw-row">
+              <text class="settings-label">对决</text>
+              <view class="quick-draw-toggle" bindtap="toggleDuelMode">
+                <view class="toggle-switch {{duelMode ? 'active' : ''}}">
+                  <view class="toggle-circle"></view>
+                </view>
+                <text class="quick-draw-desc">每轮30秒作答时间，超时直接判负</text>
+              </view>
+            </view>
+          </block>
+        </view>
+
+        <!-- 创建房间按钮 - 3D风格 -->
+        <view class="create-room-wrapper">
+          <view class="btn-3d btn-create-room" bindtap="createOnlineRoom">
+            <text class="btn-3d-text">创建房间</text>
+          </view>
+        </view>
+
+        <!-- 或 -->
+        <view class="divider">
+          <view class="divider-line"></view>
+          <text class="divider-text">或</text>
+          <view class="divider-line"></view>
+        </view>
+
+        <!-- 加入房间区域 -->
+        <view class="join-room-card">
+          <text class="card-label">加入房间</text>
+          <view class="room-input-wrapper">
+            <input 
+              class="room-input" 
+              placeholder="输入6位房间号" 
+              bindinput="onJoinRoomInput" 
+              value="{{joinRoomId}}" 
+              maxlength="6" 
+              type="number" 
+            />
+          </view>
+          <view class="btn-3d btn-join-room {{joinRoomId.length === 6 ? 'active' : 'disabled'}}" bindtap="joinRoom">
+            <text class="btn-3d-text">加入房间</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 2. 等待房间 -->
+      <view wx:if="{{onlineState === 'waiting'}}" class="online-waiting">
+        <!-- 房间号展示 - 大卡片 -->
+        <view class="room-id-card">
+          <text class="room-id-label">房间号</text>
+          <view class="room-id-box">
+            <text class="room-id-number">{{roomNumber}}</text>
+          </view>
+          <text class="room-id-tip">分享房间号给好友</text>
+        </view>
+
+        <!-- 游戏设置卡片 - 仅显示 -->
+        <view class="game-settings-card readonly">
+          <text class="settings-title">游戏设置</text>
+          
+          <!-- 游戏类型显示 -->
+          <view class="settings-row">
+            <text class="settings-label">游戏</text>
+            <view class="settings-options">
+              <view class="option-btn {{roomInfo.gameType === 'number' ? 'active' : ''}}">猜数字</view>
+              <view class="option-btn {{roomInfo.gameType === 'color' ? 'active' : ''}}">猜颜色</view>
+            </view>
+          </view>
+          
+          <!-- 猜数字设置显示 -->
+          <block wx:if="{{roomInfo.gameType === 'number'}}">
+            <!-- 位数显示 -->
+            <view class="settings-row">
+              <text class="settings-label">位数</text>
+              <view class="settings-options">
+                <view class="option-btn {{roomInfo.digitCount === 3 ? 'active' : ''}}">3</view>
+                <view class="option-btn {{roomInfo.digitCount === 4 ? 'active' : ''}}">4</view>
+                <view class="option-btn {{roomInfo.digitCount === 5 ? 'active' : ''}}">5</view>
+              </view>
+            </view>
+            
+            <!-- 规则显示 -->
+            <view class="settings-row">
+              <text class="settings-label">规则</text>
+              <view class="settings-options">
+                <view class="option-btn {{roomInfo.digitRule === 'repeat' ? 'active' : ''}}">可重复</view>
+                <view class="option-btn {{roomInfo.digitRule === 'unique' ? 'active' : ''}}">不重复</view>
+              </view>
+            </view>
+            
+            <!-- 时间显示 -->
+            <view class="settings-row">
+              <text class="settings-label">时间</text>
+              <view class="settings-options">
+                <view class="option-btn {{roomInfo.timeLimit === 10 ? 'active' : ''}}">10分钟</view>
+                <view class="option-btn {{roomInfo.timeLimit === 15 ? 'active' : ''}}">15分钟</view>
+                <view class="option-btn {{roomInfo.timeLimit === 0 ? 'active' : ''}}">不限</view>
+              </view>
+            </view>
+            
+            <!-- 对决模式显示 -->
+            <view class="settings-row" wx:if="{{roomInfo.quickDrawMode}}">
+              <text class="settings-label">对决</text>
+              <view class="settings-options">
+                <view class="option-btn quick-draw-active">已开启</view>
+              </view>
+            </view>
+          </block>
+          
+          <!-- 猜颜色设置显示 -->
+          <block wx:if="{{roomInfo.gameType === 'color'}}">
+            <!-- 模式显示 -->
+            <view class="settings-row">
+              <text class="settings-label">模式</text>
+              <view class="settings-options">
+                <view class="option-btn {{roomInfo.colorMode === 'repeat' ? 'active' : ''}}">可重复</view>
+                <view class="option-btn {{roomInfo.colorMode === 'unique' ? 'active' : ''}}">不重复</view>
+              </view>
+            </view>
+            
+            <!-- 先手显示 -->
+            <view class="settings-row">
+              <text class="settings-label">先手</text>
+              <view class="settings-options">
+                <view class="option-btn {{roomInfo.firstPlayer === 'host' ? 'active' : ''}}">房主先手</view>
+                <view class="option-btn {{roomInfo.firstPlayer === 'guest' ? 'active' : ''}}">房主后手</view>
+              </view>
+            </view>
+            
+            <!-- 时间显示 -->
+            <view class="settings-row">
+              <text class="settings-label">时间</text>
+              <view class="settings-options">
+                <view class="option-btn {{roomInfo.timeLimit === 10 ? 'active' : ''}}">10分钟</view>
+                <view class="option-btn {{roomInfo.timeLimit === 20 ? 'active' : ''}}">20分钟</view>
+              </view>
+            </view>
+            
+            <!-- 对决模式显示 -->
+            <view class="settings-row" wx:if="{{roomInfo.duelMode}}">
+              <text class="settings-label">对决</text>
+              <view class="settings-options">
+                <view class="option-btn quick-draw-active">已开启</view>
+              </view>
+            </view>
+          </block>
+        </view>
+
+        <!-- 玩家状态卡片 -->
+        <view class="players-status-card">
+          <view class="status-row">
+            <view class="status-player">
+              <view class="status-avatar host">
+                <image wx:if="{{userInfo.avatarUrl}}" class="avatar-image" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+                <text wx:else>👤</text>
+              </view>
+              <view class="status-info">
+                <text class="status-name">{{roomInfo.players.host.name || userInfo.nickName || '我'}}</text>
+                <text class="status-tag host-tag">创建者</text>
+              </view>
+            </view>
+            <view class="status-divider">VS</view>
+            <view class="status-player">
+              <view wx:if="{{roomInfo.players.guest}}" class="status-avatar guest">
+                <image wx:if="{{roomInfo.players.guest.avatar}}" class="avatar-image" src="{{roomInfo.players.guest.avatar}}" mode="aspectFill"></image>
+                <text wx:else>👤</text>
+              </view>
+              <view wx:else class="status-avatar waiting">
+                <view class="waiting-ring"></view>
+              </view>
+              <view class="status-info">
+                <text class="status-name">{{roomInfo.players.guest ? roomInfo.players.guest.name : '等待中...'}}</text>
+                <text wx:if="{{roomInfo.players.guest}}" class="status-tag guest-tag">已加入</text>
+              </view>
+            </view>
+          </view>
+        </view>
+
+        <!-- 邀请按钮 - 3D风格 -->
+        <button class="btn-3d btn-invite" open-type="share">
+          <text class="btn-3d-icon">💬</text>
+          <text class="btn-3d-text">邀请微信好友</text>
+        </button>
+      </view>
+
+      <!-- 3. 设置密码 - 复用 secret 页面样式 -->
+      <view wx:if="{{onlineState === 'setting'}}" class="online-setting-container {{isHost ? 'bg-p1' : 'bg-p2'}}">
+        <!-- 标题 -->
+        <view class="header">
+          <text class="player-label">{{isHost ? (roomInfo.players.host.name || userInfo.nickName || '我') : (roomInfo.players.guest.name || '我')}}</text>
+          <text class="page-title">设定你的密码</text>
+          <text class="page-subtitle">输入 {{digitCount}} 位{{digitRule === 'unique' ? '不重复' : ''}}数字让对手猜</text>
+        </view>
+
+        <!-- 数字显示区 -->
+        <view class="digits-display">
+          <view 
+            wx:for="{{onlineDisplayDigits}}" 
+            wx:key="index"
+            class="digit-box {{item ? 'digit-box-filled' : 'digit-box-empty'}}"
+          >
+            <text class="digit-text">{{item || ''}}</text>
+          </view>
+        </view>
+
+        <!-- 提示信息 -->
+        <view class="hint-box">
+          <text class="hint-text">{{onlineHintText}}</text>
+        </view>
+
+        <!-- 数字键盘 -->
+        <view class="keypad" wx:if="{{!roomInfo.players[isHost ? 'host' : 'guest'].isReady}}">
+          <view class="keypad-row">
+            <view class="key" bindtap="onKeypadInput" data-num="1">1</view>
+            <view class="key" bindtap="onKeypadInput" data-num="2">2</view>
+            <view class="key" bindtap="onKeypadInput" data-num="3">3</view>
+          </view>
+          <view class="keypad-row">
+            <view class="key" bindtap="onKeypadInput" data-num="4">4</view>
+            <view class="key" bindtap="onKeypadInput" data-num="5">5</view>
+            <view class="key" bindtap="onKeypadInput" data-num="6">6</view>
+          </view>
+          <view class="keypad-row">
+            <view class="key" bindtap="onKeypadInput" data-num="7">7</view>
+            <view class="key" bindtap="onKeypadInput" data-num="8">8</view>
+            <view class="key" bindtap="onKeypadInput" data-num="9">9</view>
+          </view>
+          <view class="keypad-row">
+            <view class="key key-clear" bindtap="onKeypadClear">C</view>
+            <view class="key" bindtap="onKeypadInput" data-num="0">0</view>
+            <view class="key key-delete" bindtap="onKeypadBackspace">←</view>
+          </view>
+          <!-- 确认按钮 -->
+          <button 
+            class="confirm-btn {{mySecretBuffer.length === digitCount ? (isHost ? 'btn-p1' : 'btn-p2') : 'btn-disabled'}}" 
+            bindtap="submitSecret"
+            disabled="{{mySecretBuffer.length !== digitCount}}"
+          >
+            <text>确认密码</text>
+          </button>
+        </view>
+
+        <!-- 等待对方 -->
+        <view wx:if="{{roomInfo.players[isHost ? 'host' : 'guest'].isReady}}" class="waiting-panel">
+          <view class="waiting-spinner-large"></view>
+          <text class="waiting-text">等待对手设置密码...</text>
+        </view>
+      </view>
+
+      <!-- 4. 游戏对战 - 复用 game 页面样式 -->
+      <view wx:if="{{onlineState === 'playing' && roomInfo && roomInfo.gameType === 'number'}}" class="online-game-container {{isHost ? 'bg-p1' : 'bg-p2'}}">
+        <!-- 顶部信息栏 -->
+        <view class="header-bar">
+          <view class="player-badge {{roomInfo.currentGuesser === (isHost ? 'host' : 'guest') ? (isHost ? 'badge-p1' : 'badge-p2') : ''}}">
+            <text>{{roomInfo.currentGuesser === (isHost ? 'host' : 'guest') ? '我的回合' : opponentName + '回合'}}</text>
+          </view>
+          <text class="turn-text">{{roomInfo.currentGuesser === (isHost ? 'host' : 'guest') ? '到你猜测了' : '等待中...'}}</text>
+        </view>
+
+        <!-- 房间号显示 -->
+        <view class="room-number-banner">
+          <text class="room-number-text">房间号: {{roomNumber}}</text>
+          <!-- 对决模式：显示每轮倒计时 -->
+          <text wx:if="{{roomInfo.quickDrawMode}}" class="countdown-text {{turnCountdown <= 10 ? 'countdown-warning' : ''}}">{{turnCountdown}}s</text>
+          <!-- 非对决模式：显示房间倒计时 -->
+          <text wx:elif="{{timeLimit > 0}}" class="countdown-text {{remainingTime <= 60 ? 'countdown-warning' : ''}}">{{remainingTime}}s</text>
+        </view>
+
+        <!-- 历史记录区域 -->
+        <view class="history-section {{historyExpanded ? 'expanded' : ''}} {{roomInfo.currentGuesser !== (isHost ? 'host' : 'guest') ? 'waiting' : ''}}">
+          <view class="history-header-row">
+            <text class="history-title">猜测记录 ({{roundCount}}轮)</text>
+            <text class="repeat-mode-tag">{{roomInfo.digitRule === 'unique' ? '不重复' : '可重复'}}</text>
+            <view class="filter-btn" bindtap="toggleHistoryFilter">
+              <text>{{showOnlyMyHistory ? '全局' : '只看自己'}}</text>
+            </view>
+          </view>
+          <scroll-view class="history-list" scroll-y scroll-into-view="history-0">
+            <!-- 显示全部猜测记录 -->
+            <view
+              wx:for="{{filteredHistory}}"
+              wx:key="index"
+              id="history-{{index}}"
+              class="history-item"
+            >
+              <view class="guess-number">#{{item.roundNum}}</view>
+              <view class="player-badge-hist {{item.player === 'host' ? 'badge-p1-hist' : 'badge-p2-hist'}}">
+                <text>{{item.player === 'host' ? '1P' : '2P'}}</text>
+              </view>
+              <view class="guess-digits">
+                <view
+                  wx:for="{{item.guessArr}}"
+                  wx:for-item="digit"
+                  wx:for-index="digitIndex"
+                  wx:key="digitIndex"
+                  class="history-digit {{item.isMyGuess && item.hints && item.hints[digitIndex] === 'A' ? 'digit-correct' : ''}}"
+                >{{digit}}</view>
+              </view>
+              <view class="guess-score {{item.a === digitCount ? 'score-perfect' : ''}}">
+                <text class="score-num">{{item.a}}</text>
+                <text class="score-total">/{{digitCount}}</text>
+              </view>
+            </view>
+            <view wx:if="{{filteredHistory.length === 0}}" class="empty-history">
+              <text>{{showOnlyMyHistory ? '你还没有猜测记录' : '还没有猜测记录'}}</text>
+            </view>
+          </scroll-view>
+          <!-- 展开/收起按钮（超过4条时显示） -->
+          <view wx:if="{{filteredHistory.length > 4}}" class="history-expand-btn {{historyExpanded ? 'expanded' : ''}}" bindtap="toggleHistoryExpand">
+            <view class="expand-arrow"></view>
+            <text class="expand-text">{{historyExpanded ? '收起' : '展开全部'}}</text>
+          </view>
+        </view>
+
+        <!-- 数字输入显示区 -->
+        <view wx:if="{{roomInfo.currentGuesser === (isHost ? 'host' : 'guest')}}" class="input-section">
+          <view class="digits-display">
+            <view 
+              wx:for="{{onlineGuessDisplayDigits}}" 
+              wx:key="index"
+              class="digit-box {{item ? 'digit-box-filled' : 'digit-box-empty'}}"
+            >
+              <text class="digit-text">{{item || ''}}</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 数字键盘 -->
+        <view wx:if="{{roomInfo.currentGuesser === (isHost ? 'host' : 'guest')}}" class="keypad">
+          <view class="keypad-row">
+            <view class="key" bindtap="onGuessKeypadInput" data-num="1">1</view>
+            <view class="key" bindtap="onGuessKeypadInput" data-num="2">2</view>
+            <view class="key" bindtap="onGuessKeypadInput" data-num="3">3</view>
+          </view>
+          <view class="keypad-row">
+            <view class="key" bindtap="onGuessKeypadInput" data-num="4">4</view>
+            <view class="key" bindtap="onGuessKeypadInput" data-num="5">5</view>
+            <view class="key" bindtap="onGuessKeypadInput" data-num="6">6</view>
+          </view>
+          <view class="keypad-row">
+            <view class="key" bindtap="onGuessKeypadInput" data-num="7">7</view>
+            <view class="key" bindtap="onGuessKeypadInput" data-num="8">8</view>
+            <view class="key" bindtap="onGuessKeypadInput" data-num="9">9</view>
+          </view>
+          <view class="keypad-row">
+            <view class="key key-clear" bindtap="onGuessKeypadClear">C</view>
+            <view class="key" bindtap="onGuessKeypadInput" data-num="0">0</view>
+            <view class="key key-delete" bindtap="onGuessKeypadBackspace">←</view>
+          </view>
+          <button 
+            class="confirm-btn {{myGuessBuffer.length === digitCount ? (isHost ? 'btn-p1' : 'btn-p2') : 'btn-disabled'}} {{roomInfo.quickDrawMode ? 'quick-draw-btn' : ''}}" 
+            bindtap="submitGuess"
+            disabled="{{myGuessBuffer.length !== digitCount}}"
+          >
+            <text wx:if="{{!roomInfo.quickDrawMode}}">确认猜测</text>
+            <text wx:else class="quick-draw-countdown">{{turnCountdown}}s</text>
+          </button>
+        </view>
+
+        <!-- 对手回合 - 等待中 -->
+        <view wx:else class="waiting-panel">
+          <view class="waiting-spinner-large"></view>
+          <text class="waiting-text">等待对手猜测...</text>
+        </view>
+      </view>
+
+      <!-- 4.5 猜颜色游戏对战（新增） -->
+      <view wx:if="{{onlineState === 'playing' && roomInfo && roomInfo.gameType === 'color'}}" class="online-color-game-container {{isHost ? 'bg-host' : 'bg-guest'}}">
+        <!-- 顶部信息栏 - 新布局 -->
+        <view class="online-color-header">
+          <!-- 左上角：轮次和剩余次数 -->
+          <view class="online-color-left-info">
+            <text class="online-color-round">第{{totalRounds + 1}}轮</text>
+            <text class="online-color-remaining">剩余:{{myRemainingGuesses}}/4</text>
+          </view>
+          
+          <!-- 中间：回合按钮（居中） -->
+          <view class="online-color-turn-badge {{roomInfo.currentGuesser === (isHost ? 'host' : 'guest') ? 'active' : ''}}">
+            <text>{{roomInfo.currentGuesser === (isHost ? 'host' : 'guest') ? '我的回合' : opponentName + '回合'}}</text>
+          </view>
+          
+          <!-- 右上角：决斗模式显示每轮倒计时，非决斗模式显示房间倒计时 -->
+          <view class="online-color-right-info">
+            <!-- 决斗模式：显示每轮倒计时 -->
+            <view wx:if="{{roomInfo.duelMode && roomInfo.currentGuesser === (isHost ? 'host' : 'guest')}}" class="online-color-duel-timer {{turnCountdown <= 10 ? 'warning' : ''}}">
+              <text class="timer-value">{{turnCountdown}}s</text>
+            </view>
+            <!-- 非决斗模式：显示房间倒计时 -->
+            <view wx:elif="{{!roomInfo.duelMode && roomInfo.timeLimit > 0}}" class="online-color-room-timer {{colorRemainingTime <= 60 ? 'warning' : ''}}">
+              <text class="timer-label">剩余</text>
+              <text class="timer-value">{{colorRemainingTime}}s</text>
+            </view>
+            <view wx:elif="{{!roomInfo.duelMode && roomInfo.timeLimit === 0}}" class="online-color-room-timer">
+              <text class="timer-label">不限时</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 猜测历史区域 -->
+        <view class="online-color-history-section">
+          <scroll-view class="online-color-history-list" scroll-y>
+            <view wx:for="{{parsedColorHistory}}" wx:key="index" class="online-color-history-item">
+              <!-- 序号（写死1-8） -->
+              <view class="online-color-seq-num">{{item.seqNum}}</view>
+              <!-- 1P/2P标签 -->
+              <view class="online-color-player-tag {{item.player === 'host' ? 'tag-host' : 'tag-guest'}}">
+                {{item.player === 'host' ? '1P' : '2P'}}
+              </view>
+              <!-- 颜色组合（左对齐） -->
+              <view class="online-color-guess-display">
+                <view wx:for="{{item.colors}}" wx:for-item="color" wx:key="*this" class="online-color-dot {{color}}"></view>
+              </view>
+              <!-- 提示点 -->
+              <view class="online-color-hints">
+                <view class="online-color-red-hints">
+                  <view wx:for="{{item.redHints}}" wx:key="*this" class="online-color-hint-red"></view>
+                </view>
+                <view class="online-color-white-hints">
+                  <view wx:for="{{item.whiteHints}}" wx:key="*this" class="online-color-hint-white"></view>
+                </view>
+              </view>
+            </view>
+            <view wx:if="{{parsedColorHistory.length === 0}}" class="online-color-empty-history">
+              <text>游戏开始，请猜测颜色组合</text>
+            </view>
+          </scroll-view>
+        </view>
+
+        <!-- 颜色输入区（我的回合时显示） -->
+        <view wx:if="{{roomInfo.currentGuesser === (isHost ? 'host' : 'guest')}}" class="online-color-input-section">
+          <view class="online-color-display-boxes">
+            <view wx:for="{{colorDisplayColors}}" wx:key="index" 
+                  class="online-color-box {{item ? '' : 'empty'}} {{colorEditIndex === index ? 'editing' : ''}}"
+                  bindtap="onOnlineColorBoxTap" data-index="{{index}}">
+              <view wx:if="{{item}}" class="online-color-fill {{item}}"></view>
+            </view>
+          </view>
+          
+          <!-- 颜色键盘 -->
+          <view class="online-color-keypad">
+            <view class="online-color-keypad-row">
+              <view class="online-color-key" bindtap="onOnlineColorPress" data-color="red">
+                <view class="online-color-key-fill red"></view>
+              </view>
+              <view class="online-color-key" bindtap="onOnlineColorPress" data-color="green">
+                <view class="online-color-key-fill green"></view>
+              </view>
+              <view class="online-color-key" bindtap="onOnlineColorPress" data-color="blue">
+                <view class="online-color-key-fill blue"></view>
+              </view>
+            </view>
+            <view class="online-color-keypad-row">
+              <view class="online-color-key" bindtap="onOnlineColorPress" data-color="yellow">
+                <view class="online-color-key-fill yellow"></view>
+              </view>
+              <view class="online-color-key" bindtap="onOnlineColorPress" data-color="purple">
+                <view class="online-color-key-fill purple"></view>
+              </view>
+              <view class="online-color-key" bindtap="onOnlineColorPress" data-color="gray">
+                <view class="online-color-key-fill gray"></view>
+              </view>
+            </view>
+          </view>
+          
+          <!-- 操作按钮 -->
+          <view class="online-color-actions">
+            <view class="online-color-btn-clear" bindtap="onOnlineColorClear">清空</view>
+            <button class="online-color-btn-confirm {{canConfirmColor ? 'active' : 'disabled'}}" 
+                    bindtap="submitColorGuess" disabled="{{!canConfirmColor}}">
+              确认猜测
+            </button>
+          </view>
+          
+          <!-- 提示说明 -->
+          <view class="online-color-hint-legend">
+            <view class="online-color-legend-item">
+              <view class="online-color-legend-dot red-dot"></view>
+              <text class="online-color-legend-text">位置和颜色都对</text>
+            </view>
+            <view class="online-color-legend-item">
+              <view class="online-color-legend-dot white-dot"></view>
+              <text class="online-color-legend-text">颜色对位置错</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 等待对手 -->
+        <view wx:else class="online-color-waiting">
+          <view class="online-color-spinner"></view>
+          <text>等待对手猜测...</text>
+        </view>
+      </view>
+
+      <!-- 5. 结算页面 - 复用 victory 页面样式 -->
+      <view wx:if="{{onlineState === 'result'}}" class="online-result-container {{isWin ? (isHost ? 'bg-p1' : 'bg-p2') : 'bg-pattern'}}">
+        <!-- 彩带动画 -->
+        <view class="confetti-container" wx:if="{{isWin}}">
+          <view wx:for="{{[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]}}" wx:key="*this" class="confetti {{isHost ? 'confetti-red' : 'confetti-blue'}}" style="left: {{item * 6}}%; animation-delay: {{item * 0.2}}s; animation-duration: {{3 + item * 0.2}}s;"></view>
+          <view wx:for="{{[1,2,3,4,5,6,7,8]}}" wx:key="*this" class="confetti confetti-gold" style="left: {{item * 12 + 3}}%; animation-delay: {{item * 0.3}}s; animation-duration: {{3.5 + item * 0.15}}s;"></view>
+        </view>
+
+        <!-- 胜利宣告卡片 -->
+        <view class="victory-card nintendo-card animate-bounce-in">
+          <!-- 浮动胜利图标 -->
+          <view class="victory-icon-wrapper animate-float">
+            <view class="victory-icon-bg {{isWin ? (isHost ? 'icon-p1' : 'icon-p2') : (isDraw ? 'icon-wash-bg' : 'icon-loser')}}">
+              <!-- 胜利：显示星星/皇冠 -->
+              <block wx:if="{{isWin}}">
+                <view wx:if="{{isHost}}" class="icon-star">
+                  <view class="star-shape"></view>
+                </view>
+                <view wx:else class="icon-crown">
+                  <view class="crown-shape"></view>
+                </view>
+              </block>
+              <!-- 平局（8次都没猜对）：显示洗碗图标 -->
+              <block wx:elif="{{isDraw}}">
+                <view class="icon-wash">🍽️</view>
+              </block>
+              <!-- 失败：显示皇冠 -->
+              <block wx:else>
+                <view class="icon-crown">
+                  <view class="crown-shape"></view>
+                </view>
+              </block>
+            </view>
+          </view>
+
+          <!-- 卡片内容 -->
+          <view class="victory-content">
+            <!-- 标题 -->
+            <text wx:if="{{isWin}}" class="victory-title {{isHost ? 'title-p1' : 'title-p2'}}">今天不洗碗!</text>
+            <text wx:elif="{{isDraw}}" class="victory-title title-draw">一起洗碗!</text>
+            <text wx:else class="victory-title">今天你洗碗!</text>
+            
+            <!-- 徽章 -->
+            <view wx:if="{{isWin}}" class="winner-badge {{isHost ? 'badge-p1' : 'badge-p2'}}">
+              <text>{{opponentName}}今天洗碗!</text>
+            </view>
+            <view wx:elif="{{isDraw}}" class="winner-badge badge-draw">
+              <text>{{roomInfo.players.host.name}}和{{roomInfo.players.guest.name}}一起洗碗!</text>
+            </view>
+            <view wx:else class="winner-badge badge-loser">
+              <text>{{opponentName}}今天不洗碗!</text>
+            </view>
+            
+            <!-- 玩家名 -->
+            <text wx:if="{{!isDraw}}" class="winner-name">{{myName}}</text>
+            <text wx:else class="winner-name">{{roomInfo.players.host.name}} & {{roomInfo.players.guest.name}}</text>
+            
+            <!-- 副标题 -->
+            <text wx:if="{{finishReason === 'opponent_left'}}" class="winner-subtitle">对手已离开房间</text>
+            <text wx:elif="{{isWin}}" class="winner-subtitle">完美破解了密码!</text>
+            <text wx:elif="{{isDraw}}" class="winner-subtitle">想一起洗碗就直说</text>
+            <text wx:else class="winner-subtitle">下次再接再厉</text>
+          </view>
+        </view>
+
+        <!-- 答案揭晓卡片 - 猜数字 -->
+        <view wx:if="{{roomInfo.gameType === 'number' && roomInfo.revealSecrets}}" class="stats-card nintendo-card animate-slide-up">
+          <text class="stats-title">正确答案</text>
+          
+          <!-- 我的密码 -->
+          <view class="stat-row {{isHost ? 'row-p1' : 'row-p2'}}">
+            <view class="stat-player">
+              <view class="stat-avatar {{isHost ? 'avatar-p1' : 'avatar-p2'}}">
+                <text>我</text>
+              </view>
+              <text class="stat-name">{{myName}}</text>
+            </view>
+            <view class="secret-digits-inline">
+              <view wx:for="{{roomInfo.revealSecrets[isHost ? 'host' : 'guest']}}" wx:key="*this" class="secret-digit-box {{isHost ? 'digit-p1' : 'digit-p2'}}">
+                {{item}}
+              </view>
+            </view>
+          </view>
+
+          <!-- 对手密码 -->
+          <view class="stat-row stat-loser">
+            <view class="stat-player">
+              <view class="stat-avatar avatar-loser">
+                <text>对手</text>
+              </view>
+              <text class="stat-name loser-name">{{opponentName}}</text>
+            </view>
+            <view class="secret-digits-inline">
+              <view wx:for="{{roomInfo.revealSecrets[isHost ? 'guest' : 'host']}}" wx:key="*this" class="secret-digit-box digit-loser">
+                {{item}}
+              </view>
+            </view>
+          </view>
+
+          <!-- 分割线 -->
+          <view class="divider"></view>
+
+          <!-- 统计信息 -->
+          <view class="final-stats">
+            <view class="final-stat-item">
+              <text class="final-stat-value">{{roomInfo.history.length}}</text>
+              <text class="final-stat-label">总回合</text>
+            </view>
+            <view class="final-stat-item">
+              <text class="final-stat-value">{{myTurnCount}}</text>
+              <text class="final-stat-label">你的回合</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 答案揭晓卡片 - 猜颜色 -->
+        <view wx:if="{{roomInfo.gameType === 'color' && roomInfo.revealSecret}}" class="stats-card nintendo-card animate-slide-up">
+          <text class="stats-title">正确答案</text>
+          
+          <!-- 系统密码（猜颜色是系统出题） -->
+          <view class="stat-row row-center">
+            <view class="secret-colors-inline">
+              <view wx:for="{{roomInfo.revealSecret}}" wx:key="*this" class="secret-color-box {{item}}"></view>
+            </view>
+          </view>
+
+          <!-- 分割线 -->
+          <view class="divider"></view>
+
+          <!-- 统计信息 -->
+          <view class="final-stats">
+            <view class="final-stat-item">
+              <text class="final-stat-value">{{roomInfo.history.length}}</text>
+              <text class="final-stat-label">总回合</text>
+            </view>
+            <view class="final-stat-item">
+              <text class="final-stat-value">{{myTurnCount}}</text>
+              <text class="final-stat-label">你的回合</text>
+            </view>
+          </view>
+        </view>
+
+        <!-- 再来一局等待状态（发起方显示） -->
+        <view wx:if="{{rematchStatus === 'pending' && isRematchInitiator}}" class="rematch-waiting-card nintendo-card animate-slide-up">
+          <view class="rematch-waiting-content">
+            <view class="rematch-loading-spinner"></view>
+            <text class="rematch-waiting-text">等待对方接受...</text>
+            <text class="rematch-countdown-text">{{rematchCountdown}}s</text>
+          </view>
+          <button class="rematch-cancel-btn" bindtap="cancelRematch" disabled="{{rematchLoading}}">
+            <text>取消邀请</text>
+          </button>
+        </view>
+
+        <!-- 底部按钮（非等待状态时显示） -->
+        <block wx:if="{{!(rematchStatus === 'pending' && isRematchInitiator)}}">
+          <button class="restart-btn nintendo-btn-primary animate-slide-up" bindtap="playAgainToHall" disabled="{{rematchLoading}}">
+            <view class="btn-icon">
+              <view class="refresh-icon"></view>
+            </view>
+            <text>再来一局</text>
+          </button>
+        </block>
+        
+        <button class="home-btn nintendo-btn-secondary animate-slide-up" bindtap="exitOnlineMode" disabled="{{rematchLoading}}">
+          <text>退出联机</text>
+        </button>
+      </view>
+
+      <!-- 再来一局邀请弹窗（接收方显示） -->
+      <view wx:if="{{showRematchInvite}}" class="rematch-invite-modal">
+        <view class="rematch-modal-mask" bindtap="rejectRematch"></view>
+        <view class="rematch-modal-content">
+          <view class="rematch-modal-header">
+            <text class="rematch-modal-title">对手不服，请求再战！</text>
+          </view>
+          <view class="rematch-modal-body">
+            <view class="rematch-modal-icon">🎮</view>
+            <text class="rematch-modal-desc">对方邀请你再来一局</text>
+            <text class="rematch-modal-countdown">{{rematchCountdown}}秒后自动关闭</text>
+          </view>
+          <view class="rematch-modal-footer">
+            <button class="rematch-btn rematch-btn-reject" bindtap="rejectRematch" disabled="{{rematchLoading}}">
+              <text>拒绝</text>
+            </button>
+            <button class="rematch-btn rematch-btn-accept" bindtap="acceptRematch" disabled="{{rematchLoading}}">
+              <text>接受</text>
+            </button>
+          </view>
+        </view>
+      </view>
+  </view>
+
+  <!-- 每日挑战和排行榜入口 - 并排显示 -->
+  <view id="step-ranking" class="action-buttons-section" style="display: {{showModeSelect ? 'flex' : 'none'}};">
+    <!-- 每日挑战按钮 -->
+    <view class="action-btn daily-challenge-mini" bindtap="onDailyChallengeTap">
+      <image class="action-btn-icon" src="/icons/Challenge.svg" mode="aspectFit"/>
+      <view class="action-btn-text">
+        <text class="action-btn-title">每日挑战</text>
+        <text class="action-btn-subtitle">每日2次挑战机会</text>
+      </view>
+    </view>
+
+    <!-- 排行榜按钮 -->
+    <view class="action-btn ranking-mini" bindtap="goToRanking">
+      <image class="action-btn-icon" src="/icons/list.svg" mode="aspectFit"/>
+      <view class="action-btn-text">
+        <text class="action-btn-title">全球排行榜</text>
+        <text class="action-btn-subtitle">争夺洗碗王</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 玩法建议 -->
+  <view class="footer-suggestion">
+    <text class="suggestion-text"></text>
+  </view>
+
+  <!-- 疯狂周末跑马灯按钮 - 已隐藏 -->
+  <!-- <view class="weekend-event-wrapper" wx:if="{{showWeekendEvent}}">
+    <view class="weekend-event-btn" bindtap="goToWeekend">
+      <view class="gradient-border"></view>
+      <view class="event-btn-content">
+        <view class="event-left">
+          <image class="event-icon-svg" src="/icons/star.svg" mode="aspectFit"/>
+          <text class="event-label">活动预告</text>
+        </view>
+        <view class="event-marquee">
+          <view class="marquee-content">
+            <text class="marquee-text">疯狂周末来袭!!!每日挑战排行榜第一名领星星人毛绒！点击查看活动详情</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view> -->
+
+  <!-- 新手教程引导组件 -->
+  <intro-tutorial />
+</view>

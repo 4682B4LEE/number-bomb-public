@@ -1,0 +1,122 @@
+/* 每日挑战 - 猜数字页面样式 - 复刻单机猜数字页面 */
+
+/* 导入原页面的所有样式 */
+@import "../game/game.wxss";
+
+/* 5位数字模式下的样式 - 通过添加 .mode-5digits 类来切换 */
+/* 在 daily-game.js 中根据 digitCount 动态添加此类 */
+.digits-display.mode-5digits .digit-box {
+  width: 84rpx;
+  height: 100rpx;
+  border-radius: 20rpx;
+}
+
+/* 5位数字模式下减小间距 */
+.digits-display.mode-5digits {
+  gap: 16rpx;
+}
+
+/* 历史记录中数字的响应式调整 */
+.history-digits.mode-5digits .history-digit {
+  width: 48rpx;
+  height: 48rpx;
+  font-size: 24rpx;
+}
+
+/* 计时器显示 */
+.timer-display {
+  position: absolute;
+  right: 32rpx;
+  display: flex;
+  align-items: center;
+  padding: 12rpx 24rpx;
+  background: #F3F4F6;
+  border-radius: 32rpx;
+}
+
+.timer-value {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1F2937;
+  font-family: 'Courier New', monospace;
+}
+
+/* 查看排行榜按钮 */
+.btn-rank {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  color: #1F2937;
+}
+
+/* 修复弹窗按钮点击问题 - 确保按钮在最上层 */
+.win-modal {
+  z-index: 1000;
+}
+
+.win-modal-mask {
+  z-index: 1000;
+}
+
+.win-modal-content {
+  position: relative;
+  z-index: 1001;
+}
+
+.win-buttons {
+  position: relative;
+  z-index: 1002;
+}
+
+.win-btn {
+  position: relative;
+  z-index: 1003;
+}
+
+/* 猜测历史区域 - 联机对战方案 */
+.history-section {
+  flex: 1;
+  width: 100%;
+  max-width: 680rpx;
+  background: white;
+  border-radius: 32rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+}
+
+.history-list {
+  flex: 1;
+  max-height: 320rpx;
+}
+
+/* 展开状态时自适应高度，不限制 */
+.history-section.expanded .history-list {
+  max-height: none;
+}
+
+/* 展开/收起按钮 */
+.history-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 0;
+  margin-top: 8rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.toggle-text {
+  font-size: 24rpx;
+  color: #999;
+  margin-right: 8rpx;
+}
+
+.toggle-icon {
+  font-size: 20rpx;
+  color: #999;
+  transition: transform 0.3s ease;
+}
+
+.icon-up {
+  transform: rotate(180deg);
+}

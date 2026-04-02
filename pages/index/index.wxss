@@ -1,0 +1,2813 @@
+/* 首页样式 */
+
+/* 导入联机对战新样式 */
+@import "online-styles.wxss";
+
+/* 导入联机猜颜色样式 */
+@import "online-color-styles.wxss";
+
+/* 更新公告栏 - 简约现代风格 */
+.announcement-bar {
+  position: fixed;
+  top: 16rpx;
+  left: 24rpx;
+  right: 24rpx;
+  z-index: 200;
+}
+
+.announcement-inner {
+  display: flex;
+  align-items: center;
+  padding: 16rpx 20rpx;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1rpx solid rgba(59, 130, 246, 0.2);
+  border-radius: 32rpx;
+  backdrop-filter: blur(10px);
+}
+
+.announcement-tag {
+  padding: 4rpx 12rpx;
+  background: linear-gradient(135deg, #3B82F6 0%, #60A5FA 100%);
+  border-radius: 12rpx;
+  font-size: 20rpx;
+  color: white;
+  font-weight: 700;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.announcement-content-wrapper {
+  flex: 1;
+  overflow: hidden;
+}
+
+.announcement-text {
+  font-size: 26rpx;
+  color: #3B82F6;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.announcement-close {
+  width: 44rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 12rpx;
+  flex-shrink: 0;
+  position: relative;
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.announcement-close:active {
+  background: rgba(59, 130, 246, 0.1);
+}
+
+.close-line {
+  position: absolute;
+  width: 16rpx;
+  height: 2rpx;
+  background: #9CA3AF;
+  border-radius: 2rpx;
+}
+
+.close-line-1 {
+  transform: rotate(45deg);
+}
+
+.close-line-2 {
+  transform: rotate(-45deg);
+}
+
+.announcement-close:active .close-line {
+  background: #6B7280;
+}
+
+/* 点击效果 */
+.announcement-content-wrapper:active {
+  opacity: 0.7;
+}
+
+/* 用户登录区域 */
+.user-login-section {
+  position: absolute;
+  top: 120rpx;
+  left: 40rpx;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 8rpx 16rpx;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12rpx);
+  border-radius: 40rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.08);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  transition: all 0.2s ease;
+}
+
+.user-login-section:active {
+  transform: scale(0.98);
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.user-avatar {
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: linear-gradient(135deg, #e0e7ff 0%, #c7d2fe 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.avatar-default {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-icon {
+  font-size: 32rpx;
+}
+
+.login-text {
+  font-size: 24rpx;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.user-name {
+  font-size: 28rpx;
+  color: #1f2937;
+  font-weight: 700;
+  max-width: 160rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 登录按钮 - 重置button样式 */
+.login-btn {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
+  line-height: normal;
+}
+
+.login-btn::after {
+  border: none;
+}
+
+/* 已登录区域 */
+.logged-in-section {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+/* 【合规改造】用户资料展示区域 */
+.user-profile-section {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.user-nickname {
+  font-size: 28rpx;
+  color: #1f2937;
+  font-weight: 700;
+  max-width: 160rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 昵称输入弹窗 */
+.nickname-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  position: relative;
+  width: 80%;
+  max-width: 560rpx;
+  background: white;
+  border-radius: 32rpx;
+  padding: 48rpx 40rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.2);
+}
+
+.modal-title {
+  display: block;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 16rpx;
+}
+
+.modal-desc {
+  display: block;
+  font-size: 28rpx;
+  color: #6b7280;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.nickname-input {
+  width: 100%;
+  height: 88rpx;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 32rpx;
+  color: #1f2937;
+  margin-bottom: 40rpx;
+  box-sizing: border-box;
+}
+
+.nickname-input:focus {
+  border-color: #00c3e3;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 24rpx;
+}
+
+.modal-btn {
+  flex: 1;
+  height: 80rpx;
+  border-radius: 16rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+}
+
+.modal-btn::after {
+  border: none;
+}
+
+.btn-cancel {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.btn-confirm {
+  background: linear-gradient(135deg, #4dd0e1 0%, #00c3e3 100%);
+  color: white;
+}
+
+/* 震动开关 - 任天堂风格 */
+.vibration-switch-container {
+  position: absolute;
+  top: 120rpx;
+  right: 180rpx;
+  z-index: 100;
+  padding: 20rpx;
+}
+
+.vibration-switch {
+  width: 120rpx;
+  height: 64rpx;
+  position: relative;
+  cursor: pointer;
+}
+
+.vibration-switch-track {
+  width: 100%;
+  height: 100%;
+  border-radius: 32rpx;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow:
+    inset 0 4rpx 8rpx rgba(0, 0, 0, 0.2),
+    0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+/* 开启状态 - 蓝色 */
+.vibration-switch.on .vibration-switch-track {
+  background: linear-gradient(180deg, #60A5FA 0%, #3B82F6 100%);
+}
+
+/* 关闭状态 - 任天堂灰色 */
+.vibration-switch.off .vibration-switch-track {
+  background: linear-gradient(180deg, #B8B8B8 0%, #8E8E8E 100%);
+}
+
+.vibration-switch-thumb {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 100%);
+  position: absolute;
+  top: 4rpx;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow:
+    0 4rpx 8rpx rgba(0, 0, 0, 0.3),
+    0 1rpx 2rpx rgba(255, 255, 255, 0.8) inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 开启时滑块位置 */
+.vibration-switch.on .vibration-switch-thumb {
+  left: 60rpx;
+  transform: rotate(360deg);
+}
+
+/* 关闭时滑块位置 */
+.vibration-switch.off .vibration-switch-thumb {
+  left: 4rpx;
+  transform: rotate(0deg);
+}
+
+/* 点击效果 */
+.vibration-switch-container:active .vibration-switch-thumb {
+  transform: scale(0.95);
+}
+
+.vibration-switch-container:active .vibration-switch.on .vibration-switch-thumb {
+  transform: scale(0.95) rotate(360deg);
+}
+
+/* ========== 游戏化设置按钮 - 药丸形 ========== */
+.game-settings-pill {
+  position: absolute;
+  top: 120rpx;
+  right: 40rpx;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+  padding: 16rpx 28rpx;
+  background: #ffffff;
+  border-radius: 999rpx;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08), 0 2px 4px rgba(0,0,0,0.04);
+  transition: all 0.2s ease;
+}
+
+.game-settings-pill-active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.game-settings-pill-icon {
+  width: 32rpx;
+  height: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-settings-pill-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.game-settings-pill-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #334155;
+}
+
+/* 修改资料按钮 - 在设置按钮左边 */
+.edit-profile-pill {
+  right: 200rpx; /* 在设置按钮左边，留出更大间距避免重叠 */
+  background: #ffffff;
+  border: none;
+  padding: 16rpx 28rpx;
+  margin: 0;
+  line-height: normal;
+
+  /* 👇 核心修复：强制取消微信 button 的默认宽度限制 */
+  width: auto !important;
+  min-width: 0 !important;
+
+  /* 👇 推荐补充：使用 flex 让图标和文字紧凑对齐 */
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 8rpx; /* 控制图标和文字的间距 */
+}
+
+.edit-profile-pill::after {
+  border: none;
+}
+
+.edit-profile-pill:active {
+  transform: scale(0.95);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.03);
+}
+
+/* 隐私提示文案 */
+.privacy-notice {
+  position: absolute;
+  top: 200rpx;
+  right: 40rpx;
+  z-index: 99;
+  max-width: 320rpx;
+  text-align: right;
+}
+
+.privacy-notice-text {
+  font-size: 20rpx;
+  color: #999;
+  line-height: 1.4;
+}
+
+/* ========== 游戏化设置弹窗 ========== */
+.game-settings-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.game-modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 23, 42, 0.4);
+}
+
+.game-modal-container {
+  position: relative;
+  width: 600rpx;
+  background: #ffffff;
+  border-radius: 64rpx;
+  padding: 48rpx 40rpx;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15), inset 0 2px 0 rgba(255,255,255,0.8);
+  z-index: 1001;
+}
+
+/* 弹窗标题 */
+.game-modal-title {
+  display: block;
+  font-size: 44rpx;
+  font-weight: 900;
+  color: #1e293b;
+  text-align: center;
+  letter-spacing: 8rpx;
+  margin-bottom: 48rpx;
+}
+
+/* 设置列表 */
+.game-settings-list {
+  margin-bottom: 40rpx;
+}
+
+/* 设置行 */
+.game-settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #f1f5f9;
+}
+
+.game-settings-row:last-child {
+  border-bottom: none;
+}
+
+.game-settings-row-left {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+/* 图标盒子 */
+.game-settings-icon-box {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bgm-icon-box {
+  background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
+}
+
+.vibe-icon-box {
+  background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 100%);
+}
+
+.sound-icon-box {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+}
+
+.clear-icon-box {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+}
+
+.game-settings-icon {
+  font-size: 40rpx;
+}
+
+.game-settings-icon-img {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+.game-settings-row-text {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.game-settings-arrow {
+  font-size: 40rpx;
+  color: #9ca3af;
+  font-weight: 300;
+  margin-right: 8rpx;
+}
+
+/* ========== 自定义游戏风开关 (3D Toggle) ========== */
+.game-toggle {
+  width: 110rpx;
+  height: 64rpx;
+  border-radius: 999rpx;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+/* 关闭状态 */
+.game-toggle-off {
+  background: #e5e7eb;
+  box-shadow: inset 0 4rpx 8rpx rgba(0,0,0,0.2);
+}
+
+.game-toggle-off .game-toggle-knob {
+  transform: translateX(0);
+}
+
+/* 开启状态 */
+.game-toggle-on {
+  background: #4ade80;
+  box-shadow: inset 0 4rpx 8rpx rgba(0,0,0,0.2);
+}
+
+.game-toggle-on .game-toggle-knob {
+  transform: translateX(46rpx);
+}
+
+/* 滑块 */
+.game-toggle-knob {
+  position: absolute;
+  top: 6rpx;
+  left: 6rpx;
+  width: 52rpx;
+  height: 52rpx;
+  background: #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 6rpx 0 rgba(0,0,0,0.1), 0 4rpx 8rpx rgba(0,0,0,0.2);
+  transition: transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ========== 3D关闭按钮 ========== */
+.game-modal-close-btn {
+  width: 100%;
+  height: 100rpx;
+  background: #ef4444;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12rpx 0 #b91c1c, 0 16rpx 30rpx rgba(239, 68, 68, 0.3);
+  transition: all 0.1s ease;
+}
+
+.game-modal-close-btn-active {
+  transform: translateY(12rpx);
+  box-shadow: 0 0 0 #b91c1c, 0 4rpx 10rpx rgba(239, 68, 68, 0.3);
+}
+
+.game-modal-close-text {
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+/* 图标包装器 */
+.vibration-icon-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* 手机震动图标 */
+.phone-icon {
+  position: relative;
+  width: 32rpx;
+  height: 44rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.phone-body {
+  width: 24rpx;
+  height: 40rpx;
+  background: linear-gradient(180deg, #4A5568 0%, #2D3748 100%);
+  border-radius: 4rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.phone-icon.active .phone-body {
+  background: linear-gradient(180deg, #3B82F6 0%, #2563EB 100%);
+  animation: phoneShake 0.3s ease infinite;
+}
+
+.phone-icon.muted .phone-body {
+  background: linear-gradient(180deg, #9CA3AF 0%, #6B7280 100%);
+  opacity: 0.6;
+}
+
+.phone-screen {
+  width: 18rpx;
+  height: 30rpx;
+  background: linear-gradient(180deg, #E2E8F0 0%, #CBD5E0 100%);
+  border-radius: 2rpx;
+}
+
+/* 手机震动动画 */
+@keyframes phoneShake {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-1rpx) rotate(-2deg); }
+  75% { transform: translateX(1rpx) rotate(2deg); }
+}
+
+/* 震动波纹 */
+.vibration-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60rpx;
+  height: 60rpx;
+  pointer-events: none;
+}
+
+.ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40rpx;
+  height: 40rpx;
+  border: 2rpx solid #3B82F6;
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.ripple-1 {
+  animation: rippleEffect 1s ease-out infinite;
+}
+
+.ripple-2 {
+  animation: rippleEffect 1s ease-out 0.5s infinite;
+}
+
+@keyframes rippleEffect {
+  0% {
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* 装饰性光点 - 任天堂风格 */
+.vibration-switch-track::before {
+  content: '';
+  position: absolute;
+  top: 8rpx;
+  left: 16rpx;
+  width: 8rpx;
+  height: 8rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  box-shadow:
+    80rpx 0 0 rgba(255, 255, 255, 0.4),
+    40rpx 32rpx 0 rgba(255, 255, 255, 0.3);
+}
+
+/* BGM 开关 - 任天堂风格 */
+.bgm-switch-container {
+  position: absolute;
+  top: 120rpx;
+  right: 40rpx;
+  z-index: 100;
+  padding: 20rpx;
+}
+
+.bgm-switch {
+  width: 120rpx;
+  height: 64rpx;
+  position: relative;
+  cursor: pointer;
+}
+
+.bgm-switch-track {
+  width: 100%;
+  height: 100%;
+  border-radius: 32rpx;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 
+    inset 0 4rpx 8rpx rgba(0, 0, 0, 0.2),
+    0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+/* 开启状态 - 任天堂红色 */
+.bgm-switch.on .bgm-switch-track {
+  background: linear-gradient(180deg, #FF6B6B 0%, #E60012 100%);
+}
+
+/* 关闭状态 - 任天堂灰色 */
+.bgm-switch.off .bgm-switch-track {
+  background: linear-gradient(180deg, #B8B8B8 0%, #8E8E8E 100%);
+}
+
+.bgm-switch-thumb {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F0F0F0 100%);
+  position: absolute;
+  top: 4rpx;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 
+    0 4rpx 8rpx rgba(0, 0, 0, 0.3),
+    0 1rpx 2rpx rgba(255, 255, 255, 0.8) inset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 开启时滑块位置 */
+.bgm-switch.on .bgm-switch-thumb {
+  left: 60rpx;
+  transform: rotate(360deg);
+}
+
+/* 关闭时滑块位置 */
+.bgm-switch.off .bgm-switch-thumb {
+  left: 4rpx;
+  transform: rotate(0deg);
+}
+
+/* 点击效果 */
+.bgm-switch-container:active .bgm-switch-thumb {
+  transform: scale(0.95);
+}
+
+.bgm-switch-container:active .bgm-switch.on .bgm-switch-thumb {
+  transform: scale(0.95) rotate(360deg);
+}
+
+/* 图标包装器 */
+.bgm-icon-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* 音符图标 */
+.bgm-note {
+  font-size: 28rpx;
+  font-weight: 900;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 2;
+}
+
+.bgm-note.playing {
+  color: #E60012;
+  animation: noteBounce 0.6s ease infinite;
+}
+
+.bgm-note.muted {
+  color: #8E8E8E;
+  opacity: 0.5;
+}
+
+/* 音符跳动动画 */
+@keyframes noteBounce {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4rpx) scale(1.1); }
+}
+
+/* 音波动画 */
+.bgm-sound-wave {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.bgm-sound-wave.active {
+  opacity: 1;
+}
+
+.wave {
+  width: 4rpx;
+  height: 16rpx;
+  background: #E60012;
+  border-radius: 2rpx;
+  margin: 0 2rpx;
+  animation: waveAnimation 0.5s ease infinite;
+}
+
+.wave-1 { animation-delay: 0s; }
+.wave-2 { animation-delay: 0.1s; }
+.wave-3 { animation-delay: 0.2s; }
+
+@keyframes waveAnimation {
+  0%, 100% { transform: scaleY(0.5); opacity: 0.5; }
+  50% { transform: scaleY(1.2); opacity: 1; }
+}
+
+/* 装饰性光点 - 任天堂风格 */
+.bgm-switch-track::before {
+  content: '';
+  position: absolute;
+  top: 8rpx;
+  left: 16rpx;
+  width: 8rpx;
+  height: 8rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  box-shadow: 
+    80rpx 0 0 rgba(255, 255, 255, 0.4),
+    40rpx 32rpx 0 rgba(255, 255, 255, 0.3);
+}
+
+.header-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 60rpx;
+  margin-bottom: 80rpx;
+}
+
+.logo-box {
+  width: 160rpx;
+  height: 160rpx;
+  background-color: #E60012;
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow:
+    0 8rpx 0 #99000C,
+    0 12rpx 24rpx rgba(230, 0, 18, 0.3),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+  transform: rotate(-10deg);
+  margin-bottom: 40rpx;
+  transition: all 0.2s ease;
+}
+
+.logo-box:active {
+  transform: rotate(-10deg) translateY(8rpx);
+  box-shadow:
+    0 0 0 #99000C,
+    0 4rpx 12rpx rgba(230, 0, 18, 0.2),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+.logo-text {
+  color: white;
+  font-size: 80rpx;
+  font-weight: 900;
+}
+
+.title {
+  font-size: 64rpx;
+  font-weight: 900;
+  color: #1F2937;
+  letter-spacing: -2rpx;
+}
+
+.title-highlight {
+  color: #E60012;
+}
+
+.header-actions {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20rpx;
+  margin-top: 24rpx;
+}
+
+.subtitle-box {
+  background: white;
+  padding: 12rpx 32rpx;
+  border-radius: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+  border: 2rpx solid #F3F4F6;
+}
+
+.subtitle {
+  font-size: 28rpx;
+  color: #6B7280;
+  font-weight: 700;
+}
+
+/* 反馈按钮小红点 */
+.feedback-box {
+  position: relative;
+}
+
+.feedback-badge {
+  position: absolute;
+  top: 4rpx;
+  right: 4rpx;
+  width: 16rpx;
+  height: 16rpx;
+  background: #EF4444;
+  border-radius: 50%;
+  border: 2rpx solid white;
+}
+
+.card {
+  width: 100%;
+  max-width: 600rpx;
+  padding: 64rpx 48rpx;
+  margin-bottom: 60rpx;
+  position: relative;
+  margin-top: 120rpx;
+}
+
+/* 返回按钮 - 任天堂风格 */
+.back-btn {
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 20rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+  z-index: 10;
+}
+
+.back-btn .back-text {
+  font-size: 24rpx;
+  color: #6b7280;
+  font-weight: 600;
+  margin-left: 8rpx;
+}
+
+.back-arrow {
+  width: 24rpx;
+  height: 24rpx;
+  position: relative;
+}
+
+.arrow-line {
+  position: absolute;
+  width: 16rpx;
+  height: 3rpx;
+  background: #6b7280;
+  top: 50%;
+  left: 4rpx;
+  transform: translateY(-50%);
+  border-radius: 2rpx;
+}
+
+.arrow-head {
+  position: absolute;
+  width: 10rpx;
+  height: 10rpx;
+  border-left: 3rpx solid #6b7280;
+  border-bottom: 3rpx solid #6b7280;
+  top: 50%;
+  left: 2rpx;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+.back-text {
+  font-size: 24rpx;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.card-title {
+  display: block;
+  text-align: center;
+  font-size: 36rpx;
+  color: #4B5563;
+  font-weight: 700;
+  margin-bottom: 48rpx;
+}
+
+.difficulty-grid {
+  display: flex;
+  justify-content: space-between;
+  gap: 32rpx;
+}
+
+.difficulty-btn {
+  flex: 1;
+  aspect-ratio: 1;
+  background: #F3F4F6;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 4rpx solid transparent;
+  transition: all 0.2s;
+  box-shadow: 0 8rpx 0 #D1D5DB;
+}
+
+.difficulty-btn:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #D1D5DB;
+}
+
+.difficulty-btn.active {
+  background: white;
+  border-color: rgba(230, 0, 18, 0.3);
+  color: #E60012;
+}
+
+.difficulty-num {
+  font-size: 64rpx;
+  font-weight: 900;
+  color: #374151;
+}
+
+.difficulty-btn.active .difficulty-num {
+  color: #E60012;
+}
+
+/* 游戏模式选择区域 */
+.play-mode-section {
+  margin-top: 48rpx;
+  padding-top: 48rpx;
+  border-top: 2rpx solid #E5E7EB;
+}
+
+.play-mode-title {
+  display: block;
+  text-align: center;
+  font-size: 32rpx;
+  color: #4B5563;
+  font-weight: 700;
+  margin-bottom: 32rpx;
+}
+
+.play-mode-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 24rpx;
+}
+
+.play-mode-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32rpx 20rpx;
+  border-radius: 24rpx;
+  background: #F3F4F6;
+  border: 4rpx solid transparent;
+  transition: all 0.2s ease;
+  box-shadow: 0 8rpx 0 #D1D5DB;
+}
+
+.play-mode-btn:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #D1D5DB;
+}
+
+.play-mode-btn.active {
+  background: white;
+  border-color: rgba(230, 0, 18, 0.3);
+  box-shadow: 0 8rpx 0 rgba(230, 0, 18, 0.2);
+}
+
+.play-mode-icon {
+  width: 64rpx;
+  height: 64rpx;
+  margin-bottom: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 单人模式图标 */
+.icon-single {
+  width: 48rpx;
+  height: 48rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.single-person {
+  width: 32rpx;
+  height: 40rpx;
+  background: #6B7280;
+  border-radius: 16rpx 16rpx 10rpx 10rpx;
+  position: relative;
+}
+
+.single-person::before {
+  content: '';
+  position: absolute;
+  top: 6rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 14rpx;
+  height: 14rpx;
+  background: white;
+  border-radius: 50%;
+}
+
+.play-mode-btn.active .single-person {
+  background: #E60012;
+}
+
+.play-mode-text {
+  font-size: 26rpx;
+  color: #6B7280;
+  font-weight: 700;
+}
+
+.play-mode-btn.active .play-mode-text {
+  color: #E60012;
+}
+
+/* 单人模式子选项容器 */
+.single-sub-modes {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+}
+
+/* 子选项按钮 */
+.sub-mode-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx 16rpx;
+  border-radius: 16rpx;
+  background: #F3F4F6;
+  border: 4rpx solid transparent;
+  transition: all 0.2s ease;
+  box-shadow: 0 6rpx 0 #D1D5DB;
+}
+
+.sub-mode-btn:active {
+  transform: translateY(6rpx);
+  box-shadow: 0 0 0 #D1D5DB;
+}
+
+.sub-mode-btn.active {
+  background: white;
+  border-color: rgba(230, 0, 18, 0.3);
+  box-shadow: 0 6rpx 0 rgba(230, 0, 18, 0.2);
+}
+
+.sub-mode-text {
+  font-size: 24rpx;
+  color: #6B7280;
+  font-weight: 700;
+}
+
+.sub-mode-btn.active .sub-mode-text {
+  color: #E60012;
+}
+
+.start-btn {
+  width: 100%;
+  max-width: 600rpx;
+  height: 120rpx;
+  background-color: #E60012;
+  color: white;
+  font-size: 40rpx;
+  font-weight: 900;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 0 #99000C;
+  border: none;
+}
+
+.start-btn::after {
+  border: none;
+}
+
+.start-btn:active {
+  box-shadow: 0 0 0 #99000C;
+}
+
+/* 游戏模式选择区域 - 任天堂风格 */
+.game-mode-section {
+  width: 100%;
+  max-width: 600rpx;
+  margin-bottom: 60rpx;
+  transition: all 0.3s ease;
+}
+
+.game-mode-section.hidden {
+  display: none;
+}
+
+.section-title {
+  display: block;
+  text-align: center;
+  font-size: 36rpx;
+  color: #4B5563;
+  font-weight: 700;
+  margin-bottom: 16rpx;
+}
+
+.section-subtitle {
+  display: block;
+  text-align: center;
+  font-size: 22rpx;
+  color: #9CA3AF;
+  font-weight: 400;
+  margin-bottom: 32rpx;
+  padding: 0 40rpx;
+}
+
+.beta-badge {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  background: rgba(255, 255, 255, 0.9);
+  color: #3B82F6;
+  font-size: 18rpx;
+  font-weight: 600;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.mode-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 24rpx;
+}
+
+.mode-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32rpx 16rpx;
+  border-radius: 24rpx;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 本地游戏按钮 - 任天堂红色 */
+.mode-local {
+  background: linear-gradient(180deg, #FF6B6B 0%, #E60012 100%);
+  box-shadow:
+    0 8rpx 0 #99000C,
+    0 12rpx 24rpx rgba(230, 0, 18, 0.3),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+.mode-local:active {
+  transform: translateY(8rpx);
+  box-shadow:
+    0 0 0 #99000C,
+    0 4rpx 12rpx rgba(230, 0, 18, 0.2),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+/* 猜颜色按钮 - 潘通14-0957 银杏黄 (Spectra Yellow) */
+.mode-color {
+  background: linear-gradient(180deg, #F9D35A 0%, #F7C242 100%);
+  box-shadow:
+    0 8rpx 0 #D4A832,
+    0 12rpx 24rpx rgba(247, 194, 66, 0.3),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+.mode-color:active {
+  transform: translateY(8rpx);
+  box-shadow:
+    0 0 0 #D4A832,
+    0 4rpx 12rpx rgba(247, 194, 66, 0.2),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+/* 联机对战按钮 - 潘通16-4127 柔雾蓝 (Dusk Blue) */
+.mode-online {
+  background: linear-gradient(180deg, #8FB8D4 0%, #7BA4C4 100%);
+  box-shadow:
+    0 8rpx 0 #5A8AA8,
+    0 12rpx 24rpx rgba(123, 164, 196, 0.3),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+.mode-online:active {
+  transform: translateY(8rpx);
+  box-shadow:
+    0 0 0 #5A8AA8,
+    0 4rpx 12rpx rgba(123, 164, 196, 0.2),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+/* 禁用按钮样式 */
+.mode-btn.disabled {
+  background: linear-gradient(180deg, #D1D5DB 0%, #9CA3AF 100%);
+  box-shadow: 
+    0 8rpx 0 #6B7280,
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.2);
+  opacity: 0.7;
+}
+
+.mode-btn.disabled .mode-icon {
+  opacity: 0.5;
+  filter: grayscale(100%);
+}
+
+.mode-btn.disabled .mode-text {
+  color: #6B7280;
+}
+
+/* 每日挑战和排行榜并排按钮区域 */
+.action-buttons-section {
+  width: 100%;
+  max-width: 600rpx;
+  display: flex;
+  gap: 20rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 并排按钮通用样式 - 左右布局，参考原排行榜按钮高度 */
+.action-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  border-radius: 24rpx;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-btn-icon {
+  width: 44rpx;
+  height: 44rpx;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+
+.action-btn-text {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.action-btn-title {
+  font-size: 30rpx;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 4rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.action-btn-subtitle {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* 每日挑战按钮 - 蓝黑色（与全球排行榜一致） */
+.daily-challenge-mini {
+  background: #1c2536;
+  box-shadow:
+    0 8rpx 0 #0f172a,
+    0 12rpx 24rpx rgba(28, 37, 54, 0.4),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.1);
+}
+
+.daily-challenge-mini:active {
+  transform: translateY(8rpx);
+  box-shadow:
+    0 0 0 #0f172a,
+    0 4rpx 12rpx rgba(28, 37, 54, 0.3),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.1);
+}
+
+/* 排行榜按钮 - 蓝黑色背景 */
+.ranking-mini {
+  background: #1c2536;
+  box-shadow:
+    0 8rpx 0 #0f172a,
+    0 12rpx 24rpx rgba(28, 37, 54, 0.4),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.1);
+}
+
+.ranking-mini:active {
+  transform: translateY(8rpx);
+  box-shadow:
+    0 0 0 #0f172a,
+    0 4rpx 12rpx rgba(28, 37, 54, 0.3),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.1);
+}
+
+/* 排行榜入口区域（旧样式保留兼容） */
+.ranking-section {
+  width: 100%;
+  max-width: 600rpx;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  transition: all 0.3s ease;
+}
+
+/* 排行榜按钮 - 任天堂风格3D蓝黑色 */
+.ranking-btn {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  border-radius: 24rpx;
+  background: #1c2536;
+  box-shadow:
+    0 8rpx 0 #0f172a,
+    0 12rpx 24rpx rgba(28, 37, 54, 0.4),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.1);
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.ranking-btn:active,
+.ranking-btn-hover {
+  transform: translateY(8rpx);
+  box-shadow:
+    0 0 0 #0f172a,
+    0 4rpx 12rpx rgba(28, 37, 54, 0.3),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.1);
+}
+
+/* 洗碗图标容器 */
+.ranking-icon {
+  width: 64rpx;
+  height: 64rpx;
+  margin-right: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 洗碗图标 */
+.dish-icon {
+  font-size: 44rpx;
+  line-height: 1;
+}
+
+/* 文字组 */
+.ranking-text-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ranking-title {
+  font-size: 30rpx;
+  font-weight: 800;
+  color: white;
+  margin-bottom: 4rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.ranking-subtitle {
+  font-size: 22rpx;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+}
+
+/* 箭头 */
+.ranking-arrow {
+  font-size: 32rpx;
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: bold;
+  margin-left: 12rpx;
+}
+
+/* 按钮图标容器 */
+.mode-icon {
+  width: 64rpx;
+  height: 64rpx;
+  margin-bottom: 16rpx;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 本地游戏图标 - 双人 */
+.icon-local {
+  width: 56rpx;
+  height: 48rpx;
+  position: relative;
+}
+
+.local-person {
+  position: absolute;
+  width: 24rpx;
+  height: 40rpx;
+  background: white;
+  border-radius: 12rpx 12rpx 8rpx 8rpx;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.local-person::before {
+  content: '';
+  position: absolute;
+  top: 4rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12rpx;
+  height: 12rpx;
+  background: #E60012;
+  border-radius: 50%;
+}
+
+.person-left {
+  left: 0;
+  z-index: 1;
+}
+
+.person-right {
+  right: 0;
+  z-index: 2;
+}
+
+/* 联机对战图标 - 地球 */
+.icon-online {
+  width: 52rpx;
+  height: 52rpx;
+  position: relative;
+}
+
+.online-globe {
+  width: 100%;
+  height: 100%;
+  border: 4rpx solid white;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.globe-line {
+  position: absolute;
+  background: white;
+  border-radius: 2rpx;
+}
+
+.globe-line.line-1 {
+  width: 100%;
+  height: 4rpx;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+}
+
+.globe-line.line-2 {
+  width: 4rpx;
+  height: 100%;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.globe-line.line-3 {
+  width: 140%;
+  height: 4rpx;
+  top: 50%;
+  left: -20%;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* 猜颜色图标 - 2x2 彩色棋子网格 */
+.icon-color {
+  width: 56rpx;
+  height: 56rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.color-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rpx;
+  padding: 8rpx;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(4rpx);
+  border-radius: 12rpx;
+  box-shadow: inset 0 2rpx 4rpx rgba(0, 0, 0, 0.1), 0 1rpx 2rpx rgba(255, 255, 255, 0.3);
+  border: 1rpx solid rgba(255, 255, 255, 0.3);
+}
+
+.color-dot {
+  width: 20rpx;
+  height: 20rpx;
+  border-radius: 50%;
+  box-shadow:
+    inset 0 -2rpx 4rpx rgba(0, 0, 0, 0.2),
+    0 1rpx 2rpx rgba(0, 0, 0, 0.1);
+}
+
+.dot-red {
+  background: radial-gradient(circle at 30% 30%, #fca5a5, #ef4444, #991b1b);
+}
+
+.dot-green {
+  background: radial-gradient(circle at 30% 30%, #6ee7b7, #10b981, #047857);
+}
+
+.dot-blue {
+  background: radial-gradient(circle at 30% 30%, #93c5fd, #3b82f6, #1e40af);
+}
+
+.dot-purple {
+  background: radial-gradient(circle at 30% 30%, #f0abfc, #d946ef, #86198f);
+}
+
+/* 道具赛图标 - 星星盒子 */
+.icon-items {
+  width: 48rpx;
+  height: 48rpx;
+  position: relative;
+}
+
+.item-box {
+  width: 100%;
+  height: 100%;
+  background: white;
+  border-radius: 8rpx;
+  position: relative;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-box::before {
+  content: '';
+  position: absolute;
+  top: -8rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16rpx;
+  height: 8rpx;
+  background: white;
+  border-radius: 4rpx 4rpx 0 0;
+}
+
+.item-star {
+  width: 24rpx;
+  height: 24rpx;
+  background: #E60012;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.mode-local .mode-icon {
+  filter: drop-shadow(0 2rpx 4rpx rgba(0, 0, 0, 0.2));
+}
+
+/* 联机对战图标 */
+.icon-online {
+  width: 56rpx;
+  height: 56rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.online-globe {
+  width: 48rpx;
+  height: 48rpx;
+  border: 4rpx solid white;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.globe-line {
+  position: absolute;
+  background: white;
+  border-radius: 2rpx;
+}
+
+.globe-line-1 {
+  width: 40rpx;
+  height: 4rpx;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.globe-line-2 {
+  width: 4rpx;
+  height: 40rpx;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.globe-line-3 {
+  width: 36rpx;
+  height: 4rpx;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.mode-online .mode-icon {
+  filter: drop-shadow(0 2rpx 4rpx rgba(0, 0, 0, 0.2));
+}
+
+/* 残局解谜按钮 - 神秘紫色 */
+.mode-puzzle {
+  background: linear-gradient(180deg, #A78BFA 0%, #8B5CF6 100%);
+  box-shadow:
+    0 8rpx 0 #7C3AED,
+    0 12rpx 24rpx rgba(139, 92, 246, 0.3),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+.mode-puzzle:active {
+  transform: translateY(8rpx);
+  box-shadow:
+    0 0 0 #7C3AED,
+    0 4rpx 12rpx rgba(139, 92, 246, 0.2),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+/* 残局解谜图标 */
+.icon-puzzle {
+  width: 56rpx;
+  height: 56rpx;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.puzzle-grid {
+  width: 48rpx;
+  height: 48rpx;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 4rpx;
+}
+
+.puzzle-cell {
+  border-radius: 6rpx;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.cell-1 {
+  background: #FCD34D;
+}
+
+.cell-2 {
+  background: #F87171;
+}
+
+.cell-3 {
+  background: #60A5FA;
+}
+
+.cell-4 {
+  background: #34D399;
+}
+
+.mode-puzzle .mode-icon {
+  filter: drop-shadow(0 2rpx 4rpx rgba(0, 0, 0, 0.2));
+}
+
+/* 残局模式按钮 - 潘通14-6017 Grayed Jade 灰玉色 */
+.mode-puzzle {
+  background: linear-gradient(180deg, #9ECCBE 0%, #7EB8A8 100%);
+  box-shadow:
+    0 8rpx 0 #5A9686,
+    0 12rpx 24rpx rgba(126, 184, 168, 0.3),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+.mode-puzzle:active {
+  transform: translateY(8rpx);
+  box-shadow:
+    0 0 0 #5A9686,
+    0 4rpx 12rpx rgba(126, 184, 168, 0.2),
+    inset 0 2rpx 4rpx rgba(255, 255, 255, 0.3);
+}
+
+.icon-puzzle-img {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* ================== 单机模式选择弹窗 ================== */
+.single-player-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 3000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.single-player-modal .modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10rpx);
+}
+
+.single-player-modal .modal-content {
+  position: relative;
+  width: 80%;
+  max-width: 560rpx;
+  background: white;
+  border-radius: 40rpx;
+  padding: 48rpx 40rpx;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.single-player-modal .modal-title {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 900;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 40rpx;
+}
+
+.single-mode-options {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+  margin-bottom: 32rpx;
+}
+
+.single-mode-btn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 32rpx 40rpx;
+  border-radius: 24rpx;
+  transition: all 0.2s ease;
+  box-shadow: 0 8rpx 0 rgba(0, 0, 0, 0.15);
+}
+
+.single-mode-btn:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0.15);
+}
+
+/* 猜数字按钮 - 红色 */
+.mode-guess-number {
+  background: linear-gradient(180deg, #FF6B6B 0%, #E60012 100%);
+}
+
+.mode-guess-number:active {
+  background: linear-gradient(180deg, #E60012 0%, #99000C 100%);
+}
+
+/* 猜颜色按钮 - 黄色 */
+.mode-guess-color {
+  background: linear-gradient(180deg, #F9D35A 0%, #F7C242 100%);
+}
+
+.mode-guess-color:active {
+  background: linear-gradient(180deg, #F7C242 0%, #D4A832 100%);
+}
+
+.single-mode-icon {
+  width: 80rpx;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 32rpx;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20rpx;
+}
+
+.single-mode-text {
+  font-size: 36rpx;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.modal-close-btn {
+  width: 100%;
+  height: 96rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  border-radius: 24rpx;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #6b7280;
+  transition: all 0.2s ease;
+}
+
+.modal-close-btn:active {
+  background: #e5e7eb;
+}
+
+/* 按钮文字 */
+.mode-text {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+/* 即将推出标签 */
+.mode-badge {
+  position: absolute;
+  top: 8rpx;
+  right: 8rpx;
+  background: rgba(0, 0, 0, 0.4);
+  color: white;
+  font-size: 16rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 12rpx;
+  font-weight: 600;
+}
+
+/* 联机对战弹窗 */
+/* 联机对战全屏模式 */
+.online-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+  overflow-y: auto;
+}
+
+/* 联机对战返回按钮 - 全屏模式 */
+.online-back-btn {
+  position: fixed;
+  top: 20rpx;
+  left: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12rpx 20rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 24rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.08);
+  z-index: 2001;
+}
+
+.online-back-text {
+  font-size: 24rpx;
+  color: #6b7280;
+  font-weight: 600;
+  margin-left: 8rpx;
+}
+
+.online-back-arrow {
+  width: 24rpx;
+  height: 24rpx;
+  position: relative;
+}
+
+.online-arrow-line {
+  position: absolute;
+  width: 16rpx;
+  height: 3rpx;
+  background: #6b7280;
+  top: 50%;
+  left: 4rpx;
+  transform: translateY(-50%);
+  border-radius: 2rpx;
+}
+
+.online-arrow-head {
+  position: absolute;
+  width: 10rpx;
+  height: 10rpx;
+  border-left: 3rpx solid #6b7280;
+  border-bottom: 3rpx solid #6b7280;
+  top: 50%;
+  left: 2rpx;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+
+
+/* ========== 联机大厅样式 ========== */
+.online-hall {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+  padding-top: 100rpx;
+  position: relative;
+  height: 100%;
+}
+
+.online-hall .back-btn {
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  z-index: 10;
+}
+
+.create-room-section {
+  margin-top: 20rpx;
+}
+
+.btn-create {
+  width: 100%;
+  height: 120rpx;
+  background: linear-gradient(180deg, #60A5FA 0%, #3B82F6 100%);
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 0 #1D4ED8, 0 12rpx 24rpx rgba(59, 130, 246, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-create:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #1D4ED8, 0 4rpx 12rpx rgba(59, 130, 246, 0.2);
+}
+
+.btn-create-text {
+  font-size: 40rpx;
+  font-weight: 800;
+  color: white;
+  letter-spacing: 4rpx;
+}
+
+.join-room-section {
+  background: white;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  border: 2rpx solid #E5E7EB;
+}
+
+.section-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #4B5563;
+  margin-bottom: 20rpx;
+}
+
+.join-input-row {
+  display: flex;
+  gap: 16rpx;
+}
+
+.room-input {
+  flex: 1;
+  height: 88rpx;
+  background: #F3F4F6;
+  border: 2rpx solid #E5E7EB;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 32rpx;
+  color: #1F2937;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.room-input::placeholder {
+  color: #9CA3AF;
+}
+
+.btn-join {
+  width: 140rpx;
+  height: 88rpx;
+  background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6rpx 0 #047857, 0 8rpx 16rpx rgba(16, 185, 129, 0.3);
+  transition: all 0.2s ease;
+}
+
+.btn-join:active {
+  transform: translateY(6rpx);
+  box-shadow: 0 0 0 #047857, 0 4rpx 8rpx rgba(16, 185, 129, 0.2);
+}
+
+.btn-join-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: white;
+}
+
+.online-tip {
+  text-align: center;
+  font-size: 26rpx;
+  color: #9CA3AF;
+  margin-top: 20rpx;
+}
+
+/* ========== 等待房间样式 ========== */
+.online-waiting {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+  padding-top: 100rpx;
+  gap: 32rpx;
+  position: relative;
+}
+
+.online-waiting .back-btn {
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  z-index: 10;
+}
+
+.room-number-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32rpx;
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+  border-radius: 24rpx;
+  border: 4rpx solid #3B82F6;
+}
+
+.room-number-label {
+  font-size: 28rpx;
+  color: #3B82F6;
+  font-weight: 600;
+  margin-bottom: 16rpx;
+}
+
+.room-number-display {
+  font-size: 64rpx;
+  font-weight: 800;
+  color: #1D4ED8;
+  letter-spacing: 12rpx;
+}
+
+.digit-select-section,
+.rule-select-section {
+  background: white;
+  border-radius: 24rpx;
+  padding: 24rpx 32rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  border: 2rpx solid #E5E7EB;
+}
+
+.digit-options,
+.rule-options {
+  display: flex;
+  gap: 16rpx;
+}
+
+.digit-btn,
+.rule-btn {
+  flex: 1;
+  height: 72rpx;
+  background: #F3F4F6;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6B7280;
+  transition: all 0.2s ease;
+}
+
+.digit-btn.active,
+.rule-btn.active {
+  background: linear-gradient(180deg, #60A5FA 0%, #3B82F6 100%);
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(59, 130, 246, 0.3);
+}
+
+.players-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 32rpx;
+  padding: 32rpx;
+  background: white;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.06);
+  border: 2rpx solid #E5E7EB;
+}
+
+.player-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12rpx;
+}
+
+.player-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #F3F4F6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  overflow: hidden;
+}
+
+.player-avatar image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.player-avatar.default {
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+}
+
+.player-avatar.waiting {
+  background: #F3F4F6;
+}
+
+.player-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.waiting-dots {
+  display: flex;
+  gap: 8rpx;
+}
+
+.waiting-dot {
+  width: 12rpx;
+  height: 12rpx;
+  background: #9CA3AF;
+  border-radius: 50%;
+  animation: waitingBounce 1.4s ease-in-out infinite;
+}
+
+.waiting-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.waiting-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.player-name {
+  font-size: 26rpx;
+  font-weight: 600;
+  color: #1F2937;
+  max-width: 140rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-tag {
+  font-size: 20rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-weight: 600;
+}
+
+.player-tag.host {
+  background: #DBEAFE;
+  color: #1D4ED8;
+}
+
+.player-tag.guest {
+  background: #FEF3C7;
+  color: #92400E;
+}
+
+.invite-btn {
+  width: 100%;
+  height: 100rpx;
+  background: linear-gradient(180deg, #10B981 0%, #059669 100%);
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16rpx;
+  box-shadow: 0 8rpx 0 #047857, 0 12rpx 24rpx rgba(16, 185, 129, 0.3);
+  transition: all 0.2s ease;
+  margin-top: 20rpx;
+}
+
+.invite-btn:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #047857, 0 4rpx 12rpx rgba(16, 185, 129, 0.2);
+}
+
+.invite-icon {
+  font-size: 36rpx;
+}
+
+.invite-text {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: white;
+}
+
+@keyframes waitingBounce {
+  0%, 80%, 100% {
+    transform: scale(0.6);
+    opacity: 0.5;
+  }
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* 隐藏类 */
+.hidden {
+  display: none !important;
+}
+
+/* 玩法建议 */
+.footer-suggestion {
+  position: fixed;
+  bottom: 20rpx;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 100;
+}
+
+.suggestion-text {
+  font-size: 22rpx;
+  color: #9CA3AF;
+  font-weight: 400;
+}
+
+/* ========== 疯狂周末跑马灯按钮 ========== */
+.weekend-event-wrapper {
+  position: absolute;
+  bottom: 80rpx;
+  left: 75rpx;
+  right: 75rpx;
+  z-index: 10;
+}
+
+.weekend-event-btn {
+  position: relative;
+  width: 100%;
+  height: 96rpx;
+  border-radius: 32rpx;
+  overflow: hidden;
+  box-shadow: 0 8rpx 24rpx rgba(230, 0, 18, 0.25);
+}
+
+/* 流光渐变边框效果 */
+.gradient-border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    90deg,
+    #ff0000 0%,
+    #ff8800 25%,
+    #ffcc00 50%,
+    #ff8800 75%,
+    #ff0000 100%
+  );
+  background-size: 200% 100%;
+  animation: gradientFlow 3s linear infinite;
+  border-radius: 32rpx;
+  z-index: 1;
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* 按钮内容容器 */
+.event-btn-content {
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+  right: 4rpx;
+  bottom: 4rpx;
+  background: white;
+  border-radius: 28rpx;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+  overflow: hidden;
+}
+
+/* 左侧固定内容 */
+.event-left {
+  display: flex;
+  align-items: center;
+  padding: 0 24rpx;
+  background: linear-gradient(135deg, #fff5f5 0%, #ffffff 100%);
+  height: 100%;
+  flex-shrink: 0;
+  border-right: 2rpx solid #ffe6e6;
+}
+
+.event-icon-svg {
+  width: 36rpx;
+  height: 36rpx;
+  margin-right: 12rpx;
+}
+
+.event-label {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #cc292b;
+}
+
+/* 右侧跑马灯区域 */
+.event-marquee {
+  flex: 1;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.marquee-content {
+  position: absolute;
+  white-space: nowrap;
+  animation: marquee 12s linear infinite;
+  padding-left: 100%;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.marquee-text {
+  font-size: 28rpx;
+  color: #666;
+  font-weight: 500;
+}
+
+/* 点击效果 */
+.weekend-event-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 4rpx 12rpx rgba(230, 0, 18, 0.2);
+}
+
+/* 每日挑战入口样式 */
+.daily-challenge-section {
+  margin: 0 40rpx 30rpx;
+}
+
+.daily-challenge-btn {
+  display: flex;
+  align-items: center;
+  padding: 30rpx 36rpx;
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+  border-radius: 24rpx;
+  box-shadow: 0 8rpx 0 #E69500, 0 12rpx 24rpx rgba(255, 165, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.daily-challenge-btn:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #E69500, 0 4rpx 12rpx rgba(255, 165, 0, 0.2);
+}
+
+.daily-challenge-icon {
+  font-size: 48rpx;
+  margin-right: 24rpx;
+}
+
+.daily-challenge-content {
+  flex: 1;
+}
+
+.daily-challenge-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1C2536;
+}
+
+.daily-challenge-subtitle {
+  display: block;
+  font-size: 24rpx;
+  color: rgba(28, 37, 54, 0.7);
+  margin-top: 4rpx;
+}
+
+.daily-challenge-arrow {
+  font-size: 32rpx;
+  color: #1C2536;
+  font-weight: bold;
+}
+
+/* ========== 再来一局相关样式 ========== */
+
+/* 等待状态卡片 */
+.rematch-waiting-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 24rpx;
+  padding: 40rpx;
+  margin: 20rpx 0;
+  box-shadow: 0 8rpx 32rpx rgba(59, 130, 246, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.rematch-waiting-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.rematch-loading-spinner {
+  width: 60rpx;
+  height: 60rpx;
+  border: 4rpx solid #E5E7EB;
+  border-top-color: #3B82F6;
+  border-radius: 50%;
+  animation: rematch-spin 1s linear infinite;
+}
+
+@keyframes rematch-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rematch-waiting-text {
+  font-size: 32rpx;
+  color: #1C2536;
+  font-weight: 600;
+}
+
+.rematch-countdown-text {
+  font-size: 48rpx;
+  color: #3B82F6;
+  font-weight: 700;
+}
+
+.rematch-cancel-btn {
+  width: 200rpx;
+  height: 72rpx;
+  background: #F3F4F6;
+  border-radius: 36rpx;
+  font-size: 28rpx;
+  color: #6B7280;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: none;
+}
+
+.rematch-cancel-btn::after {
+  border: none;
+}
+
+.rematch-cancel-btn:active {
+  background: #E5E7EB;
+}
+
+/* 邀请弹窗 */
+.rematch-invite-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rematch-modal-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+.rematch-modal-content {
+  position: relative;
+  width: 560rpx;
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%);
+  border-radius: 32rpx;
+  padding: 48rpx 40rpx;
+  box-shadow: 
+    0 25rpx 50rpx -12rpx rgba(0, 0, 0, 0.25),
+    0 0 0 1rpx rgba(255, 255, 255, 0.5) inset;
+  animation: rematch-modal-in 0.3s ease-out;
+}
+
+@keyframes rematch-modal-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.rematch-modal-header {
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+.rematch-modal-title {
+  font-size: 36rpx;
+  color: #1C2536;
+  font-weight: 700;
+}
+
+.rematch-modal-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 40rpx;
+}
+
+.rematch-modal-icon {
+  font-size: 80rpx;
+}
+
+.rematch-modal-desc {
+  font-size: 30rpx;
+  color: #4B5563;
+}
+
+.rematch-modal-countdown {
+  font-size: 24rpx;
+  color: #9CA3AF;
+}
+
+.rematch-modal-footer {
+  display: flex;
+  gap: 24rpx;
+}
+
+.rematch-btn {
+  flex: 1;
+  height: 88rpx;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.rematch-btn::after {
+  border: none;
+}
+
+.rematch-btn:active {
+  transform: scale(0.95);
+}
+
+.rematch-btn-reject {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+.rematch-btn-reject:active {
+  background: #E5E7EB;
+}
+
+.rematch-btn-accept {
+  background: linear-gradient(135deg, #10B981 0%, #34D399 100%);
+  color: white;
+  box-shadow: 0 4rpx 16rpx rgba(16, 185, 129, 0.3);
+}
+
+.rematch-btn-accept:active {
+  box-shadow: 0 2rpx 8rpx rgba(16, 185, 129, 0.2);
+}

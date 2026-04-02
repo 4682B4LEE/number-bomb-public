@@ -1,0 +1,1708 @@
+/* ========== 联机对战新样式 - 复用现有页面样式 ========== */
+
+/* ========== 通用3D按钮 ========== */
+.btn-3d {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20rpx;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.btn-3d-text {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: white;
+}
+
+.btn-3d-icon {
+  font-size: 36rpx;
+  margin-right: 12rpx;
+}
+
+.btn-3d.disabled {
+  opacity: 0.5;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* 次级按钮 */
+.btn-3d.btn-secondary {
+  background: linear-gradient(180deg, #9CA3AF 0%, #6B7280 100%);
+  box-shadow: 0 8rpx 0 #4B5563, 0 12rpx 24rpx rgba(107, 114, 128, 0.3);
+}
+
+.btn-3d.btn-secondary:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #4B5563, 0 4rpx 12rpx rgba(107, 114, 128, 0.2);
+}
+
+/* ========== 玩家主题背景色 ========== */
+.bg-p1 {
+  background-color: #FFF1F2;
+}
+
+.bg-p2 {
+  background-color: #F0F9FF;
+}
+
+/* ========== 返回按钮 ========== */
+.back-btn {
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  display: flex;
+  align-items: center;
+  padding: 16rpx 24rpx;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 32rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+  z-index: 100;
+}
+
+.back-arrow {
+  display: flex;
+  align-items: center;
+  margin-right: 8rpx;
+}
+
+.arrow-line {
+  width: 16rpx;
+  height: 4rpx;
+  background: #374151;
+  border-radius: 2rpx;
+}
+
+.arrow-head {
+  width: 0;
+  height: 0;
+  border-top: 8rpx solid transparent;
+  border-bottom: 8rpx solid transparent;
+  border-right: 12rpx solid #374151;
+  margin-left: -4rpx;
+}
+
+.back-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #374151;
+}
+
+/* ========== 大厅页面 ========== */
+.online-hall {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+  padding-top: 120rpx;
+  position: relative;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.hall-title {
+  font-size: 48rpx;
+  font-weight: 800;
+  color: #1F2937;
+  text-align: center;
+  margin-bottom: 40rpx;
+  margin-top: 20rpx;
+}
+
+/* ========== 游戏设置卡片 ========== */
+.game-settings-card {
+  background: #ffffff;
+  border-radius: 24rpx;
+  padding: 32rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.settings-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #374151;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.settings-row:last-child {
+  margin-bottom: 0;
+}
+
+.settings-label {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6B7280;
+  width: 80rpx;
+  margin-right: 20rpx;
+}
+
+.settings-options {
+  flex: 1;
+  display: flex;
+  gap: 16rpx;
+}
+
+.setting-btn {
+  flex: 1;
+  height: 72rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F3F4F6;
+  border-radius: 16rpx;
+  border: 2rpx solid transparent;
+  transition: all 0.2s ease;
+}
+
+.setting-btn.active {
+  background: #DBEAFE;
+  border-color: #3B82F6;
+}
+
+.setting-btn-text {
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6B7280;
+}
+
+.setting-btn.active .setting-btn-text {
+  color: #3B82F6;
+}
+
+/* ========== 快枪手模式 ========== */
+.quick-draw-row {
+  align-items: flex-start;
+}
+
+.quick-draw-toggle {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.toggle-switch {
+  width: 88rpx;
+  height: 48rpx;
+  background: #E5E7EB;
+  border-radius: 24rpx;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.toggle-switch.active {
+  background: #F59E0B;
+}
+
+.toggle-circle {
+  width: 40rpx;
+  height: 40rpx;
+  background: #FFFFFF;
+  border-radius: 50%;
+  position: absolute;
+  top: 4rpx;
+  left: 4rpx;
+  transition: all 0.3s ease;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.15);
+}
+
+.toggle-switch.active .toggle-circle {
+  left: 44rpx;
+}
+
+.quick-draw-desc {
+  font-size: 24rpx;
+  color: #9CA3AF;
+  flex: 1;
+}
+
+.option-btn.quick-draw-active {
+  background: #FEF3C7;
+  border-color: #F59E0B;
+  color: #F59E0B;
+  font-weight: 700;
+}
+
+.create-room-wrapper {
+  margin-bottom: 40rpx;
+}
+
+.btn-create-room {
+  width: 100%;
+  height: 140rpx;
+  background: linear-gradient(180deg, #60A5FA 0%, #3B82F6 100%);
+  box-shadow: 0 10rpx 0 #1D4ED8, 0 16rpx 32rpx rgba(59, 130, 246, 0.3);
+}
+
+.btn-create-room:active {
+  transform: translateY(10rpx);
+  box-shadow: 0 0 0 #1D4ED8, 0 8rpx 16rpx rgba(59, 130, 246, 0.2);
+}
+
+.btn-create-room .btn-3d-text {
+  font-size: 40rpx;
+  letter-spacing: 4rpx;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40rpx;
+}
+
+.divider-line {
+  flex: 1;
+  height: 2rpx;
+  background: #E5E7EB;
+}
+
+.divider-text {
+  font-size: 28rpx;
+  color: #9CA3AF;
+  margin: 0 24rpx;
+  font-weight: 600;
+}
+
+.join-room-card {
+  background: white;
+  border-radius: 32rpx;
+  padding: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+.card-label {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+
+.room-input-wrapper {
+  margin-bottom: 32rpx;
+}
+
+.room-input {
+  width: 100%;
+  height: 100rpx;
+  background: #F9FAFB;
+  border-radius: 20rpx;
+  text-align: center;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #1F2937;
+  letter-spacing: 16rpx;
+}
+
+.btn-join-room {
+  width: 100%;
+  height: 100rpx;
+  background: linear-gradient(180deg, #34D399 0%, #10B981 100%);
+  box-shadow: 0 8rpx 0 #059669, 0 12rpx 24rpx rgba(16, 185, 129, 0.3);
+}
+
+.btn-join-room:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #059669, 0 4rpx 12rpx rgba(16, 185, 129, 0.2);
+}
+
+.btn-join-room.disabled {
+  background: linear-gradient(180deg, #D1D5DB 0%, #9CA3AF 100%);
+  box-shadow: 0 8rpx 0 #6B7280, 0 12rpx 24rpx rgba(156, 163, 175, 0.3);
+}
+
+/* ========== 等待房间 ========== */
+.online-waiting {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+  padding-top: 120rpx;
+  position: relative;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.room-id-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 32rpx;
+  padding: 48rpx;
+  margin-bottom: 40rpx;
+  text-align: center;
+  box-shadow: 0 16rpx 48rpx rgba(102, 126, 234, 0.3);
+}
+
+.room-id-label {
+  display: block;
+  font-size: 28rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 16rpx;
+}
+
+.room-id-box {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 20rpx;
+  padding: 32rpx;
+  margin-bottom: 16rpx;
+}
+
+.room-id-number {
+  font-size: 72rpx;
+  font-weight: 900;
+  color: white;
+  letter-spacing: 16rpx;
+}
+
+.room-id-tip {
+  display: block;
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.game-settings-card {
+  background: white;
+  border-radius: 32rpx;
+  padding: 32rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+.settings-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 24rpx;
+  text-align: center;
+}
+
+.settings-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.settings-row:last-child {
+  margin-bottom: 0;
+}
+
+.settings-label {
+  font-size: 28rpx;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+.settings-options {
+  display: flex;
+  gap: 16rpx;
+}
+
+.option-btn {
+  padding: 16rpx 32rpx;
+  background: #F3F4F6;
+  border-radius: 16rpx;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #6B7280;
+  transition: all 0.2s;
+}
+
+.option-btn.active {
+  background: #3B82F6;
+  color: white;
+}
+
+.players-status-card {
+  background: white;
+  border-radius: 32rpx;
+  padding: 32rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+.status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.status-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.status-avatar {
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  margin-bottom: 16rpx;
+  overflow: hidden;
+}
+
+.status-avatar.host {
+  background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+}
+
+.status-avatar.guest {
+  background: linear-gradient(135deg, #34D399 0%, #10B981 100%);
+}
+
+.status-avatar.waiting {
+  background: #F3F4F6;
+  position: relative;
+}
+
+.avatar-image {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.waiting-ring {
+  width: 48rpx;
+  height: 48rpx;
+  border: 4rpx solid #E5E7EB;
+  border-top-color: #3B82F6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.status-info {
+  text-align: center;
+}
+
+.status-name {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #1F2937;
+  margin-bottom: 8rpx;
+}
+
+.status-tag {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  border-radius: 12rpx;
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
+.host-tag {
+  background: #DBEAFE;
+  color: #3B82F6;
+}
+
+.guest-tag {
+  background: #D1FAE5;
+  color: #10B981;
+}
+
+.status-divider {
+  font-size: 32rpx;
+  font-weight: 900;
+  color: #E5E7EB;
+  padding: 0 24rpx;
+}
+
+.btn-invite {
+  width: 100%;
+  height: 100rpx;
+  background: linear-gradient(180deg, #FBBF24 0%, #F59E0B 100%);
+  box-shadow: 0 8rpx 0 #D97706, 0 12rpx 24rpx rgba(245, 158, 11, 0.3);
+  border: none;
+}
+
+.btn-invite::after {
+  border: none;
+}
+
+.btn-invite:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #D97706, 0 4rpx 12rpx rgba(245, 158, 11, 0.2);
+}
+
+/* ========== 密码设置页面 - 复用 secret.wxss 样式 ========== */
+.online-setting-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40rpx;
+  padding-top: 120rpx;
+  position: relative;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* 标题样式 */
+.online-setting-container .header {
+  text-align: center;
+  margin-bottom: 60rpx;
+}
+
+.online-setting-container .player-label {
+  display: block;
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6B7280;
+  margin-bottom: 16rpx;
+  text-transform: uppercase;
+  letter-spacing: 4rpx;
+}
+
+.online-setting-container .page-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 900;
+  color: #1F2937;
+  margin-bottom: 16rpx;
+}
+
+.online-setting-container .page-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #9CA3AF;
+}
+
+/* 数字显示区 */
+.online-setting-container .digits-display {
+  display: flex;
+  justify-content: center;
+  gap: 24rpx;
+  margin-bottom: 40rpx;
+}
+
+.online-setting-container .digit-box {
+  width: 112rpx;
+  height: 128rpx;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 56rpx;
+  font-weight: 900;
+}
+
+.online-setting-container .digit-box-empty {
+  background: white;
+  border: 4rpx solid #F3F4F6;
+  color: #D1D5DB;
+}
+
+.online-setting-container .digit-box-filled {
+  background: white;
+  border: 4rpx solid #E5E7EB;
+  color: #374151;
+  box-shadow: 0 8rpx 0 #E5E7EB;
+}
+
+.online-setting-container .digit-text {
+  font-family: 'Varela Round', 'Nunito', sans-serif;
+}
+
+/* 提示信息 */
+.online-setting-container .hint-box {
+  margin-bottom: 60rpx;
+}
+
+.online-setting-container .hint-text {
+  font-size: 28rpx;
+  color: #6B7280;
+}
+
+/* 数字键盘 */
+.online-setting-container .keypad {
+  width: 100%;
+  max-width: 640rpx;
+  padding: 0 32rpx;
+}
+
+.online-setting-container .keypad-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.online-setting-container .key {
+  width: 160rpx;
+  height: 128rpx;
+  background: white;
+  border-radius: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #374151;
+  box-shadow: 0 8rpx 0 #E5E7EB;
+  transition: all 0.1s;
+}
+
+.online-setting-container .key:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #E5E7EB;
+}
+
+.online-setting-container .key-clear {
+  background: #FFE4E6;
+  color: #F43F5E;
+  box-shadow: 0 8rpx 0 #FECDD3;
+}
+
+.online-setting-container .key-clear:active {
+  box-shadow: 0 0 0 #FECDD3;
+}
+
+.online-setting-container .key-delete {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+/* 确认按钮 */
+.online-setting-container .confirm-btn {
+  width: 100%;
+  height: 120rpx;
+  border-radius: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36rpx;
+  font-weight: 700;
+  color: white;
+  margin-top: 24rpx;
+  border: none;
+  transition: all 0.2s;
+}
+
+.online-setting-container .confirm-btn::after {
+  border: none;
+}
+
+.online-setting-container .btn-p1 {
+  background: linear-gradient(180deg, #FF6B6B 0%, #E60012 100%);
+  box-shadow: 0 8rpx 0 #B91C1C, 0 12rpx 24rpx rgba(230, 0, 18, 0.3);
+}
+
+.online-setting-container .btn-p1:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #B91C1C, 0 4rpx 12rpx rgba(230, 0, 18, 0.2);
+}
+
+.online-setting-container .btn-p2 {
+  background: linear-gradient(180deg, #4FC3F7 0%, #00B3E6 100%);
+  box-shadow: 0 8rpx 0 #0288D1, 0 12rpx 24rpx rgba(0, 179, 230, 0.3);
+}
+
+.online-setting-container .btn-p2:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #0288D1, 0 4rpx 12rpx rgba(0, 179, 230, 0.2);
+}
+
+.online-setting-container .btn-disabled {
+  background: #E5E7EB;
+  color: #9CA3AF;
+  box-shadow: 0 8rpx 0 #D1D5DB;
+}
+
+/* 等待面板 */
+.waiting-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 40rpx;
+}
+
+.waiting-spinner-large {
+  width: 120rpx;
+  height: 120rpx;
+  border: 8rpx solid #E5E7EB;
+  border-top-color: #3B82F6;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 32rpx;
+}
+
+.waiting-text {
+  font-size: 32rpx;
+  color: #6B7280;
+  font-weight: 600;
+}
+
+/* ========== 游戏对战页面 - 复用 game.wxss 样式 ========== */
+.online-game-container {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+  padding-top: 120rpx;
+  position: relative;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+/* 顶部信息栏 */
+.online-game-container .header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32rpx;
+  padding-top: 20rpx;
+}
+
+.online-game-container .player-badge {
+  padding: 16rpx 40rpx;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  font-weight: 900;
+  color: white;
+  background: #E5E7EB;
+}
+
+.online-game-container .badge-p1 {
+  background-color: #E60012;
+}
+
+.online-game-container .badge-p2 {
+  background-color: #00B3E6;
+}
+
+.online-game-container .turn-text {
+  font-size: 32rpx;
+  color: #6B7280;
+  margin-left: 16rpx;
+  font-weight: 700;
+}
+
+/* 历史记录区域 */
+.online-game-container .history-section {
+  flex: 1;
+  width: 100%;
+  max-width: 680rpx;
+  background: white;
+  border-radius: 32rpx;
+  padding: 32rpx 28rpx;
+  margin-bottom: 32rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* 房间号横幅 - 在猜测记录上方居中显示 */
+.online-game-container .room-number-banner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding: 16rpx 0;
+}
+
+.online-game-container .room-number-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #3B82F6;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 12rpx 32rpx;
+  border-radius: 32rpx;
+  border: 2rpx solid rgba(59, 130, 246, 0.2);
+}
+
+/* 倒计时样式 */
+.online-game-container .countdown-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #10B981;
+  background: rgba(16, 185, 129, 0.1);
+  padding: 12rpx 24rpx;
+  border-radius: 32rpx;
+  border: 2rpx solid rgba(16, 185, 129, 0.2);
+  margin-left: 20rpx;
+}
+
+/* 倒计时警告样式（60秒内） */
+.online-game-container .countdown-text.countdown-warning {
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
+  border: 2rpx solid rgba(239, 68, 68, 0.3);
+  animation: countdown-pulse 1s infinite;
+}
+
+@keyframes countdown-pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.online-game-container .history-header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24rpx;
+}
+
+.online-game-container .history-title {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #6B7280;
+}
+
+/* 可重复/不重复标签 */
+.online-game-container .repeat-mode-tag {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #F59E0B;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 8rpx 16rpx;
+  border-radius: 16rpx;
+  border: 1rpx solid rgba(245, 158, 11, 0.2);
+}
+
+.online-game-container .filter-btn {
+  padding: 12rpx 24rpx;
+  background: #F3F4F6;
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  font-weight: 600;
+  color: #6B7280;
+  transition: all 0.2s;
+}
+
+.online-game-container .filter-btn:active {
+  background: #E5E7EB;
+}
+
+.online-game-container .history-list {
+  flex: 1;
+  max-height: 360rpx;
+}
+
+/* 等待对手时历史记录高度 - 显示更多内容 */
+.online-game-container .history-section.waiting .history-list {
+  max-height: 400rpx;
+}
+
+/* 展开状态时自适应高度，不限制 */
+.online-game-container .history-section.expanded .history-list {
+  max-height: none;
+}
+
+/* 展开/收起按钮 - 更紧凑 */
+.online-game-container .history-expand-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8rpx 0 4rpx;
+  margin-top: 4rpx;
+  border-top: 2rpx solid #F3F4F6;
+}
+
+.online-game-container .expand-arrow {
+  width: 20rpx;
+  height: 20rpx;
+  border-right: 3rpx solid #9CA3AF;
+  border-bottom: 3rpx solid #9CA3AF;
+  transform: rotate(45deg);
+  transition: transform 0.3s ease;
+  margin-bottom: 4rpx;
+}
+
+.online-game-container .history-expand-btn.expanded .expand-arrow {
+  transform: rotate(-135deg);
+  margin-bottom: 0;
+  margin-top: 4rpx;
+}
+
+.online-game-container .expand-text {
+  font-size: 20rpx;
+  color: #9CA3AF;
+}
+
+.online-game-container .history-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 2rpx solid #F3F4F6;
+}
+
+.online-game-container .guess-number {
+  width: 60rpx;
+  font-size: 24rpx;
+  color: #9CA3AF;
+  font-weight: 700;
+}
+
+/* 历史记录中的玩家标识 */
+.online-game-container .player-badge-hist {
+  width: 52rpx;
+  height: 36rpx;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 8rpx;
+  font-size: 20rpx;
+  font-weight: 700;
+}
+
+.online-game-container .badge-p1-hist {
+  background: linear-gradient(135deg, #FF6B6B 0%, #E60012 100%);
+  color: white;
+}
+
+.online-game-container .badge-p2-hist {
+  background: linear-gradient(135deg, #4FC3F7 0%, #00B3E6 100%);
+  color: white;
+}
+
+.online-game-container .guess-digits {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 12rpx;
+}
+
+.online-game-container .history-digit {
+  width: 52rpx;
+  height: 60rpx;
+  background: #F3F4F6;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #374151;
+}
+
+.online-game-container .history-digit.digit-correct {
+  background: linear-gradient(135deg, #4dd0e1 0%, #00c3e3 100%);
+  color: white;
+  box-shadow: 0 4rpx 12rpx rgba(0, 195, 227, 0.4);
+}
+
+.online-game-container .guess-score {
+  width: 90rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.online-game-container .score-num {
+  font-size: 36rpx;
+  font-weight: 900;
+  color: #374151;
+}
+
+.online-game-container .score-total {
+  font-size: 24rpx;
+  color: #9CA3AF;
+  font-weight: 700;
+}
+
+.online-game-container .score-perfect .score-num {
+  color: #10B981;
+}
+
+.online-game-container .empty-history {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #9CA3AF;
+  font-size: 28rpx;
+}
+
+.online-game-container .view-more-btn {
+  text-align: center;
+  padding: 32rpx 0;
+  margin-top: 16rpx;
+  border-top: 2rpx solid #F3F4F6;
+}
+
+.online-game-container .view-more-btn text {
+  font-size: 28rpx;
+  color: #3B82F6;
+  font-weight: 600;
+}
+
+/* 数字输入显示区 */
+.online-game-container .input-section {
+  margin-bottom: 24rpx;
+}
+
+.online-game-container .digits-display {
+  display: flex;
+  justify-content: center;
+  gap: 24rpx;
+}
+
+.online-game-container .digit-box {
+  width: 100rpx;
+  height: 120rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  font-weight: 900;
+}
+
+.online-game-container .digit-box-empty {
+  background: white;
+  border: 4rpx solid #F3F4F6;
+  color: #D1D5DB;
+}
+
+.online-game-container .digit-box-filled {
+  background: white;
+  border: 4rpx solid #E5E7EB;
+  color: #374151;
+  box-shadow: 0 8rpx 0 #E5E7EB;
+}
+
+.online-game-container .digit-text {
+  font-family: 'Varela Round', 'Nunito', sans-serif;
+}
+
+/* 数字键盘 */
+.online-game-container .keypad {
+  width: 100%;
+  max-width: 640rpx;
+  padding: 0 32rpx;
+  margin-bottom: 40rpx;
+}
+
+.online-game-container .keypad-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+
+.online-game-container .key {
+  width: 140rpx;
+  height: 100rpx;
+  background: white;
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #374151;
+  box-shadow: 0 6rpx 0 #E5E7EB;
+  transition: all 0.1s;
+}
+
+.online-game-container .key:active {
+  transform: translateY(6rpx);
+  box-shadow: 0 0 0 #E5E7EB;
+}
+
+.online-game-container .key-clear {
+  background: #FFE4E6;
+  color: #F43F5E;
+  box-shadow: 0 6rpx 0 #FECDD3;
+}
+
+.online-game-container .key-clear:active {
+  box-shadow: 0 0 0 #FECDD3;
+}
+
+.online-game-container .key-delete {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+.online-game-container .confirm-btn {
+  width: 100%;
+  height: 100rpx;
+  border-radius: 50rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: white;
+  margin-top: 16rpx;
+  border: none;
+  transition: all 0.2s;
+}
+
+.online-game-container .confirm-btn::after {
+  border: none;
+}
+
+.online-game-container .btn-p1 {
+  background: linear-gradient(180deg, #FF6B6B 0%, #E60012 100%);
+  box-shadow: 0 6rpx 0 #B91C1C, 0 10rpx 20rpx rgba(230, 0, 18, 0.3);
+}
+
+.online-game-container .btn-p1:active {
+  transform: translateY(6rpx);
+  box-shadow: 0 0 0 #B91C1C, 0 4rpx 12rpx rgba(230, 0, 18, 0.2);
+}
+
+.online-game-container .btn-p2 {
+  background: linear-gradient(180deg, #4FC3F7 0%, #00B3E6 100%);
+  box-shadow: 0 6rpx 0 #0288D1, 0 10rpx 20rpx rgba(0, 179, 230, 0.3);
+}
+
+.online-game-container .btn-p2:active {
+  transform: translateY(6rpx);
+  box-shadow: 0 0 0 #0288D1, 0 4rpx 12rpx rgba(0, 179, 230, 0.2);
+}
+
+.online-game-container .btn-disabled {
+  background: #E5E7EB;
+  color: #9CA3AF;
+  box-shadow: 0 6rpx 0 #D1D5DB;
+}
+
+/* 快枪手模式按钮 */
+.online-game-container .quick-draw-btn {
+  background: linear-gradient(180deg, #F59E0B 0%, #D97706 100%) !important;
+  box-shadow: 0 6rpx 0 #B45309, 0 10rpx 20rpx rgba(245, 158, 11, 0.3) !important;
+}
+
+.online-game-container .quick-draw-btn:active {
+  transform: translateY(6rpx);
+  box-shadow: 0 0 0 #B45309, 0 4rpx 12rpx rgba(245, 158, 11, 0.2) !important;
+}
+
+.online-game-container .quick-draw-countdown {
+  font-size: 40rpx;
+  font-weight: 800;
+}
+
+/* ========== 结算页面 - 复用 victory.wxss 样式 ========== */
+.online-result-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  padding-top: 120rpx;
+  position: relative;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.online-result-container.bg-pattern {
+  background: linear-gradient(180deg, #F9FAFB 0%, #F3F4F6 100%);
+}
+
+/* 彩带动画 */
+.online-result-container .confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.online-result-container .confetti {
+  position: absolute;
+  top: -20rpx;
+  width: 20rpx;
+  height: 20rpx;
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+.online-result-container .confetti-red {
+  background: #ef4444;
+  border-radius: 4rpx;
+}
+
+.online-result-container .confetti-blue {
+  background: #3b82f6;
+  border-radius: 50%;
+}
+
+.online-result-container .confetti-gold {
+  background: #facc15;
+  border-radius: 2rpx;
+  transform: rotate(45deg);
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-20rpx) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* 任天堂风格卡片 */
+.online-result-container .nintendo-card {
+  background: white;
+  border-radius: 48rpx;
+  border: 8rpx solid white;
+  box-shadow: 0 16rpx 0 0 rgba(0,0,0,0.08);
+  width: 100%;
+  max-width: 640rpx;
+}
+
+/* 胜利宣告卡片 */
+.online-result-container .victory-card {
+  padding: 120rpx 48rpx 64rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 40rpx;
+  z-index: 10;
+}
+
+/* 浮动胜利图标 */
+.online-result-container .victory-icon-wrapper {
+  position: absolute;
+  top: -60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+}
+
+.online-result-container .victory-icon-bg {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 40rpx;
+  border: 8rpx solid white;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.online-result-container .icon-p1 {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.online-result-container .icon-p2 {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+/* 平局图标背景 - 洗碗图标不需要背景色 */
+.online-result-container .icon-wash-bg {
+  background: transparent;
+  border: 4rpx solid #E5E7EB;
+}
+
+/* 失败图标背景 */
+.online-result-container .icon-loser {
+  background: linear-gradient(135deg, #9CA3AF 0%, #6B7280 100%);
+}
+
+/* 星星图标 */
+.online-result-container .icon-star {
+  width: 64rpx;
+  height: 64rpx;
+  position: relative;
+}
+
+.online-result-container .star-shape {
+  width: 100%;
+  height: 100%;
+  background: white;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* 皇冠图标 */
+.online-result-container .icon-crown {
+  width: 64rpx;
+  height: 64rpx;
+  position: relative;
+}
+
+.online-result-container .crown-shape {
+  width: 100%;
+  height: 60%;
+  background: white;
+  clip-path: polygon(20% 100%, 0% 40%, 30% 60%, 50% 20%, 70% 60%, 100% 40%, 80% 100%);
+  position: absolute;
+  bottom: 20%;
+}
+
+/* 洗碗图标 */
+.online-result-container .icon-wash {
+  font-size: 56rpx;
+  line-height: 1;
+}
+
+/* 卡片内容 */
+.online-result-container .victory-content {
+  text-align: center;
+}
+
+.online-result-container .victory-title {
+  display: block;
+  font-size: 56rpx;
+  font-weight: 900;
+  margin-bottom: 24rpx;
+}
+
+.online-result-container .title-p1 {
+  color: #E60012;
+}
+
+.online-result-container .title-p2 {
+  color: #00B3E6;
+}
+
+/* 平局标题 */
+.online-result-container .title-draw {
+  color: #8B5CF6;
+}
+
+.online-result-container .winner-badge {
+  display: inline-block;
+  padding: 12rpx 32rpx;
+  border-radius: 32rpx;
+  margin-bottom: 24rpx;
+}
+
+.online-result-container .badge-p1 {
+  background: #FEE2E2;
+  color: #DC2626;
+}
+
+.online-result-container .badge-p2 {
+  background: #DBEAFE;
+  color: #2563EB;
+}
+
+.online-result-container .badge-loser {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+/* 平局徽章 */
+.online-result-container .badge-draw {
+  background: #EDE9FE;
+  color: #7C3AED;
+}
+
+.online-result-container .winner-name {
+  display: block;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 16rpx;
+}
+
+.online-result-container .winner-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #6B7280;
+}
+
+/* 统计卡片 */
+.online-result-container .stats-card {
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  z-index: 10;
+}
+
+.online-result-container .stats-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1F2937;
+  text-align: center;
+  margin-bottom: 32rpx;
+}
+
+.online-result-container .stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid #F3F4F6;
+}
+
+.online-result-container .stat-row:last-of-type {
+  border-bottom: none;
+}
+
+.online-result-container .stat-player {
+  display: flex;
+  align-items: center;
+}
+
+.online-result-container .stat-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.online-result-container .avatar-p1 {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.online-result-container .avatar-p2 {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
+
+.online-result-container .avatar-loser {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+.online-result-container .stat-name {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1F2937;
+}
+
+.online-result-container .loser-name {
+  color: #9CA3AF;
+}
+
+/* 密码数字内联显示 */
+.online-result-container .secret-digits-inline {
+  display: flex;
+  gap: 12rpx;
+}
+
+.online-result-container .secret-digit-box {
+  width: 56rpx;
+  height: 64rpx;
+  border-radius: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.online-result-container .digit-p1 {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+  color: white;
+}
+
+.online-result-container .digit-p2 {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  color: white;
+}
+
+.online-result-container .digit-loser {
+  background: #F3F4F6;
+  color: #6B7280;
+}
+
+/* 猜颜色正确答案样式 */
+.online-result-container .secret-colors-inline {
+  display: flex;
+  justify-content: center;
+  gap: 20rpx;
+  padding: 40rpx 0;
+}
+
+.online-result-container .secret-color-box {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: 4rpx solid white;
+  box-shadow: 0 4rpx 6rpx -1rpx rgba(0, 0, 0, 0.3), inset 0 -2rpx 4rpx rgba(0, 0, 0, 0.2), inset 0 1rpx 2rpx rgba(255, 255, 255, 0.4);
+}
+
+.online-result-container .secret-color-box.red {
+  background: radial-gradient(circle at 30% 30%, #fca5a5, #ef4444, #991b1b);
+}
+
+.online-result-container .secret-color-box.green {
+  background: radial-gradient(circle at 30% 30%, #6ee7b7, #10b981, #047857);
+}
+
+.online-result-container .secret-color-box.blue {
+  background: radial-gradient(circle at 30% 30%, #93c5fd, #3b82f6, #1e40af);
+}
+
+.online-result-container .secret-color-box.yellow {
+  background: radial-gradient(circle at 30% 30%, #fcd34d, #f59e0b, #b45309);
+}
+
+.online-result-container .secret-color-box.purple {
+  background: radial-gradient(circle at 30% 30%, #f0abfc, #d946ef, #86198f);
+}
+
+.online-result-container .secret-color-box.gray {
+  background: radial-gradient(circle at 30% 30%, #cbd5e1, #64748b, #334155);
+}
+
+.online-result-container .row-center {
+  justify-content: center;
+}
+
+.online-result-container .divider {
+  height: 2rpx;
+  background: #F3F4F6;
+  margin: 24rpx 0;
+}
+
+/* 最终统计 */
+.online-result-container .final-stats {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 24rpx;
+}
+
+.online-result-container .final-stat-item {
+  text-align: center;
+}
+
+.online-result-container .final-stat-value {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 900;
+  color: #1F2937;
+  margin-bottom: 8rpx;
+}
+
+.online-result-container .final-stat-label {
+  display: block;
+  font-size: 24rpx;
+  color: #9CA3AF;
+}
+
+/* 底部按钮 */
+.online-result-container .restart-btn,
+.online-result-container .home-btn {
+  width: 100%;
+  max-width: 640rpx;
+  height: 120rpx;
+  border-radius: 64rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32rpx;
+  font-weight: 700;
+  margin-bottom: 24rpx;
+  border: none;
+  z-index: 10;
+}
+
+.online-result-container .restart-btn::after,
+.online-result-container .home-btn::after {
+  border: none;
+}
+
+.online-result-container .nintendo-btn-primary {
+  background: linear-gradient(180deg, #34D399 0%, #10B981 100%);
+  box-shadow: 0 8rpx 0 #059669, 0 12rpx 24rpx rgba(16, 185, 129, 0.3);
+  color: white;
+}
+
+.online-result-container .nintendo-btn-primary:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #059669, 0 4rpx 12rpx rgba(16, 185, 129, 0.2);
+}
+
+.online-result-container .nintendo-btn-secondary {
+  background: white;
+  box-shadow: 0 8rpx 0 #E5E7EB, 0 12rpx 24rpx rgba(0, 0, 0, 0.08);
+  color: #6B7280;
+}
+
+.online-result-container .nintendo-btn-secondary:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #E5E7EB, 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.online-result-container .btn-icon {
+  margin-right: 16rpx;
+}
+
+.online-result-container .refresh-icon {
+  width: 40rpx;
+  height: 40rpx;
+  border: 4rpx solid white;
+  border-radius: 50%;
+  border-right-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+/* 动画 */
+.animate-bounce-in {
+  animation: bounceIn 0.6s ease-out;
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-10rpx);
+  }
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out;
+}
+
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40rpx);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

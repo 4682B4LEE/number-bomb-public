@@ -1,0 +1,9 @@
+{
+  "triggers": [
+    {
+      "name": "updateRankCacheTrigger",
+      "type": "timer",
+      "config": "0 */30 * * * * *"
+    }
+  ]
+}

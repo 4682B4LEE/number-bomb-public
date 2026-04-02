@@ -1,0 +1,118 @@
+<!-- 猜颜色游戏进行页 - Royal Design -->
+<view class="container {{isP1 ? 'bg-p1' : 'bg-p2'}}">
+  <!-- 顶部信息栏 - 已隐藏 -->
+  <!-- <view class="header-bar">
+    <view class="player-badge {{isP1 ? 'badge-p1' : 'badge-p2'}}">
+      <text>{{currentPlayerName}}</text>
+    </view>
+    <text class="turn-text">的回合</text>
+  </view> -->
+
+  <!-- 猜测历史 -->
+  <view class="history-section">
+    <text class="history-title">猜测历史</text>
+    <scroll-view class="history-list" scroll-y>
+      <view
+        wx:for="{{playerGuesses}}"
+        wx:key="index"
+        class="history-item {{item.player === 1 ? 'item-p1' : 'item-p2'}}"
+      >
+        <view class="guess-info">
+          <view class="guess-number">{{index + 1}}</view>
+          <view class="player-tag {{item.player === 1 ? 'tag-p1' : 'tag-p2'}}">P{{item.player}}</view>
+        </view>
+        <view class="guess-colors">
+          <view
+            wx:for="{{item.colors}}"
+            wx:for-item="color"
+            wx:key="*this"
+            class="history-color {{color}}"
+          ></view>
+        </view>
+        <view class="guess-hints">
+          <view class="hint-red" wx:for="{{item.redHints}}" wx:key="*this"></view>
+          <view class="hint-white" wx:for="{{item.whiteHints}}" wx:key="*this"></view>
+        </view>
+      </view>
+      <view wx:if="{{playerGuesses.length === 0}}" class="empty-history">
+        <text>游戏开始</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 底部控制区域 -->
+  <view class="control-section">
+    <!-- 回合徽章 -->
+    <view class="turn-badge {{isP1 ? 'p1' : 'p2'}}">
+      <text>{{currentPlayerName}}'S TURN</text>
+    </view>
+
+    <!-- 输入区域 -->
+    <view class="input-section">
+      <view class="colors-display">
+        <view
+          wx:for="{{displayColors}}"
+          wx:key="index"
+          class="color-box {{item ? '' : 'color-box-empty'}} {{editIndex === index ? 'color-box-editing' : ''}}"
+          bindtap="onColorBoxTap"
+          data-index="{{index}}"
+        >
+          <view wx:if="{{item}}" class="color-fill {{item}}"></view>
+          <view wx:if="{{editIndex === index}}" class="edit-indicator"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 颜色选择键盘 -->
+    <view class="color-keypad">
+      <view class="color-keypad-row">
+        <view class="color-key" bindtap="onColorPress" data-color="red">
+          <view class="color-key-fill red"></view>
+        </view>
+        <view class="color-key" bindtap="onColorPress" data-color="green">
+          <view class="color-key-fill green"></view>
+        </view>
+        <view class="color-key" bindtap="onColorPress" data-color="blue">
+          <view class="color-key-fill blue"></view>
+        </view>
+      </view>
+      <view class="color-keypad-row">
+        <view class="color-key" bindtap="onColorPress" data-color="yellow">
+          <view class="color-key-fill yellow"></view>
+        </view>
+        <view class="color-key" bindtap="onColorPress" data-color="purple">
+          <view class="color-key-fill purple"></view>
+        </view>
+        <view class="color-key" bindtap="onColorPress" data-color="gray">
+          <view class="color-key-fill gray"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-row">
+      <view class="action-key" bindtap="onClear">
+        <text>清空</text>
+      </view>
+      <button
+        class="confirm-btn {{canConfirm ? (isP1 ? 'btn-p1' : 'btn-p2') : 'btn-disabled'}}"
+        bindtap="onConfirm"
+        disabled="{{!canConfirm}}"
+      >
+        <text>提交</text>
+      </button>
+    </view>
+
+    <!-- 提示说明 -->
+    <view class="hint-legend">
+      <view class="legend-item">
+        <view class="legend-dot red-dot"></view>
+        <text class="legend-text">位置和颜色都对</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-dot white-dot"></view>
+        <text class="legend-text">颜色对位置错</text>
+      </view>
+    </view>
+  </view>
+</view>

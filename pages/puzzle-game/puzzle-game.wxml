@@ -1,0 +1,503 @@
+<view class="container dot-bg">
+
+  <!-- 加载中状态 -->
+  <view class="loading-screen" wx:if="{{isLoading}}">
+    <view class="loading-icon-box">
+      <view class="icon-bounce">
+        <image class="icon-inner" src="/icons/keji.svg" mode="aspectFit"></image>
+      </view>
+      <view class="shadow-pulse"></view>
+    </view>
+    <view class="loading-text">关卡加载中...</view>
+    <view class="loading-sub">请稍候，马上就来</view>
+  </view>
+
+  <!-- ==================== 页面 1：选关地图 ==================== -->
+  <view class="page-container {{currentPage === 'map' ? 'page-active' : 'page-hidden-left'}}" wx:else>
+    <!-- 自定义导航栏（带返回按钮） -->
+    <view class="custom-nav-bar" style="padding-top: {{statusBarHeight}}px;">
+      <view class="nav-bar-content">
+        <!-- 返回按钮 -->
+        <view class="nav-back-btn" bindtap="onNavBack">
+          <text class="nav-back-icon">‹</text>
+          <text class="nav-back-text">返回</text>
+        </view>
+        <!-- 页面标题 -->
+        <text class="nav-title">残局挑战</text>
+        <!-- 占位，保持标题居中 -->
+        <view class="nav-placeholder"></view>
+      </view>
+    </view>
+
+    <!-- 地图顶部信息栏 -->
+    <view class="map-header">
+      <view class="map-header-content">
+        <view class="user-pill">
+          <image class="user-avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+          <text class="user-name">{{userInfo.nickName}}</text>
+        </view>
+        <!-- 右侧信息（星星+体力） -->
+        <view class="header-right-info">
+          <!-- 累计星星显示 -->
+          <view class="total-stars-pill">
+            <text class="total-stars-num">{{totalEarnedStars}}</text>
+            <image class="total-stars-icon" src="/icons/star.svg" mode="aspectFit"></image>
+          </view>
+          <!-- 体力显示：当前体力/体力槽 -->
+          <view class="total-stars-pill strength-pill">
+            <text class="total-stars-num strength-num">{{strength}}/{{strengthCap}}</text>
+            <image wx:if="{{!strengthIconError}}" class="total-stars-icon" src="/icons/strength2.svg" mode="aspectFit" binderror="onStrengthIconError"></image>
+            <text wx:if="{{strengthIconError}}" class="strength-fallback">⚡</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 关卡滑动选择器（可收起） -->
+    <view class="slider-collapsible {{isSliderCollapsed ? 'collapsed' : ''}}" bindtouchstart="onSliderTouchStart" bindtouchend="onSliderTouchEnd">
+      <!-- 收起时的紧凑状态 -->
+      <view class="slider-collapsed-bar" wx:if="{{isSliderCollapsed}}">
+        <view class="collapsed-content">
+          <text class="collapsed-text">第 {{sliderValue}} 关</text>
+          <view class="collapsed-hint">
+            <text class="hint-text">右滑展开快速选择关卡</text>
+            <text class="hint-arrow">››</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 展开时的完整状态 -->
+      <view class="slider-expanded" wx:if="{{!isSliderCollapsed}}">
+        <view class="slider-drag-handle">
+          <view class="drag-bar"></view>
+          <text class="drag-hint">左滑收起</text>
+        </view>
+        <view class="slider-compact-row">
+          <slider
+            class="level-slider"
+            min="1"
+            max="{{maxLevel}}"
+            value="{{sliderValue}}"
+            block-size="24"
+            activeColor="#e00025"
+            backgroundColor="#e5e7eb"
+            bindchange="onSliderChange"
+            bindchanging="onSliderChanging"
+          />
+          <view class="slider-value-badge">{{sliderValue}}</view>
+        </view>
+        <view class="slider-marks">
+          <text class="mark-text">1</text>
+          <text class="mark-text">{{middleMark}}</text>
+          <text class="mark-text">{{maxLevel}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 蜿蜒关卡列表 -->
+    <scroll-view class="map-scroll" scroll-y="true" show-scrollbar="false" scroll-top="{{scrollTop}}">
+      <view class="map-nodes-container">
+        <block wx:for="{{mapLevels}}" wx:key="id">
+          <view id="node-{{item.id}}" class="node-wrapper {{item.status === 'locked' ? 'node-locked' : ''}}" style="transform: translateX({{item.offset}}px)">
+            
+            <!-- 当前关卡 -->
+            <block wx:if="{{item.status === 'current'}}">
+              <view class="pulse-ring"></view>
+              <view class="node-btn btn-current" bindtap="openGame" data-id="{{item.id}}">
+                <text class="icon-play">▶</text>
+              </view>
+              <view class="stars-badge bottom-badge">
+                <!-- 当前关卡（未挑战）显示3颗灰星星，通关后根据结果显示 -->
+                <image class="star-icon" src="/icons/graystar.svg" mode="aspectFit"></image>
+                <image class="star-icon" src="/icons/graystar.svg" mode="aspectFit"></image>
+                <image class="star-icon" src="/icons/graystar.svg" mode="aspectFit"></image>
+              </view>
+              <view class="current-bubble">
+                第 {{item.id}} 关
+                <view class="bubble-arrow"></view>
+              </view>
+            </block>
+
+            <!-- 已通关 -->
+            <block wx:elif="{{item.status === 'completed'}}">
+              <view class="node-btn btn-completed" bindtap="openGame" data-id="{{item.id}}">
+                <text class="icon-check">✔</text>
+              </view>
+              <view class="stars-badge bottom-badge opacity-90">
+                <!-- 已通关关卡显示实际获得的星级（ earnedStars 个黄星 + (3-earnedStars) 个灰星） -->
+                <block wx:for="{{[0, 1, 2]}}" wx:for-item="starIdx" wx:key="starIdx">
+                  <image wx:if="{{starIdx < item.earnedStars}}" class="star-icon" src="/icons/star.svg" mode="aspectFit"></image>
+                  <image wx:else class="star-icon" src="/icons/graystar.svg" mode="aspectFit"></image>
+                </block>
+              </view>
+              <!-- 已通关关卡显示关数 -->
+              <view class="completed-level-num">{{item.id}}</view>
+            </block>
+
+            <!-- 未解锁（包含区间锁定和前置关卡未完成） -->
+            <block wx:else>
+              <view class="node-btn btn-locked">
+                <text class="icon-lock">🔒</text>
+              </view>
+              <view class="stars-badge bottom-badge">
+                <!-- 未解锁关卡显示默认难度星级（全灰星） -->
+                <block wx:for="{{[0, 1, 2]}}" wx:for-item="starIdx" wx:key="starIdx">
+                  <image wx:if="{{starIdx < item.starLevel}}" class="star-icon" src="/icons/star.svg" mode="aspectFit"></image>
+                  <image wx:else class="star-icon" src="/icons/graystar.svg" mode="aspectFit"></image>
+                </block>
+              </view>
+            </block>
+
+          </view>
+        </block>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- ==================== 页面 2：游戏对局 ==================== -->
+  <view class="page-container {{currentPage === 'game' ? 'page-active' : 'page-hidden-right'}}" bindtouchstart="onTouchStart" bindtouchend="onTouchEnd">
+    
+    <!-- 自定义导航栏（带返回按钮） -->
+    <view class="game-nav-bar" style="padding-top: {{statusBarHeight}}px;">
+      <view class="game-nav-content">
+        <!-- 返回按钮 -->
+        <view class="game-nav-back" bindtap="closeGame">
+          <text class="game-nav-back-icon">‹</text>
+          <text class="game-nav-back-text">返回</text>
+        </view>
+        <!-- 页面标题 -->
+        <text class="game-nav-title">残局挑战</text>
+        <!-- 占位，保持标题居中 -->
+        <view class="game-nav-placeholder"></view>
+      </view>
+    </view>
+    
+    <!-- 红色沉浸式头部 -->
+    <view class="red-header">
+      <view class="red-header-top">
+        <view class="steps-badge">剩余 {{maxSteps - usedSteps}} 步</view>
+        <!-- 移除原来的关闭按钮，因为导航栏已有返回按钮 -->
+        <view class="game-level-badge">第 {{currentGameData.id}} 关</view>
+      </view>
+      <view class="red-header-title">
+        <view class="title-sub">根据线索推理</view>
+        <view class="title-main">找出4位密码</view>
+      </view>
+    </view>
+
+    <!-- 线索滚动区 -->
+    <scroll-view class="game-scroll" scroll-y="true" scroll-into-view="{{scrollToId}}" scroll-with-animation="true" show-scrollbar="false">
+      <view class="clues-padding">
+        
+        <!-- 预设线索 - 默认显示前3条 -->
+        <block wx:for="{{displayedClues}}" wx:key="index">
+          <view class="clue-row">
+            <view class="clue-digits">
+              <view class="clue-digit">{{item.guess[0]}}</view>
+              <view class="clue-digit">{{item.guess[1]}}</view>
+              <view class="clue-digit">{{item.guess[2]}}</view>
+              <view class="clue-digit">{{item.guess[3]}}</view>
+            </view>
+            <view class="clue-result">{{item.a}}A {{item.b}}B</view>
+          </view>
+        </block>
+
+        <!-- 查看全部按钮 - 当线索超过3条时显示 -->
+        <view wx:if="{{currentGameData.clues.length > 3 && !showAllClues}}" class="expand-clues-btn" bindtap="toggleShowAllClues">
+          <text class="expand-clues-text">查看全部 {{currentGameData.clues.length}} 条线索</text>
+          <view class="expand-clues-arrow">↓</view>
+        </view>
+
+        <!-- 收起按钮 - 展开后显示 -->
+        <view wx:if="{{currentGameData.clues.length > 3 && showAllClues}}" class="expand-clues-btn" bindtap="toggleShowAllClues">
+          <text class="expand-clues-text">收起线索</text>
+          <view class="expand-clues-arrow">↑</view>
+        </view>
+
+        <!-- 玩家推理线索 -->
+        <block wx:if="{{playerGuesses.length > 0}}">
+          <view class="player-clues-divider"></view>
+          <block wx:for="{{playerGuesses}}" wx:key="index">
+            <view class="clue-row player-clue" id="guess-{{index}}">
+              <view class="clue-digits">
+                <view class="clue-digit">{{item.guess[0]}}</view>
+                <view class="clue-digit">{{item.guess[1]}}</view>
+                <view class="clue-digit">{{item.guess[2]}}</view>
+                <view class="clue-digit">{{item.guess[3]}}</view>
+              </view>
+              <view class="clue-result">{{item.a}}A {{item.b}}B</view>
+            </view>
+          </block>
+        </block>
+        
+        <view id="scroll-anchor" class="scroll-anchor"></view>
+      </view>
+    </scroll-view>
+
+    <!-- 键盘区域 -->
+    <view class="keyboard-area">
+      <view class="keyboard-container">
+        
+        <!-- 悬浮输入槽 -->
+        <view class="floating-inputs">
+          <view class="input-slot {{inputBuffer[0] ? 'filled' : ''}} {{isReadOnly ? 'readonly' : ''}} {{isWrongShake ? 'shake' : ''}}">{{inputBuffer[0] || ''}}</view>
+          <view class="input-slot {{inputBuffer[1] ? 'filled' : ''}} {{isReadOnly ? 'readonly' : ''}} {{isWrongShake ? 'shake' : ''}}">{{inputBuffer[1] || ''}}</view>
+          <view class="input-slot {{inputBuffer[2] ? 'filled' : ''}} {{isReadOnly ? 'readonly' : ''}} {{isWrongShake ? 'shake' : ''}}">{{inputBuffer[2] || ''}}</view>
+          <view class="input-slot {{inputBuffer[3] ? 'filled' : ''}} {{isReadOnly ? 'readonly' : ''}} {{isWrongShake ? 'shake' : ''}}">{{inputBuffer[3] || ''}}</view>
+        </view>
+
+        <!-- 数字键 -->
+        <view class="numpad-grid">
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="1">1</view>
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="2">2</view>
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="3">3</view>
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="4">4</view>
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="5">5</view>
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="6">6</view>
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="7">7</view>
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="8">8</view>
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="9">9</view>
+          
+          <view class="num-key key-clear" hover-class="key-clear-hover" bindtap="clearInput">C</view>
+          <view class="num-key" hover-class="num-key-hover" bindtap="inputNum" data-num="0">0</view>
+          <view class="num-key key-action" hover-class="key-action-hover" bindtap="deleteNum">⌫</view>
+
+          <view class="btn-submit {{inputBuffer.length === 4 ? 'ready' : ''}}" hover-class="{{inputBuffer.length === 4 ? 'btn-submit-hover' : ''}}" bindtap="submitGuess">确定</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- ==================== 弹窗区 ==================== -->
+  
+  <!-- 失败复活弹窗 -->
+  <view class="modal-mask {{showLoseModal ? 'show' : ''}}">
+    <view class="modal-box">
+      <image class="modal-icon-svg" src="/icons/loser.svg" mode="aspectFit"></image>
+      <view class="modal-title">步数已耗尽</view>
+      <view class="modal-desc" wx:if="{{!hasUsedShare || !hasUsedAd}}">获得步数会增加可用步数，但会影响星级评定哦~</view>
+      <view class="modal-desc fail-desc" wx:if="{{hasUsedShare && hasUsedAd}}">获得步数次数已耗尽，挑战失败！</view>
+
+      <!-- 分享获得步数按钮（未使用时显示） -->
+      <button
+        wx:if="{{!hasUsedShare}}"
+        class="btn-primary"
+        open-type="share"
+        bindtap="onShareForStepsTap"
+      >
+        <text>分享 (+2步)</text>
+      </button>
+
+      <!-- 广告获得步数按钮（未使用时显示） -->
+      <button
+        wx:if="{{!hasUsedAd}}"
+        class="btn-secondary"
+        bindtap="onAdForStepsTap"
+      >
+        <text>看广告 (+3步)</text>
+      </button>
+
+      <!-- 重新挑战按钮（两次复活都使用后显示） -->
+      <button
+        wx:if="{{hasUsedShare && hasUsedAd}}"
+        class="btn-primary btn-retry"
+        bindtap="retryChallenge"
+      >
+        <text>重新挑战</text>
+      </button>
+
+      <!-- 星级提示 -->
+      <view class="star-hint" wx:if="{{!hasUsedShare || !hasUsedAd}}">
+        <text wx:if="{{!hasUsedShare && !hasUsedAd}}" class="hint-3star">✨ 当前可获得3星</text>
+        <text wx:elif="{{(hasUsedShare && !hasUsedAd) || (!hasUsedShare && hasUsedAd)}}" class="hint-2star">⭐ 当前可获得2星</text>
+      </view>
+
+      <!-- 0星提示（两次复活都使用后显示） -->
+      <view class="star-hint" wx:if="{{hasUsedShare && hasUsedAd}}">
+        <text class="hint-0star">⚠ 使用两次复活，最高只能获得1星</text>
+      </view>
+
+      <view class="modal-close" bindtap="giveUpChallenge">放弃挑战，返回地图</view>
+    </view>
+  </view>
+
+  <!-- 胜利弹窗 -->
+  <view class="modal-mask {{showWinModal ? 'show' : ''}}">
+    <view class="modal-box">
+      <image class="modal-icon-svg" src="/icons/win.svg" mode="aspectFit"></image>
+      <view class="modal-title win-title">密码破解成功！</view>
+      <view class="modal-desc">
+        仅用 <text class="win-steps-highlight">{{totalUsedSteps + usedSteps + 1}}</text> 步看破了真相！
+        <view>不愧是最强大脑。</view>
+        <!-- 显示通关体力奖励 -->
+        <view wx:if="{{strengthReward > 0}}" class="win-strength-reward">
+          <text class="reward-label">获得体力奖励：</text>
+          <text class="reward-value">+{{strengthReward}}⚡</text>
+        </view>
+      </view>
+
+      <button class="btn-primary" bindtap="nextLevel">继续挑战下一关</button>
+      <view class="modal-close" bindtap="backToMap">返回地图</view>
+    </view>
+  </view>
+
+  <!-- 【关卡解锁】解锁弹窗 -->
+  <view class="modal-mask {{showUnlockModal ? 'show' : ''}}">
+    <view class="modal-box unlock-box">
+      <image class="modal-icon-svg" src="/icons/lock.svg" mode="aspectFit"></image>
+      <view class="modal-title">解锁新关卡</view>
+      <view class="unlock-desc">
+        <text>第 {{unlockRangeStart}}-{{unlockRangeEnd}} 关已锁定</text>
+        <view class="unlock-detail">
+          观看广告即可解锁 <text class="unlock-highlight">{{unlockRangeStart}}-{{unlockRangeEnd}}</text> 关
+        </view>
+        <view class="unlock-progress">
+          <text class="progress-text">当前解锁进度：</text>
+          <view class="progress-bar">
+            <view class="progress-fill" style="width: {{(playerProgress.unlockedRangeEnd / 200) * 100}}%"></view>
+          </view>
+          <text class="progress-num">{{playerProgress.unlockedRangeEnd}}/200+</text>
+        </view>
+      </view>
+      
+      <button class="btn-primary btn-unlock" bindtap="watchAdToUnlock">
+        <text class="btn-icon">▶</text>
+        <text>观看广告解锁</text>
+      </button>
+      <view class="modal-close" bindtap="closeUnlockModal">稍后再说</view>
+    </view>
+  </view>
+
+  <!-- 【已通关关卡】查看答案/重新挑战弹窗 -->
+  <view class="modal-mask {{showCompletedLevelModal ? 'show' : ''}}">
+    <view class="modal-box completed-box">
+      <image class="modal-icon-svg" src="/icons/star.svg" mode="aspectFit"></image>
+      <view class="modal-title">第 {{completedLevelId}} 关已通关</view>
+      <view class="completed-stars">
+        <text class="completed-stars-label">当前星级：</text>
+        <block wx:for="{{[0, 1, 2]}}" wx:for-item="starIdx" wx:key="starIdx">
+          <image wx:if="{{starIdx < completedLevelStars}}" class="completed-star-icon" src="/icons/star.svg" mode="aspectFit"></image>
+          <image wx:else class="completed-star-icon" src="/icons/graystar.svg" mode="aspectFit"></image>
+        </block>
+      </view>
+      <view class="modal-desc">
+        <text wx:if="{{completedLevelStars === 3}}">完美通关！3星关卡无法重新挑战</text>
+        <text wx:else>重新挑战需要消耗 {{strengthCostPerGame}} 体力</text>
+      </view>
+      
+      <!-- 查看答案按钮 -->
+      <button class="btn-primary" bindtap="viewCompletedLevelAnswer">
+        <text>查看答案</text>
+      </button>
+      
+      <!-- 重新挑战按钮（3星关卡不显示） -->
+      <button 
+        wx:if="{{completedLevelStars < 3}}"
+        class="btn-secondary" 
+        bindtap="retryCompletedLevel"
+      >
+        <text>重新挑战</text>
+      </button>
+      
+      <view class="modal-close" bindtap="closeCompletedLevelModal">返回地图</view>
+    </view>
+  </view>
+
+  <!-- 【体力不足】弹窗 -->
+  <view class="modal-mask {{showStrengthModal ? 'show' : ''}}">
+    <view class="modal-box strength-box">
+      <image class="modal-icon-svg" src="/icons/strength2.svg" mode="aspectFit"></image>
+      <view class="modal-title">体力不足</view>
+      <view class="strength-info">
+        <text class="strength-current">当前体力：{{strength}}/{{strengthCap}}</text>
+        <text class="strength-needed">需要体力：{{strengthCostPerGame}}</text>
+        <text class="strength-recover">每分钟恢复 {{strengthRecoverPerMinute}} 点体力（最多到{{strengthCap}}）</text>
+      </view>
+      
+      <!-- 看广告获得体力按钮 -->
+      <button class="btn-primary" bindtap="watchAdForStrength">
+        <text class="btn-icon">▶</text>
+        <text>观看广告恢复体力</text>
+      </button>
+      
+      <view class="modal-close" bindtap="closeStrengthModal">等待恢复</view>
+    </view>
+  </view>
+
+  <!-- 【体力确认】挑战新关卡确认弹窗 -->
+  <view class="modal-mask {{showStrengthConfirmModal ? 'show' : ''}}">
+    <view class="modal-box strength-confirm-box">
+      <!-- 体力图标 -->
+      <view class="strength-confirm-icon">
+        <image class="confirm-icon-img" src="/icons/strength2.svg" mode="aspectFit"></image>
+        <view class="confirm-cost-badge">-{{strengthCostPerGame}}</view>
+      </view>
+      
+      <view class="modal-title">准备挑战</view>
+      
+      <view class="strength-confirm-info">
+        <view class="confirm-level">第 {{pendingLevelId}} 关</view>
+        <view class="confirm-divider"></view>
+        <view class="confirm-cost-row">
+          <text class="confirm-label">挑战消耗</text>
+          <text class="confirm-value">{{strengthCostPerGame}} 体力</text>
+        </view>
+        <view class="confirm-balance-row">
+          <text class="confirm-label">当前拥有</text>
+          <text class="confirm-balance {{strength < strengthCostPerGame ? 'insufficient' : ''}}">{{strength}} 体力</text>
+        </view>
+      </view>
+      
+      <!-- 按钮区域 -->
+      <view class="confirm-btn-group">
+        <button class="btn-cancel" bindtap="closeStrengthConfirmModal">返回</button>
+        <button 
+          wx:if="{{strength >= strengthCostPerGame}}"
+          class="btn-confirm" 
+          bindtap="confirmStartLevel"
+        >
+          <text>继续挑战</text>
+        </button>
+        <button 
+          wx:if="{{strength < strengthCostPerGame}}"
+          class="btn-watch-ad" 
+          bindtap="watchAdFromConfirmModal"
+        >
+          <text class="btn-icon">▶</text>
+          <text>观看广告</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 【AB提示】首次进入游戏提示弹窗 -->
+  <view class="modal-mask {{showABTipModal ? 'show' : ''}}">
+    <view class="modal-box ab-tip-box">
+      <image class="ab-tip-icon" src="/icons/tips.svg" mode="aspectFit"></image>
+      <view class="modal-title">游戏提示</view>
+
+      <view class="ab-tip-content">
+        <view class="ab-tip-row">
+          <view class="ab-badge ab-a">A</view>
+          <text class="ab-text">数字和位置都对</text>
+        </view>
+        <view class="ab-tip-row">
+          <view class="ab-badge ab-b">B</view>
+          <text class="ab-text">数字对但位置不对</text>
+        </view>
+      </view>
+
+      <!-- 不再提示选项 -->
+      <view class="do-not-show-row" bindtap="toggleDoNotShowAgain">
+        <view class="checkbox {{abTipDoNotShowAgain ? 'checked' : ''}}">
+          <text wx:if="{{abTipDoNotShowAgain}}">✓</text>
+        </view>
+        <text class="do-not-show-text">不再提示</text>
+      </view>
+      
+      <!-- 了解按钮 -->
+      <button class="btn-primary btn-understand" bindtap="closeABTipModal">了解</button>
+    </view>
+  </view>
+
+</view>

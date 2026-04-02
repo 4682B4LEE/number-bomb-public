@@ -1,0 +1,469 @@
+<!-- 背景波点 -->
+<view class="bg-pattern"></view>
+
+<!-- ================= 主视图：规则列表 ================= -->
+<view class="page-container view-container {{currentView === 'main' ? 'active' : ''}}">
+    <!-- 头部 -->
+    <view class="header">
+        <view class="back-btn" bindtap="goBack">❮</view>
+        <view class="page-title">游戏规则</view>
+    </view>
+
+    <!-- 规则列表 -->
+    <view class="rule-list">
+        
+        <!-- 01 猜数字规则 -->
+        <view class="rule-card">
+            <view class="card-header theme-red">
+                <view class="icon">01</view>
+                <text>猜数字模式</text>
+                <view class="detail-link" bindtap="switchView" data-view="detail-guess">规则详情 ❯</view>
+            </view>
+            <view class="card-body">
+                <view class="rule-item">
+                    <text class="rule-number">1.</text>
+                    <text class="rule-text">游戏开始前，可自由选择 <text class="bold">3位、4位 或 5位数</text> 的难度进行挑战。</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-number">2.</text>
+                    <text class="rule-text">每次猜测后系统会给出提示，<text class="bold">只有数字和位数（位置）均正确</text>才算成功。</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-number">3.</text>
+                    <text class="rule-text">双人模式下，双方各设定一个秘密数字，轮流猜测对方的数字，先猜中者获胜！</text>
+                </view>
+            </view>
+        </view>
+
+        <!-- 02 猜颜色规则 -->
+        <view class="rule-card">
+            <view class="card-header theme-yellow">
+                <view class="icon">02</view>
+                <text>猜颜色模式</text>
+                <view class="detail-link" bindtap="switchView" data-view="detail-color">规则详情 ❯</view>
+            </view>
+            <view class="card-body">
+                <view class="rule-item">
+                    <text class="rule-number">1.</text>
+                    <text class="rule-text">游戏开始前，可自由选择 <text class="bold">颜色可重复</text> 或 <text class="bold">颜色不重复</text> 两种难度模式。</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-number">2.</text>
+                    <text class="rule-text">每次猜测后系统会给出提示，<text class="bold">颜色和位置均正确</text>才算完全命中。</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-number">3.</text>
+                    <text class="rule-text">双人模式下，由系统出题后双方轮流猜颜色，先猜中者获胜！</text>
+                </view>
+            </view>
+        </view>
+
+        <!-- 03 联机对战规则 -->
+        <view class="rule-card">
+            <view class="card-header theme-blue">
+                <view class="icon">03</view>
+                <text>联机对战模式</text>
+                <view class="detail-link" bindtap="switchView" data-view="detail-online">规则详情 ❯</view>
+            </view>
+            <view class="card-body">
+                <view class="rule-item">
+                    <text class="rule-number">1.</text>
+                    <text class="rule-text">联机对战支持 <text class="bold">猜数字</text> 和 <text class="bold">猜颜色</text> 两种经典游戏模式。</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-number">2.</text>
+                    <text class="rule-text">玩家可以自行创建房间并配置规则，或输入 <text class="bold">6位房间号</text> 加入好友的对局。</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-number">3.</text>
+                    <text class="rule-text">新增特色 <text class="bold">快枪手（对决）模式</text>，限制每轮作答时间，超时将自动判负。</text>
+                </view>
+            </view>
+        </view>
+
+        <!-- 04 残局挑战规则 -->
+        <view class="rule-card">
+            <view class="card-header theme-purple">
+                <view class="icon">04</view>
+                <text>残局挑战模式</text>
+                <view class="detail-link" bindtap="switchView" data-view="detail-puzzle">规则详情 ❯</view>
+            </view>
+            <view class="card-body">
+                <view class="rule-item">
+                    <text class="rule-number">1.</text>
+                    <text class="rule-text">根据给出的线索推理出 <text class="bold">4位密码</text>，每关都有固定步数限制。</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-number">2.</text>
+                    <text class="rule-text">每次猜测后获得 <text class="bold">A/B提示</text>：A表示数字和位置都对，B表示数字对但位置不对。</text>
+                </view>
+                <view class="rule-item">
+                    <text class="rule-number">3.</text>
+                    <text class="rule-text">挑战需消耗 <text class="bold">20体力</text>，通关可获得星级评价和体力奖励，3星完美通关不可重复挑战。</text>
+                </view>
+            </view>
+        </view>
+
+    </view>
+
+    <view class="footer-tips">
+        祝大家游戏愉快，远离洗碗池！
+    </view>
+</view>
+
+<!-- ================= 详情视图：猜数字规则详情 ================= -->
+<view class="page-container view-container {{currentView === 'detail-guess' ? 'active' : ''}}">
+    <!-- 头部 -->
+    <view class="header">
+        <view class="back-btn" bindtap="goBack">❮</view>
+        <view class="page-title">猜数字模式详则</view>
+    </view>
+
+    <!-- Section 1: 游戏设置 -->
+    <view class="section-card">
+        <view class="section-title">难度选择</view>
+        <view class="desc-text">游戏开始前，你需要选择要猜测数字的长度（位数）。位数越多，难度越大！</view>
+        <view class="ui-mockup">
+            <view class="digit-box">3</view>
+            <view class="digit-box active">4</view>
+            <view class="digit-box">5</view>
+        </view>
+    </view>
+
+    <!-- Section 2: 核心判定规则 -->
+    <view class="section-card">
+        <view class="section-title">核心判定规则</view>
+        <view class="desc-text">每次输入你猜测的数字后，系统会给出一个判定结果。<text class="bold">只有数字和位数（位置）均完全正确</text>才算命中。</view>
+        
+        <view class="history-row">
+            <view class="h-round">#1</view>
+            <view class="h-nums">
+                <view class="h-num">8</view><view class="h-num">5</view><view class="h-num">2</view><view class="h-num">0</view>
+            </view>
+            <view class="h-result"><text class="correct">0</text>/4</view>
+        </view>
+        
+        <view class="desc-text tip-box">
+            <text>💡 </text><text class="bold">怎么看结果？</text>\n
+            <text>右侧的 <text class="highlight">0/4</text> 代表：在刚刚猜的 4 个数字中，有 <text class="highlight">0</text> 个数字是“数值对且位置也对”的。</text>\n
+            <text>遇到困难时，可以点击右上角的</text><text class="bold">“提示”</text><text>按钮获取帮助！</text>
+        </view>
+    </view>
+
+    <!-- Section 3: 游戏模式 -->
+    <view class="section-card">
+        <view class="section-title">玩法模式</view>
+        <view class="mode-split">
+            <view class="mode-box">
+                <view class="mode-icon">👤</view>
+                <view class="mode-name">单人挑战</view>
+                <view class="mode-desc">系统随机生成一组神秘数字。用最少的次数推断出正确答案，挑战你的逻辑极限！</view>
+            </view>
+            <view class="mode-box mode-box-active">
+                <view class="mode-icon">⚔️</view>
+                <view class="mode-name highlight">本地双人</view>
+                <view class="mode-desc">双方各自暗中设定一串数字。随后双方轮流进行猜测，<text class="bold">谁先猜中对方的数字，谁就获得最终胜利！</text></view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<!-- ================= 详情视图：猜颜色规则详情 ================= -->
+<view class="page-container view-container {{currentView === 'detail-color' ? 'active' : ''}}">
+    <!-- 头部 -->
+    <view class="header">
+        <view class="back-btn" bindtap="goBack">❮</view>
+        <view class="page-title">颜色模式详则</view>
+    </view>
+
+    <!-- Section 1: 颜色模式选择 -->
+    <view class="section-card">
+        <view class="section-title yellow">颜色模式</view>
+        <view class="desc-text">根据你的记忆力和逻辑推理能力，选择不同的颜色排列规则：</view>
+        
+        <view class="color-mode-btn active">
+            <view class="color-icon-group">
+                <view class="c-dot c-red"></view><view class="c-dot c-green"></view>
+                <view class="c-dot c-blue"></view><view class="c-dot c-red"></view>
+            </view>
+            <view class="c-mode-text">颜色可重复 <text class="c-mode-sub">最多一个颜色相同</text></view>
+        </view>
+        
+        <view class="color-mode-btn">
+            <view class="color-icon-group">
+                <view class="c-dot c-red"></view><view class="c-dot c-green"></view>
+                <view class="c-dot c-blue"></view><view class="c-dot c-yellow"></view>
+            </view>
+            <view class="c-mode-text">颜色不重复 <text class="c-mode-sub">四个颜色都不同</text></view>
+        </view>
+    </view>
+
+    <!-- Section 2: 核心判定规则 -->
+    <view class="section-card">
+        <view class="section-title yellow">核心判定规则</view>
+        <view class="desc-text">每次提交颜色组合后，系统会给出圆点提示。你需要根据提示不断调整策略。</view>
+        
+        <view class="color-history-row">
+            <view class="ch-left">
+                <view class="ch-round">1</view>
+                <view class="ch-player">P1</view>
+            </view>
+            <view class="ch-colors">
+                <view class="ch-color-ball c-red"></view><view class="ch-color-ball c-green"></view>
+                <view class="ch-color-ball c-blue"></view><view class="ch-color-ball c-purple"></view>
+            </view>
+            <view class="ch-hints">
+                <view class="hint-dot empty"></view><view class="hint-dot empty"></view><view class="hint-dot empty"></view>
+            </view>
+        </view>
+
+        <view class="color-history-row">
+            <view class="ch-left">
+                <view class="ch-round">2</view>
+                <view class="ch-player">P1</view>
+            </view>
+            <view class="ch-colors">
+                <view class="ch-color-ball c-purple"></view><view class="ch-color-ball c-yellow"></view>
+                <view class="ch-color-ball c-green"></view><view class="ch-color-ball c-blue"></view>
+            </view>
+            <view class="ch-hints">
+                <view class="hint-dot full"></view><view class="hint-dot empty"></view><view class="hint-dot empty"></view><view class="hint-dot empty"></view>
+            </view>
+        </view>
+
+        <view class="hint-legend">
+            <view class="legend-item"><view class="hint-dot full"></view> 位置和颜色都对</view>
+            <view class="legend-item"><view class="hint-dot empty"></view> 颜色对位置错</view>
+        </view>
+
+        <!-- 补充规则：次数限制 -->
+        <view class="limit-box">
+            <text>⚠️ 注意：无论是单人还是双人模式，都需要在 <text class="bold">8次</text> 内猜对颜色。第 8 次仍未猜中则直接判负！</text>
+        </view>
+    </view>
+
+    <!-- Section 3: 游戏模式 -->
+    <view class="section-card">
+        <view class="section-title yellow">玩法模式</view>
+        <view class="mode-split">
+            <view class="mode-box">
+                <view class="mode-icon">👤</view>
+                <view class="mode-name">单人挑战</view>
+                <view class="mode-desc">系统出题。用最少的次数推断出正确颜色顺序，挑战思维极限！</view>
+            </view>
+            <view class="mode-box mode-box-active">
+                <view class="mode-icon">⚔️</view>
+                <view class="mode-name highlight">本地双人</view>
+                <view class="mode-desc">由<text class="highlight">系统生成</text>一组神秘颜色。随后双方轮流进行猜测，<text class="bold">谁先猜中正确答案，谁就获得最终胜利！</text></view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<!-- ================= 详情视图：残局挑战规则详情 ================= -->
+<view class="page-container view-container {{currentView === 'detail-puzzle' ? 'active' : ''}}">
+    <!-- 头部 -->
+    <view class="header">
+        <view class="back-btn" bindtap="goBack">❮</view>
+        <view class="page-title">残局挑战详则</view>
+    </view>
+
+    <!-- Section 1: 游戏目标 -->
+    <view class="section-card">
+        <view class="section-title purple">游戏目标</view>
+        <view class="desc-text">根据系统给出的线索，运用逻辑推理解开 <text class="bold">4位数字密码</text>。每关都有预设线索和步数限制，考验你的推理能力！</view>
+        
+        <view class="puzzle-mockup">
+            <view class="pm-title">找出4位密码</view>
+            <view class="pm-clues">
+                <view class="pm-clue-row">
+                    <view class="pm-clue-nums">
+                        <view class="pm-num">1</view>
+                        <view class="pm-num">2</view>
+                        <view class="pm-num">3</view>
+                        <view class="pm-num">4</view>
+                    </view>
+                    <view class="pm-result"><text class="pm-a">1</text>A <text class="pm-b">2</text>B</view>
+                </view>
+                <view class="pm-clue-row">
+                    <view class="pm-clue-nums">
+                        <view class="pm-num">5</view>
+                        <view class="pm-num">6</view>
+                        <view class="pm-num">7</view>
+                        <view class="pm-num">8</view>
+                    </view>
+                    <view class="pm-result"><text class="pm-a">0</text>A <text class="pm-b">1</text>B</view>
+                </view>
+            </view>
+        </view>
+    </view>
+
+    <!-- Section 2: AB提示规则 -->
+    <view class="section-card">
+        <view class="section-title purple">AB提示规则</view>
+        <view class="desc-text">每次猜测后，系统会给出A和B的提示，帮助你逐步缩小答案范围：</view>
+        
+        <view class="ab-hint-box">
+            <view class="ab-hint-item">
+                <view class="ab-badge ab-a">A</view>
+                <view class="ab-hint-text">
+                    <view class="ab-hint-title">数字和位置都对</view>
+                    <view class="ab-hint-desc">猜测的数字中，有几个数字不仅数值正确，位置也完全正确</view>
+                </view>
+            </view>
+            <view class="ab-divider"></view>
+            <view class="ab-hint-item">
+                <view class="ab-badge ab-b">B</view>
+                <view class="ab-hint-text">
+                    <view class="ab-hint-title">数字对但位置不对</view>
+                    <view class="ab-hint-desc">猜测的数字中，有几个数字数值正确，但位置不正确</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="desc-text tip-box">
+            <text>💡 </text><text class="bold">举例说明：</text>
+            <text>如果答案是 9012，你猜 1234，得到 <text class="highlight">1A 1B</text>：
+            1A 表示数字1位置正确，1B 表示数字2存在但位置不对。</text>
+        </view>
+    </view>
+
+    <!-- Section 3: 体力与星级系统 -->
+    <view class="section-card">
+        <view class="section-title purple">体力与星级系统</view>
+        
+        <view class="puzzle-feature-row">
+            <view class="pf-icon">⚡</view>
+            <view class="pf-content">
+                <view class="pf-title">体力消耗</view>
+                <view class="pf-desc">每次挑战需消耗 <text class="bold">20体力</text>，体力会随时间恢复（2体力/分钟），也可通过观看广告快速恢复</view>
+            </view>
+        </view>
+
+        <view class="puzzle-feature-row">
+            <view class="pf-icon">⭐</view>
+            <view class="pf-content">
+                <view class="pf-title">星级评价</view>
+                <view class="pf-desc">
+                    <text class="star-line"><text class="star">★★★</text> 无复活通关</text>
+                    <text class="star-line"><text class="star">★★☆</text> 使用1次复活</text>
+                    <text class="star-line"><text class="star">★☆☆</text> 使用2次复活</text>
+                </view>
+            </view>
+        </view>
+
+        <view class="puzzle-feature-row">
+            <view class="pf-icon">🎁</view>
+            <view class="pf-content">
+                <view class="pf-title">通关奖励</view>
+                <view class="pf-desc">
+                    <text class="reward-line"><text class="star">★★★</text> +30体力</text>
+                    <text class="reward-line"><text class="star">★★☆</text> +20体力</text>
+                    <text class="reward-line"><text class="star">★☆☆</text> +10体力</text>
+                </view>
+            </view>
+        </view>
+
+        <view class="limit-box purple-box">
+            <text>⚠️ 注意：3星完美通关的关卡无法重新挑战，其他星级可消耗体力重新挑战以获取更高星级。</text>
+        </view>
+    </view>
+
+    <!-- Section 4: 复活机制 -->
+    <view class="section-card">
+        <view class="section-title purple">复活机制</view>
+        <view class="desc-text">步数耗尽时，你可以通过以下方式复活，继续挑战：</view>
+        
+        <view class="revive-options">
+            <view class="revive-item">
+                <view class="revive-icon">📤</view>
+                <view class="revive-info">
+                    <view class="revive-name">分享复活</view>
+                    <view class="revive-desc">分享游戏给好友，步数 <text class="bold">+2</text>（每关限1次）</view>
+                </view>
+            </view>
+            <view class="revive-item">
+                <view class="revive-icon">📺</view>
+                <view class="revive-info">
+                    <view class="revive-name">广告复活</view>
+                    <view class="revive-desc">观看激励视频，步数 <text class="bold">+3</text>（每关限1次）</view>
+                </view>
+            </view>
+        </view>
+
+        <view class="desc-text tip-box">
+            <text>💡 </text><text class="bold">策略提示：</text>
+            <text>复活次数会影响最终星级评价，尽量在关键时刻使用，争取3星完美通关！</text>
+        </view>
+    </view>
+</view>
+
+<!-- ================= 详情视图：联机对战规则详情 ================= -->
+<view class="page-container view-container {{currentView === 'detail-online' ? 'active' : ''}}">
+    <!-- 头部 -->
+    <view class="header">
+        <view class="back-btn" bindtap="goBack">❮</view>
+        <view class="page-title">联机对战详则</view>
+    </view>
+
+    <!-- Section 1: 房间机制 -->
+    <view class="section-card">
+        <view class="section-title blue">加入与创建房间</view>
+        <view class="desc-text">您可以自定义设置并创建对战房间，也可以通过房间号快速加入好友的对局。</view>
+        
+        <view class="online-mockup">
+            <view class="om-title">加入房间</view>
+            <view class="om-input-box">输 入 6 位 房 间 号</view>
+            <view class="om-btn">加入房间</view>
+        </view>
+    </view>
+
+    <!-- Section 2: 游戏设置 -->
+    <view class="section-card">
+        <view class="section-title blue">丰富的游戏设置</view>
+        <view class="desc-text">房主在创建房间时，可以灵活搭配不同的游戏模式和难度规则：</view>
+        
+        <view class="setting-row">
+            <view class="setting-info">
+                <view class="setting-name">游戏模式</view>
+                <view class="setting-desc">支持猜数字、猜颜色两种经典玩法。</view>
+            </view>
+            <view class="setting-tags">
+                <view class="s-tag">猜数字</view>
+                <view class="s-tag tag-yellow">猜颜色</view>
+            </view>
+        </view>
+
+        <view class="setting-row">
+            <view class="setting-info">
+                <view class="setting-name">难度配置</view>
+                <view class="setting-desc">可选择数字位数（3-5位）、颜色是否可重复。</view>
+            </view>
+        </view>
+
+        <view class="setting-row">
+            <view class="setting-info">
+                <view class="setting-name">对局时长</view>
+                <view class="setting-desc">可设置整场对局的总时间限制（如10分钟、15分钟或不限）。</view>
+            </view>
+        </view>
+    </view>
+
+    <!-- Section 3: 快枪手模式 -->
+    <view class="section-card">
+        <view class="section-title blue title-red">⚡ 快枪手（对决）模式</view>
+        <view class="desc-text">想体验让人肾上腺素飙升的刺激感吗？开启“快枪手”模式，你的每一次思考都必须争分夺秒！</view>
+        
+        <view class="setting-row setting-row-active">
+            <view class="setting-info">
+                <view class="setting-name text-red">快枪手</view>
+                <view class="setting-desc">每轮 <text class="text-red bold">10秒</text> 作答时间，超时直接判负</view>
+            </view>
+            <view class="toggle-switch"></view>
+        </view>
+        
+        <view class="desc-text text-sm">
+            * 核心游戏胜负判定规则与单机版的“猜数字”、“猜颜色”一致，具体可参考对应模式的规则说明。
+        </view>
+    </view>
+</view>

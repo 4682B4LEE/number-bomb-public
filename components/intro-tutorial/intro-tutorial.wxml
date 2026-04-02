@@ -1,0 +1,36 @@
+<!-- 引导式新手教程组件 -->
+<!-- 使用遮罩层和镂空高亮效果实现 -->
+<view wx:if="{{visible}}" class="tutorial-container">
+  <!-- 遮罩层：使用 box-shadow 实现镂空效果 -->
+  <view 
+    class="highlight-box"
+    style="top: {{highlightTop}}px; left: {{highlightLeft}}px; width: {{highlightWidth}}px; height: {{highlightHeight}}px;"
+  ></view>
+
+  <!-- 气泡提示框 -->
+  <view 
+    class="bubble-box"
+    style="top: {{bubbleTop}}px;"
+  >
+    <!-- 气泡内容 -->
+    <view class="bubble-content">
+      <text class="bubble-text">{{currentStepText}}</text>
+    </view>
+
+    <!-- 进度指示器 -->
+    <view class="bubble-footer">
+      <text class="progress-text">{{currentStepIndex + 1}}/{{totalSteps}}</text>
+      
+      <!-- 按钮区域 -->
+      <view class="button-group">
+        <!-- 跳过按钮 -->
+        <view class="skip-btn" bindtap="onSkip">跳过</view>
+        
+        <!-- 下一步/开始游戏按钮 -->
+        <view class="next-btn {{isLastStep ? 'start-btn' : ''}}" bindtap="onNext">
+          {{isLastStep ? '开始游戏' : '下一步'}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

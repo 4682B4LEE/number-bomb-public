@@ -1,0 +1,208 @@
+<!-- 每日挑战 - 猜颜色页面 - 复刻单机猜颜色页面，集成结算弹窗 -->
+<view class="container bg-p1">
+  <!-- 猜测历史 -->
+  <view class="history-section">
+    <!-- 猜测历史标题栏：左侧模式标签 + 中间标题 + 右侧计时器 -->
+    <view class="history-title-bar">
+      <view class="mode-badge-small {{allowRepeat ? 'mode-repeat' : 'mode-unique'}}">
+        <text>{{allowRepeat ? '可重复' : '不重复'}}</text>
+      </view>
+      <text class="history-title-text">猜测历史</text>
+      <view class="timer-badge-small">
+        <text class="timer-icon-small">⏱</text>
+        <text class="timer-text-small">{{formattedTime}}</text>
+      </view>
+    </view>
+    <scroll-view class="history-list" scroll-y>
+      <view
+        wx:for="{{playerGuesses}}"
+        wx:key="index"
+        class="history-item item-p1"
+      >
+        <view class="guess-info">
+          <view class="guess-number">{{index + 1}}</view>
+          <view class="player-tag tag-p1">P1</view>
+        </view>
+        <view class="guess-colors">
+          <view
+            wx:for="{{item.colors}}"
+            wx:for-item="color"
+            wx:key="*this"
+            class="history-color {{color}}"
+          ></view>
+        </view>
+        <view class="guess-hints">
+          <view class="hint-red" wx:for="{{item.redHints}}" wx:key="*this"></view>
+          <view class="hint-white" wx:for="{{item.whiteHints}}" wx:key="*this"></view>
+        </view>
+      </view>
+      <view wx:if="{{playerGuesses.length === 0}}" class="empty-history">
+        <text>游戏开始</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 底部控制区域 -->
+  <view class="control-section">
+    <!-- 回合徽章 -->
+    <view class="turn-badge p1">
+      <text>每日挑战</text>
+    </view>
+
+    <!-- 输入区域 -->
+    <view class="input-section">
+      <view class="colors-display">
+        <view
+          wx:for="{{displayColors}}"
+          wx:key="index"
+          class="color-box {{item ? '' : 'color-box-empty'}} {{editIndex === index ? 'color-box-editing' : ''}}"
+          bindtap="onColorBoxTap"
+          data-index="{{index}}"
+        >
+          <view wx:if="{{item}}" class="color-fill {{item}}"></view>
+          <view wx:if="{{editIndex === index}}" class="edit-indicator"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 颜色选择键盘 -->
+    <view class="color-keypad">
+      <view class="color-keypad-row">
+        <view class="color-key" bindtap="onColorPress" data-color="red">
+          <view class="color-key-fill red"></view>
+        </view>
+        <view class="color-key" bindtap="onColorPress" data-color="green">
+          <view class="color-key-fill green"></view>
+        </view>
+        <view class="color-key" bindtap="onColorPress" data-color="blue">
+          <view class="color-key-fill blue"></view>
+        </view>
+      </view>
+      <view class="color-keypad-row">
+        <view class="color-key" bindtap="onColorPress" data-color="yellow">
+          <view class="color-key-fill yellow"></view>
+        </view>
+        <view class="color-key" bindtap="onColorPress" data-color="purple">
+          <view class="color-key-fill purple"></view>
+        </view>
+        <view class="color-key" bindtap="onColorPress" data-color="gray">
+          <view class="color-key-fill gray"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="action-row">
+      <view class="action-key" bindtap="onClear">
+        <text>清空</text>
+      </view>
+      <button
+        class="confirm-btn {{canConfirm ? 'btn-p1' : 'btn-disabled'}}"
+        bindtap="onConfirm"
+        disabled="{{!canConfirm}}"
+      >
+        <text>提交</text>
+      </button>
+    </view>
+
+    <!-- 提示说明 -->
+    <view class="hint-legend">
+      <view class="legend-item">
+        <view class="legend-dot red-dot"></view>
+        <text class="legend-text">位置和颜色都对</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-dot white-dot"></view>
+        <text class="legend-text">颜色对位置错</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 结算弹窗（胜利/失败） -->
+  <view class="result-modal-mask" wx:if="{{showResultModal}}" bindtap="preventTouchMove">
+    <view class="result-modal-content">
+      <!-- 胜利弹窗 -->
+      <block wx:if="{{resultType === 'win'}}">
+        <view class="trophy-area">
+          <view class="trophy-glow"></view>
+          <view class="trophy-icon">🏆</view>
+          <view class="sparkle star-1">✦</view>
+          <view class="sparkle star-2">✦</view>
+        </view>
+
+        <view class="winner-section">
+          <text class="victory-title">挑战成功！</text>
+          <view class="winner-badge badge-p1">
+            <text class="winner-label-small">WINNER</text>
+            <text class="winner-name">我</text>
+          </view>
+        </view>
+
+        <view class="answer-section">
+          <text class="answer-label">正确答案</text>
+          <view class="answer-colors">
+            <view wx:for="{{resultData.secretColors}}" wx:key="index" class="answer-color {{item}}"></view>
+          </view>
+        </view>
+
+        <view class="stats-grid">
+          <view class="stat-box">
+            <text class="stat-num">{{resultData.guessCount}}</text>
+            <text class="stat-label">猜测次数</text>
+          </view>
+          <view class="stat-box">
+            <text class="stat-num">{{resultData.timeUsed}}s</text>
+            <text class="stat-label">用时</text>
+          </view>
+        </view>
+      </block>
+
+      <!-- 失败弹窗 -->
+      <block wx:if="{{resultType === 'lose'}}">
+        <view class="trophy-area">
+          <view class="trophy-icon" style="filter: grayscale(100%);">😔</view>
+        </view>
+
+        <view class="winner-section">
+          <text class="victory-title" style="color: #6b7280;">挑战失败</text>
+          <text class="fail-subtitle">8次机会已用完</text>
+        </view>
+
+        <view class="answer-section">
+          <text class="answer-label">正确答案</text>
+          <view class="answer-colors">
+            <view wx:for="{{resultData.secretColors}}" wx:key="index" class="answer-color {{item}}"></view>
+          </view>
+        </view>
+
+        <view class="stats-grid">
+          <view class="stat-box">
+            <text class="stat-num" style="color: #6b7280;">{{resultData.guessCount}}</text>
+            <text class="stat-label">猜测次数</text>
+          </view>
+          <view class="stat-box">
+            <text class="stat-num" style="color: #6b7280;">{{resultData.timeUsed}}s</text>
+            <text class="stat-label">用时</text>
+          </view>
+        </view>
+      </block>
+
+      <!-- 按钮区域 -->
+      <view class="button-section">
+        <view class="btn-wrapper" bindtap="goToRank">
+          <view class="btn-shadow btn-shadow-yellow"></view>
+          <view class="btn-main btn-yellow">
+            <text>查看排行榜</text>
+          </view>
+        </view>
+
+        <view class="btn-wrapper" bindtap="goHome">
+          <view class="btn-shadow btn-shadow-gray"></view>
+          <view class="btn-main btn-gray">
+            <text>返回首页</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

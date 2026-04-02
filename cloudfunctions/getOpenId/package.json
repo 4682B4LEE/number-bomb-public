@@ -1,0 +1,7 @@
+{
+  "name": "getOpenId",
+  "version": "1.0.0",
+  "description": "获取用户 OpenID",
+  "main": "index.js",
+  "dependencies": {}
+}

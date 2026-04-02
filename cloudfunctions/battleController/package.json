@@ -1,0 +1,9 @@
+{
+  "name": "battleController",
+  "version": "1.0.0",
+  "description": "联机对战控制器",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

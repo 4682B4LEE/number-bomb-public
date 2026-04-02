@@ -1,0 +1,80 @@
+<!-- 猜颜色游戏结束页 - Victor Design -->
+<view class="container">
+  <!-- 背景纹理 -->
+  <view class="noise-bg"></view>
+
+  <!-- 模糊背景层 -->
+  <view class="blur-bg"></view>
+
+  <!-- 核心卡片容器 -->
+  <view class="outer-card">
+    <!-- 内层白色卡片 -->
+    <view class="inner-card">
+
+      <!-- 顶部灰色光效背景 -->
+      <view class="gray-glow"></view>
+
+      <!-- 结束图标区 -->
+      <view class="gameover-area">
+        <!-- 背后光晕 -->
+        <view class="gameover-glow"></view>
+
+        <!-- 结束图标 -->
+        <view class="gameover-icon">✕</view>
+      </view>
+
+      <!-- 标题 -->
+      <view class="title-section">
+        <text class="gameover-title">游戏结束</text>
+        <text class="gameover-subtitle">已达到最大猜测次数</text>
+      </view>
+
+      <!-- 正确答案展示区 -->
+      <view class="answer-section">
+        <text class="answer-label">正确答案</text>
+        <view class="answer-colors">
+          <view
+            wx:for="{{secretColors}}"
+            wx:key="index"
+            class="answer-color {{item}}"
+            style="animation-delay: {{index * 100}}ms"
+          ></view>
+        </view>
+      </view>
+
+      <!-- 数据统计网格 -->
+      <view class="stats-grid">
+        <view class="stat-box">
+          <text class="stat-num">{{totalGuesses}}</text>
+          <text class="stat-label">总猜测次数</text>
+        </view>
+        <view class="stat-box">
+          <text class="stat-mode">{{gameModeText}}</text>
+          <text class="stat-label">游戏模式</text>
+        </view>
+      </view>
+
+      <!-- 底部操作按钮 (实体按键风格) -->
+      <view class="button-section">
+        <!-- 再来一局 (主按钮 - 蓝色) -->
+        <view class="btn-wrapper" bindtap="restartGame">
+          <view class="btn-shadow btn-shadow-blue"></view>
+          <view class="btn-main btn-blue">
+            <text>再来一局</text>
+            <text class="btn-icon">↻</text>
+          </view>
+        </view>
+
+        <!-- 返回首页 (次要按钮 - 灰色) -->
+        <view class="btn-wrapper" bindtap="goHome">
+          <view class="btn-shadow btn-shadow-gray"></view>
+          <view class="btn-main btn-gray">
+            <text>返回首页</text>
+            <text class="btn-icon">⌂</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</view>

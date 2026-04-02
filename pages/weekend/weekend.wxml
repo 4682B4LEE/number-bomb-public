@@ -1,0 +1,77 @@
+<!-- 背景波点 -->
+<view class="bg-pattern"></view>
+
+<!-- 页面容器 -->
+<view class="page-container">
+  <!-- 头部 -->
+  <view class="header">
+    <view class="back-btn" bindtap="goBack">❮</view>
+    <view class="page-title">疯狂周末活动</view>
+  </view>
+
+  <!-- 卡片 1：活动说明 -->
+  <view class="section-card">
+    <view class="section-title">
+      <view class="title-bar"></view>
+      <text>活动说明</text>
+    </view>
+    <view class="card-content">
+      <view class="content-item">
+        <text class="item-label">活动时间：</text>
+        <text class="item-value highlight">3月21日、3月22日</text>
+      </view>
+      <view class="content-item">
+        <text class="item-label">参与方式：</text>
+        <text class="item-value">参与 <text class="bold">【每日挑战】</text> 模式并挑战成功（成绩被有效记录）</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 卡片 2：评判标准 -->
+  <view class="section-card">
+    <view class="section-title">
+      <view class="title-bar"></view>
+      <text>评判标准</text>
+    </view>
+    <view class="card-content">
+      <view class="content-text">
+        系统将根据你的<text class="bold">「猜对所用次数」</text>和<text class="bold">「通关最短用时」</text>进行综合排名
+      </view>
+    </view>
+  </view>
+
+  <!-- 卡片 3：奖励与领取 -->
+  <view class="section-card">
+    <view class="section-title">
+      <view class="title-bar"></view>
+      <text>奖励与领取</text>
+    </view>
+    <view class="card-content">
+      <view class="content-text reward-text">
+        当天24:00结算时，位列<text class="highlight">【排行榜第一名】</text>的玩家，<text class="bold">星星人美时美刻系列毛绒挂件盲盒</text>直接送你！每天1个，共计2个名额！
+      </view>
+      
+      <!-- 提示框 -->
+      <view class="tip-box">
+        <view class="tip-header">
+          <text class="tip-icon">💡</text>
+          <text class="tip-title">怎么领奖？</text>
+        </view>
+        <view class="tip-content">
+          添加下方助手微信，核实排名后即可领取盲盒奖励！
+        </view>
+      </view>
+
+      <!-- 微信号展示条 -->
+      <view class="wechat-id-box">
+        <text class="wechat-id">SSSXW2026</text>
+        <view class="copy-btn" bindtap="copyWechat">复制</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部装饰 -->
+  <view class="footer-decoration">
+    <text class="footer-text"> 疯狂周末，等你来战！</text>
+  </view>
+</view>

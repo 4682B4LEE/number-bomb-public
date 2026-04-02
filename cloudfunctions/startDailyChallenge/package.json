@@ -1,0 +1,9 @@
+{
+  "name": "startDailyChallenge",
+  "version": "1.0.0",
+  "description": "开始每日挑战（原子扣减次数）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

@@ -1,0 +1,589 @@
+/* ==================== 胜利结算页 - 红蓝主题样式 ==================== */
+
+/* ---------- 基础容器 ---------- */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+/* 玩家1主题背景 - 红色渐变 */
+.bg-p1 {
+  background: radial-gradient(circle at 50% 30%, #fff1f2 0%, #ffe4e6 100%);
+}
+
+/* 玩家2主题背景 - 蓝色渐变 */
+.bg-p2 {
+  background: radial-gradient(circle at 50% 30%, #eff6ff 0%, #dbeafe 100%);
+}
+
+/* ---------- 圆点背景图案 ---------- */
+.bg-pattern-dots {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.12;
+  pointer-events: none;
+  background-size: 40rpx 40rpx;
+  z-index: 1;
+}
+
+.dots-p1 {
+  background-image: radial-gradient(#f87171 2rpx, transparent 2rpx);
+}
+
+.dots-p2 {
+  background-image: radial-gradient(#60a5fa 2rpx, transparent 2rpx);
+}
+
+/* ---------- 彩带动画 - 在最前面 ---------- */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 100;
+}
+
+.confetti {
+  position: absolute;
+  top: -20rpx;
+  width: 20rpx;
+  height: 20rpx;
+  opacity: 0.8;
+  animation: fall linear infinite;
+}
+
+.confetti-red {
+  background: #ef4444;
+  border-radius: 4rpx;
+}
+
+.confetti-blue {
+  background: #3b82f6;
+  border-radius: 50%;
+}
+
+.confetti-gold {
+  background: #facc15;
+  border-radius: 2rpx;
+  transform: rotate(45deg);
+}
+
+.confetti-green {
+  background: #4ade80;
+  width: 16rpx;
+  height: 16rpx;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-20rpx) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* ---------- 调试用切换按钮 ---------- */
+.debug-switch {
+  position: fixed;
+  top: 40rpx;
+  right: 40rpx;
+  z-index: 50;
+  display: flex;
+  gap: 16rpx;
+}
+
+.switch-btn {
+  width: 64rpx;
+  height: 64rpx;
+  border-radius: 50%;
+  border: 4rpx solid white;
+  box-shadow: 0 4rpx 8rpx rgba(0,0,0,0.1);
+  transition: all 0.2s;
+}
+
+.switch-btn:first-child {
+  background: #fca5a5;
+}
+
+.switch-btn:last-child {
+  background: #93c5fd;
+}
+
+.active-p1 {
+  background: #ef4444 !important;
+  transform: scale(1.1);
+  box-shadow: 0 0 0 4rpx rgba(239, 68, 68, 0.3);
+}
+
+.active-p2 {
+  background: #3b82f6 !important;
+  transform: scale(1.1);
+  box-shadow: 0 0 0 4rpx rgba(59, 130, 246, 0.3);
+}
+
+/* ---------- 任天堂风格卡片 ---------- */
+.nintendo-card {
+  background: white;
+  border-radius: 48rpx;
+  border: 8rpx solid white;
+  box-shadow: 0 16rpx 0 0 rgba(0,0,0,0.08);
+}
+
+/* ---------- 胜利宣告卡片 ---------- */
+.victory-card {
+  width: 100%;
+  max-width: 640rpx;
+  padding: 120rpx 48rpx 64rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-bottom: 40rpx;
+  z-index: 10;
+}
+
+/* 浮动胜利图标 */
+.victory-icon-wrapper {
+  position: absolute;
+  top: -60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+}
+
+.victory-icon-bg {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 40rpx;
+  border: 8rpx solid white;
+  box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-p1 {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.icon-p2 {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+/* 星星图标 - CSS绘制 */
+.icon-star {
+  width: 64rpx;
+  height: 64rpx;
+  position: relative;
+}
+
+.star-shape {
+  width: 100%;
+  height: 100%;
+  background: white;
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+/* 皇冠图标 - CSS绘制 */
+.icon-crown {
+  width: 64rpx;
+  height: 56rpx;
+  position: relative;
+}
+
+.crown-shape {
+  width: 100%;
+  height: 100%;
+  background: white;
+  clip-path: polygon(20% 100%, 0% 40%, 20% 60%, 40% 20%, 50% 50%, 60% 20%, 80% 60%, 100% 40%, 80% 100%);
+}
+
+/* 卡片内容 */
+.victory-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.victory-title {
+  font-size: 80rpx;
+  font-weight: 900;
+  margin-bottom: 24rpx;
+  text-shadow: 0 4rpx 8rpx rgba(0,0,0,0.1);
+  letter-spacing: 4rpx;
+}
+
+.title-p1 {
+  color: #ef4444;
+}
+
+.title-p2 {
+  color: #3b82f6;
+}
+
+.winner-badge {
+  padding: 16rpx 40rpx;
+  border-radius: 40rpx;
+  margin-bottom: 24rpx;
+}
+
+.badge-p1 {
+  background: #ef4444;
+}
+
+.badge-p2 {
+  background: #3b82f6;
+}
+
+.winner-badge text {
+  color: white;
+  font-size: 24rpx;
+  font-weight: 900;
+  letter-spacing: 4rpx;
+}
+
+.winner-name {
+  font-size: 56rpx;
+  font-weight: 900;
+  color: #1f2937;
+  margin-bottom: 16rpx;
+}
+
+.winner-subtitle {
+  font-size: 28rpx;
+  color: #9ca3af;
+  font-weight: 700;
+}
+
+/* ---------- 统计数据卡片 ---------- */
+.stats-card {
+  width: 100%;
+  max-width: 640rpx;
+  padding: 48rpx;
+  margin-bottom: 48rpx;
+  z-index: 10;
+}
+
+.stats-title {
+  display: block;
+  text-align: center;
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #9ca3af;
+  margin-bottom: 32rpx;
+  letter-spacing: 4rpx;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx;
+  border-radius: 24rpx;
+  margin-bottom: 16rpx;
+  border: 4rpx solid transparent;
+}
+
+.row-p1 {
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.row-p2 {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.stat-loser {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+
+.stat-player {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.stat-avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 8rpx rgba(0,0,0,0.1);
+}
+
+.stat-avatar text {
+  color: white;
+  font-size: 28rpx;
+  font-weight: 900;
+}
+
+.avatar-p1 {
+  background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+}
+
+.avatar-p2 {
+  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+}
+
+.avatar-loser {
+  background: #d1d5db;
+}
+
+.stat-name {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #374151;
+}
+
+.loser-name {
+  color: #9ca3af;
+}
+
+.stat-count {
+  display: flex;
+  align-items: baseline;
+  gap: 8rpx;
+}
+
+.stat-number {
+  font-size: 40rpx;
+  font-weight: 900;
+}
+
+.num-p1 {
+  color: #ef4444;
+}
+
+.num-p2 {
+  color: #3b82f6;
+}
+
+.loser-num {
+  color: #d1d5db;
+}
+
+.stat-unit {
+  font-size: 22rpx;
+  color: #6b7280;
+  font-weight: 700;
+}
+
+.loser-unit {
+  color: #d1d5db;
+}
+
+/* 分割线 */
+.divider {
+  height: 4rpx;
+  background: repeating-linear-gradient(
+    to right,
+    #e5e7eb 0,
+    #e5e7eb 16rpx,
+    transparent 16rpx,
+    transparent 24rpx
+  );
+  margin: 32rpx 0;
+}
+
+/* 密码揭晓 */
+.secret-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.reveal-label {
+  font-size: 22rpx;
+  color: #9ca3af;
+  margin-bottom: 24rpx;
+  font-weight: 700;
+  letter-spacing: 2rpx;
+}
+
+.secret-digits {
+  display: flex;
+  gap: 20rpx;
+}
+
+.secret-digit {
+  width: 88rpx;
+  height: 104rpx;
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+  border-radius: 20rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48rpx;
+  font-weight: 900;
+  color: white;
+  box-shadow: 0 8rpx 0 #15803d;
+  text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.2);
+}
+
+/* ---------- 按钮样式 ---------- */
+.restart-btn, .home-btn {
+  width: 100%;
+  max-width: 640rpx;
+  height: 112rpx;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24rpx;
+  border: none;
+  font-size: 36rpx;
+  font-weight: 900;
+  z-index: 10;
+}
+
+.restart-btn::after, .home-btn::after {
+  border: none;
+}
+
+/* 再玩一局按钮 */
+.restart-btn {
+  background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+  color: #713f12;
+  box-shadow: 0 8rpx 0 #ca8a04;
+}
+
+.nintendo-btn-primary {
+  transition: all 0.1s;
+}
+
+.nintendo-btn-primary:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #ca8a04;
+}
+
+.btn-icon {
+  margin-right: 16rpx;
+  display: flex;
+  align-items: center;
+}
+
+/* 刷新图标 - CSS绘制 */
+.refresh-icon {
+  width: 40rpx;
+  height: 40rpx;
+  border: 6rpx solid #713f12;
+  border-radius: 50%;
+  border-right-color: transparent;
+  position: relative;
+  transform: rotate(-45deg);
+}
+
+.refresh-icon::after {
+  content: '';
+  position: absolute;
+  top: -4rpx;
+  right: -4rpx;
+  width: 0;
+  height: 0;
+  border-left: 12rpx solid #713f12;
+  border-top: 8rpx solid transparent;
+  border-bottom: 8rpx solid transparent;
+  transform: rotate(45deg);
+}
+
+/* 返回首页按钮 */
+.home-btn {
+  background: white;
+  color: #6b7280;
+  box-shadow: 0 8rpx 0 #e5e7eb;
+}
+
+.nintendo-btn-secondary {
+  transition: all 0.1s;
+}
+
+.nintendo-btn-secondary:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #e5e7eb;
+}
+
+/* ---------- 动画效果 ---------- */
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.8) translateY(40rpx);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.02) translateY(-10rpx);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0) rotate(-3deg);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-16rpx) rotate(3deg);
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(60rpx);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  opacity: 0;
+  animation: slide-up 0.5s ease-out forwards;
+}
+
+/* 动画延迟 */
+.victory-card {
+  animation-delay: 0.1s;
+}
+
+.stats-card {
+  animation-delay: 0.3s;
+}
+
+.restart-btn {
+  animation-delay: 0.5s;
+}
+
+.home-btn {
+  animation-delay: 0.6s;
+}

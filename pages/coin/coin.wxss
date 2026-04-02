@@ -1,0 +1,377 @@
+/* ==================== 抛硬币决定先手页面样式 ==================== */
+
+/* ---------- 基础容器 ---------- */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #fdfbf7;
+  padding: 40rpx;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---------- 背景装饰 ---------- */
+.bg-pattern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.1;
+  pointer-events: none;
+  background-image: radial-gradient(#94a3b8 4rpx, transparent 4rpx);
+  background-size: 48rpx 48rpx;
+}
+
+/* ---------- 标题区域 ---------- */
+.header {
+  text-align: center;
+  margin-bottom: 80rpx;
+  z-index: 10;
+}
+
+.title {
+  display: block;
+  font-size: 72rpx;
+  font-weight: 900;
+  color: #1f2937;
+  margin-bottom: 16rpx;
+  letter-spacing: 4rpx;
+}
+
+.subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #9ca3af;
+  font-weight: 700;
+}
+
+/* ---------- 3D 硬币场景 ---------- */
+.coin-scene {
+  position: relative;
+  width: 400rpx;
+  height: 500rpx;
+  margin-bottom: 60rpx;
+  margin-top: -40rpx;
+  perspective: 1200px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 硬币包装器：负责跳跃动画 */
+.coin-wrapper {
+  transform-style: preserve-3d;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 硬币：负责旋转动画 */
+.coin {
+  width: 240rpx;
+  height: 240rpx;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+
+/* 硬币面通用样式 - 完全复制首页 logo-box */
+.coin-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 24rpx rgba(230, 0, 18, 0.3);
+}
+
+/* 正面 - 玩家1（红色）完全复制 logo-box */
+.coin-front {
+  background-color: #E60012;
+  transform: rotate(-10deg) translateZ(30rpx);
+}
+
+/* 背面 - 玩家2（蓝色） */
+.coin-back {
+  background-color: #2563EB;
+  box-shadow: 0 8rpx 24rpx rgba(37, 99, 235, 0.3);
+  transform: rotateX(180deg) rotate(-10deg) translateZ(30rpx);
+}
+
+/* 硬币文字 - 完全复制 logo-text */
+.coin-text {
+  color: white;
+  font-size: 100rpx;
+  font-weight: 900;
+}
+
+/* 玩家名称显示在硬币下方 */
+.coin-player-name {
+  position: absolute;
+  bottom: -60rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #4b5563;
+  white-space: nowrap;
+}
+
+/* 地面阴影 */
+.coin-shadow {
+  position: absolute;
+  bottom: -40rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200rpx;
+  height: 20rpx;
+  background: black;
+  border-radius: 50%;
+  filter: blur(8rpx);
+  opacity: 0.2;
+  transition: all 0.3s;
+}
+
+/* ---------- 动画效果 ---------- */
+
+/* 抛起动画 */
+@keyframes toss-jump {
+  0% { transform: translateY(0) scale(1); }
+  40% { transform: translateY(-300rpx) scale(1.1); }
+  100% { transform: translateY(0) scale(1); }
+}
+
+/* 阴影动画 */
+@keyframes shadow-scale {
+  0% { transform: translateX(-50%) scale(1); opacity: 0.2; }
+  40% { transform: translateX(-50%) scale(0.4); opacity: 0.08; }
+  100% { transform: translateX(-50%) scale(1); opacity: 0.2; }
+}
+
+/* 弹跳进入动画 */
+@keyframes bounce-in {
+  0% { transform: scale(0.8) translateY(40rpx); opacity: 0; }
+  60% { transform: scale(1.05) translateY(-10rpx); opacity: 1; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* 闪烁动画 */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-jump {
+  animation: toss-jump 2s cubic-bezier(0.3, 0, 0.6, 1) forwards;
+}
+
+.animate-shadow {
+  animation: shadow-scale 2s cubic-bezier(0.3, 0, 0.6, 1) forwards;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* ---------- 控制区域 ---------- */
+.control-area {
+  width: 100%;
+  max-width: 560rpx;
+  height: 160rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+/* 抛硬币按钮 */
+.toss-btn {
+  width: 100%;
+  height: 120rpx;
+  border-radius: 32rpx;
+  background: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+  color: #713f12;
+  font-size: 40rpx;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 12rpx 0 #ca8a04;
+  border: none;
+}
+
+.toss-btn::after {
+  border: none;
+}
+
+.nintendo-btn-primary {
+  transition: all 0.1s;
+}
+
+.nintendo-btn-primary:active {
+  transform: translateY(12rpx);
+  box-shadow: 0 0 0 #ca8a04;
+}
+
+/* 播放图标 */
+.btn-icon {
+  margin-right: 16rpx;
+  display: flex;
+  align-items: center;
+}
+
+.play-icon {
+  width: 0;
+  height: 0;
+  border-left: 32rpx solid #713f12;
+  border-top: 20rpx solid transparent;
+  border-bottom: 20rpx solid transparent;
+  margin-left: 8rpx;
+}
+
+/* 抛硬币中文字 */
+.flipping-text {
+  font-size: 40rpx;
+  font-weight: 900;
+  color: #9ca3af;
+  letter-spacing: 8rpx;
+  animation: pulse 1s ease-in-out infinite;
+}
+
+/* ---------- 结果卡片 ---------- */
+.result-card {
+  width: 100%;
+  padding: 40rpx;
+  border-radius: 32rpx;
+  border: 8rpx solid;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 16rpx 0 rgba(0,0,0,0.08);
+}
+
+.result-p1 {
+  background: #fef2f2;
+  border-color: #fecaca;
+}
+
+.result-p2 {
+  background: #eff6ff;
+  border-color: #bfdbfe;
+}
+
+.result-label {
+  font-size: 24rpx;
+  color: #9ca3af;
+  font-weight: 700;
+  margin-bottom: 16rpx;
+  letter-spacing: 4rpx;
+}
+
+.result-name {
+  font-size: 56rpx;
+  font-weight: 900;
+  margin-bottom: 32rpx;
+}
+
+.text-p1 {
+  color: #E60012;
+}
+
+.text-p2 {
+  color: #2563EB;
+}
+
+/* 开始游戏按钮 */
+.start-btn {
+  width: 100%;
+  height: 88rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 32rpx;
+  font-weight: 900;
+  border: none;
+  box-shadow: 0 8rpx 0 rgba(0,0,0,0.2);
+  transition: all 0.1s;
+}
+
+.start-btn::after {
+  border: none;
+}
+
+.start-btn:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 rgba(0,0,0,0.2);
+}
+
+.btn-p1 {
+  background-color: #E60012;
+}
+
+.btn-p2 {
+  background-color: #2563EB;
+}
+
+/* 箭头图标 */
+.arrow-icon {
+  width: 0;
+  height: 0;
+  border-left: 16rpx solid white;
+  border-top: 12rpx solid transparent;
+  border-bottom: 12rpx solid transparent;
+  margin-left: 12rpx;
+}
+
+/* ---------- 底部玩家信息 ---------- */
+.players-info {
+  position: fixed;
+  bottom: 60rpx;
+  left: 40rpx;
+  right: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.player-info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info-label {
+  font-size: 22rpx;
+  color: #9ca3af;
+  font-weight: 700;
+  margin-bottom: 8rpx;
+}
+
+.info-name {
+  font-size: 28rpx;
+  color: #4b5563;
+  font-weight: 700;
+  max-width: 200rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vs-divider {
+  font-size: 32rpx;
+  font-weight: 900;
+  color: #d1d5db;
+  letter-spacing: 4rpx;
+}

@@ -1,0 +1,17 @@
+<!-- 过渡页 -->
+<view class="container {{bgClass}}" bindtap="continue">
+  <!-- 背景装饰 -->
+  <view class="bg-decoration">
+    <view class="joycon left {{isP1 ? 'joycon-p1' : 'joycon-p2'}}"></view>
+    <view class="joycon right {{isP1 ? 'joycon-p1' : 'joycon-p2'}}"></view>
+  </view>
+
+  <!-- 内容卡片 -->
+  <view class="card nintendo-card">
+    <view class="player-indicator {{isP1 ? 'indicator-p1' : 'indicator-p2'}}">
+      <text class="player-text">{{isP1 ? 'PLAYER 1' : 'PLAYER 2'}}</text>
+    </view>
+    <text class="message">{{message}}</text>
+    <text class="hint">点击任意处继续</text>
+  </view>
+</view>

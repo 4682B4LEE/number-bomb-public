@@ -1,0 +1,135 @@
+/* 全局样式 */
+page {
+  background-color: #EFEFF1;
+  color: #2c2c2c;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  height: 100%;
+}
+
+/* 任天堂风格配色 */
+:root {
+  --nintendo-red: #E60012;
+  --nintendo-blue: #00B3E6;
+  --nintendo-bg: #EFEFF1;
+  --text-dark: #2c2c2c;
+}
+
+/* 卡片样式 */
+.nintendo-card {
+  background: white;
+  border-radius: 24rpx;
+  box-shadow: 0 10rpx 30rpx rgba(0,0,0,0.05);
+  border: 2rpx solid white;
+}
+
+/* 3D按钮效果 */
+.btn-3d {
+  transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateY(0);
+}
+
+.btn-3d:active {
+  transform: translateY(8rpx);
+}
+
+/* 背景图案 */
+.bg-pattern {
+  background-image: radial-gradient(#d1d5db 1rpx, transparent 1rpx);
+  background-size: 20rpx 20rpx;
+}
+
+/* 数字字体 */
+.mono-digit {
+  font-family: 'Varela Round', 'Nunito', 'Segoe UI Rounded', sans-serif;
+}
+
+/* 输入框样式 */
+.name-input {
+  background: #F3F4F6;
+  border: 2rpx solid transparent;
+  border-radius: 24rpx;
+  color: #374151;
+  text-align: center;
+  outline: none;
+  font-weight: 700;
+  transition: all 0.2s;
+}
+
+.name-input:focus {
+  background: white;
+  border-color: #E60012;
+  box-shadow: 0 0 0 8rpx rgba(230, 0, 18, 0.1);
+}
+
+/* 通用容器 */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48rpx;
+  box-sizing: border-box;
+}
+
+/* 主按钮样式 */
+.btn-primary {
+  background-color: #E60012;
+  color: white;
+  font-weight: 900;
+  border-radius: 32rpx;
+  box-shadow: 0 8rpx 0 #99000C;
+}
+
+.btn-primary:active {
+  box-shadow: 0 0 0 #99000C;
+}
+
+/* 次要按钮样式 */
+.btn-secondary {
+  background-color: #00B3E6;
+  color: white;
+  font-weight: 900;
+  border-radius: 32rpx;
+  box-shadow: 0 8rpx 0 #0088B3;
+}
+
+.btn-secondary:active {
+  box-shadow: 0 0 0 #0088B3;
+}
+
+/* 禁用按钮 */
+.btn-disabled {
+  background-color: #E5E7EB;
+  color: #9CA3AF;
+  box-shadow: 0 8rpx 0 #D1D5DB;
+}
+
+/* 数字显示框 */
+.digit-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 32rpx;
+  font-weight: 900;
+}
+
+.digit-box-empty {
+  background: white;
+  border: 4rpx solid #F3F4F6;
+  color: #D1D5DB;
+}
+
+.digit-box-filled {
+  background: white;
+  border: 4rpx solid #E5E7EB;
+  color: #374151;
+  box-shadow: 0 8rpx 0 #E5E7EB;
+}
+
+.digit-box-correct {
+  background: #2ECC71;
+  border: 4rpx solid #27AE60;
+  color: white;
+  box-shadow: 0 8rpx 0 #1E8449;
+}

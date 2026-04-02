@@ -1,0 +1,9 @@
+{
+  "triggers": [
+    {
+      "name": "cleanupRoomsTrigger",
+      "type": "timer",
+      "config": "0 */5 * * * *"
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+/* 猜颜色猜测结果页样式 - Royal Design System */
+
+/* 页面容器 */
+.container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40rpx;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(255, 60, 40, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(0, 195, 227, 0.1) 0%, transparent 50%),
+    #f8fafc;
+}
+
+/* 结果卡片 - Glassmorphism */
+.result-card {
+  width: 100%;
+  max-width: 600rpx;
+  padding: 60rpx 48rpx;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  border-radius: 48rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 20rpx 60rpx rgba(0, 0, 0, 0.1);
+  border: 1rpx solid rgba(255, 255, 255, 0.6);
+  margin-bottom: 48rpx;
+}
+
+/* 结果图标 */
+.result-icon {
+  width: 140rpx;
+  height: 140rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40rpx;
+  box-shadow: 0 12rpx 32rpx rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+
+.result-icon::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 15%;
+  width: 30%;
+  height: 20%;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.4;
+  filter: blur(2rpx);
+}
+
+.result-icon.win {
+  background: radial-gradient(circle at 30% 30%, #fcd34d, #f59e0b, #b45309);
+  animation: pulse 1.5s ease infinite;
+}
+
+.result-icon.continue {
+  background: radial-gradient(circle at 30% 30%, #93c5fd, #3b82f6, #1e40af);
+}
+
+.result-icon.gameover {
+  background: radial-gradient(circle at 30% 30%, #cbd5e1, #64748b, #334155);
+}
+
+.icon-text {
+  font-size: 64rpx;
+  font-weight: 900;
+  color: white;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+/* 结果标题 */
+.result-title {
+  font-size: 44rpx;
+  font-weight: 900;
+  color: #1f2937;
+  margin-bottom: 16rpx;
+  letter-spacing: 2rpx;
+}
+
+/* 猜测次数提示 */
+.guess-count {
+  font-size: 28rpx;
+  color: #6b7280;
+  margin-bottom: 40rpx;
+  font-weight: 700;
+  padding: 8rpx 24rpx;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 20rpx;
+}
+
+/* 提示详情 */
+.hints-detail {
+  display: flex;
+  gap: 32rpx;
+  margin-bottom: 48rpx;
+  width: 100%;
+  justify-content: center;
+}
+
+.hint-box {
+  flex: 1;
+  max-width: 200rpx;
+  padding: 32rpx 24rpx;
+  border-radius: 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.hint-box::before {
+  content: '';
+  position: absolute;
+  top: 8%;
+  left: 20%;
+  width: 25%;
+  height: 15%;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.3;
+}
+
+.red-box {
+  background: radial-gradient(circle at 30% 30%, #fca5a5, #ef4444, #991b1b);
+}
+
+.white-box {
+  background: white;
+  border: 4rpx solid #e5e7eb;
+}
+
+.hint-count {
+  font-size: 64rpx;
+  font-weight: 900;
+  color: white;
+  margin-bottom: 12rpx;
+  text-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+}
+
+.white-box .hint-count {
+  color: #1f2937;
+  text-shadow: none;
+}
+
+.hint-label {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  text-align: center;
+}
+
+.white-box .hint-label {
+  color: #6b7280;
+}
+
+/* 提示说明 */
+.hint-legend {
+  width: 100%;
+  padding: 24rpx;
+  background: rgba(243, 244, 246, 0.8);
+  border-radius: 20rpx;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-bottom: 16rpx;
+}
+
+.legend-row:last-child {
+  margin-bottom: 0;
+}
+
+.legend-dot {
+  width: 24rpx;
+  height: 24rpx;
+  border-radius: 50%;
+  border: 2rpx solid white;
+  box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.red-dot {
+  background: #ff3c28;
+}
+
+.white-dot {
+  background: white;
+  border-color: #d1d5db;
+}
+
+.legend-text {
+  font-size: 26rpx;
+  color: #4b5563;
+  font-weight: 600;
+}
+
+/* 按钮区域 */
+.button-group {
+  width: 100%;
+  max-width: 600rpx;
+}
+
+/* 3D 按钮效果 */
+.action-btn {
+  width: 100%;
+  height: 100rpx;
+  border-radius: 28rpx;
+  font-size: 32rpx;
+  font-weight: 900;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  letter-spacing: 2rpx;
+  position: relative;
+  overflow: hidden;
+  margin-bottom: 24rpx;
+}
+
+.action-btn::after {
+  border: none;
+}
+
+.btn-victory {
+  background: linear-gradient(180deg, #fcd34d 0%, #f59e0b 100%);
+  box-shadow: 0 8rpx 0 #b45309;
+}
+
+.btn-victory:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #b45309;
+}
+
+.btn-gameover {
+  background: linear-gradient(180deg, #9ca3af 0%, #6b7280 100%);
+  box-shadow: 0 8rpx 0 #4b5563;
+}
+
+.btn-gameover:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #4b5563;
+}
+
+.btn-continue {
+  background: linear-gradient(180deg, #4dd0e1 0%, #00c3e3 100%);
+  box-shadow: 0 8rpx 0 #009cb8;
+}
+
+.btn-continue:active {
+  transform: translateY(8rpx);
+  box-shadow: 0 0 0 #009cb8;
+}

@@ -1,0 +1,9 @@
+{
+  "name": "updateRankCache",
+  "version": "1.0.0",
+  "description": "更新排行榜缓存",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

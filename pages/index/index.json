@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#EFEFF1",
+  "navigationBarTextStyle": "black",
+  "usingComponents": {
+    "intro-tutorial": "/components/intro-tutorial/intro-tutorial"
+  }
+}

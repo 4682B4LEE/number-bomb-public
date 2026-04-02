@@ -1,0 +1,56 @@
+<!-- 猜颜色猜测结果页 -->
+<view class="container bg-pattern">
+  <!-- 结果展示卡片 -->
+  <view class="result-card nintendo-card">
+    <!-- 结果图标 -->
+    <view class="result-icon {{isWin ? 'win' : (isGameOver ? 'gameover' : 'continue')}}">
+      <text class="icon-text">{{isWin ? '★' : (isGameOver ? '✕' : '→')}}</text>
+    </view>
+
+    <!-- 结果标题 -->
+    <text class="result-title">{{isWin ? '恭喜你猜对了！' : (isGameOver ? '游戏结束' : '猜测结果')}}</text>
+
+    <!-- 次数提示 -->
+    <text class="guess-count" wx:if="{{!isWin}}">第 {{totalGuesses}} / 8 次猜测</text>
+
+    <!-- 提示详情 -->
+    <view class="hints-detail">
+      <view class="hint-box red-box">
+        <view class="hint-count">{{redCount}}</view>
+        <text class="hint-label">位置和颜色都对</text>
+      </view>
+      <view class="hint-box white-box">
+        <view class="hint-count">{{whiteCount}}</view>
+        <text class="hint-label">颜色对位置错</text>
+      </view>
+    </view>
+
+    <!-- 提示说明 -->
+    <view class="hint-legend">
+      <view class="legend-row">
+        <view class="legend-dot red-dot"></view>
+        <text class="legend-text">红色 = 位置和颜色都正确</text>
+      </view>
+      <view class="legend-row">
+        <view class="legend-dot white-dot"></view>
+        <text class="legend-text">白色 = 颜色正确但位置错误</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 按钮区域 -->
+  <view class="button-group">
+    <!-- 获胜时显示 -->
+    <block wx:if="{{isWin}}">
+      <button class="action-btn btn-victory" bindtap="goToVictory">查看胜利</button>
+    </block>
+    <!-- 游戏结束时显示 -->
+    <block wx:elif="{{isGameOver}}">
+      <button class="action-btn btn-gameover" bindtap="goToGameOver">查看答案</button>
+    </block>
+    <!-- 未获胜时显示 -->
+    <block wx:else>
+      <button class="action-btn btn-continue" bindtap="continueGame">轮到对手</button>
+    </block>
+  </view>
+</view>

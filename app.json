@@ -1,0 +1,36 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/ranking/ranking",
+    "pages/rules/rules",
+    "pages/names/names",
+    "pages/coin/coin",
+    "pages/secret/secret",
+    "pages/intermission/intermission",
+    "pages/game/game",
+    "pages/result/result",
+    "pages/victory/victory",
+    "pages/color-mode/color-mode",
+    "pages/color-game/color-game",
+    "pages/color-result/color-result",
+    "pages/color-victory/color-victory",
+    "pages/color-gameover/color-gameover",
+    "pages/records/records",
+    "pages/record-detail/record-detail",
+    "pages/feedback/feedback",
+    "pages/daily-game/daily-game",
+    "pages/daily-color/daily-color",
+    "pages/weekend/weekend",
+    "pages/puzzle-game/puzzle-game"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#EFEFF1",
+    "navigationBarTitleText": "双人猜数对决",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#EFEFF1"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents"
+}

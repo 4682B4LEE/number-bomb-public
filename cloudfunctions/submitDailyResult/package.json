@@ -1,0 +1,9 @@
+{
+  "name": "submitDailyResult",
+  "version": "1.0.0",
+  "description": "提交每日挑战结果",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

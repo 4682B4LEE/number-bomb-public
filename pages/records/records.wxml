@@ -1,0 +1,204 @@
+<!-- 1. 加载中状态 (Loading Screen) -->
+<view class="loading-screen" wx:if="{{isLoading}}">
+  <view class="loading-icon-box">
+    <view class="icon-bounce">
+      <view class="icon-inner">🎮</view>
+    </view>
+    <view class="shadow-pulse"></view>
+  </view>
+  <view class="loading-text">数据读取中...</view>
+  <view class="loading-sub">请稍候，马上就来</view>
+</view>
+
+<!-- 2. 主页面 -->
+<view class="page-container" wx:else>
+
+  <!-- 顶部背景装饰 -->
+  <view class="bg-decoration"></view>
+
+  <!-- 返回按钮 -->
+  <view class="back-btn" bindtap="goBack">
+    <view class="back-arrow">
+      <view class="arrow-line"></view>
+      <view class="arrow-head"></view>
+    </view>
+    <text class="back-text">返回</text>
+  </view>
+
+  <!-- 导航栏 (自定义导航) -->
+  <view class="nav-bar">
+    <view class="nav-title">对局记录</view>
+  </view>
+
+  <!-- 主体内容 -->
+  <view class="content">
+
+    <!-- 游戏模式切换 -->
+    <view class="tabs">
+      <view
+        class="tab-btn {{activeMode === 'number' ? 'active-number' : ''}}"
+        bindtap="switchMode"
+        data-mode="number"
+      >
+        <text class="tab-icon">#</text>
+        <text>猜数字</text>
+      </view>
+      <view
+        class="tab-btn {{activeMode === 'color' ? 'active-color' : ''}}"
+        bindtap="switchMode"
+        data-mode="color"
+      >
+        <text class="tab-icon">●</text>
+        <text>猜颜色</text>
+      </view>
+      <view
+        class="tab-btn {{activeMode === 'online' ? 'active-online' : ''}}"
+        bindtap="switchMode"
+        data-mode="online"
+      >
+        <text class="tab-icon">🌐</text>
+        <text>联机</text>
+      </view>
+    </view>
+
+    <!-- 数据总览卡片 -->
+    <view class="stats-card">
+      <view class="stat-item">
+        <text class="stat-label">近期胜率</text>
+        <view class="stat-value-box">
+          <text class="stat-num blue">{{currentStats.winRate}}</text>
+          <text class="stat-unit blue">%</text>
+        </view>
+      </view>
+
+      <view class="divider"></view>
+
+      <view class="stat-item align-right">
+        <text class="stat-label">最近对局数</text>
+        <view class="stat-value-box">
+          <text class="stat-num black">{{currentStats.totalMatches}}</text>
+          <text class="stat-unit">局</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 历史对局标题 -->
+    <view class="history-title-box">
+      <text class="history-icon">🕒</text>
+      <text class="history-title">历史对局</text>
+      <text class="history-hint">长按战绩可收藏置顶</text>
+    </view>
+
+    <!-- 联机模式刷新提示 -->
+    <view wx:if="{{activeMode === 'online' && currentRecords.length > 0}}" class="refresh-hint">
+      <text class="hint-text">下拉可刷新列表</text>
+    </view>
+
+    <!-- 历史对局列表 -->
+    <block wx:if="{{currentRecords.length > 0}}">
+      <scroll-view scroll-y class="history-list" refresher-enabled="{{activeMode === 'online'}}" refresher-triggered="{{isRefreshing}}" bindrefresherrefresh="onPullDownRefresh">
+        <view
+          class="history-card {{item.isFavorite ? 'favorite-card' : ''}}"
+          wx:for="{{currentRecords}}"
+          wx:key="id"
+          bindtap="viewDetail"
+          bindlongpress="onLongPress"
+          data-id="{{item.id}}"
+          data-record="{{item}}"
+        >
+
+
+          <!-- 顶部：类型与状态 -->
+          <view class="card-top">
+            <view class="card-top-left">
+              <view class="tag-type {{item.quickDrawMode || item.duelMode ? 'tag-quick-draw' : item.gameType === 'color' ? 'tag-purple' : activeMode === 'number' ? 'tag-red' : activeMode === 'online' ? 'tag-blue' : 'tag-yellow'}}">
+                {{item.gameModeText}}
+              </view>
+              <text class="card-time">{{item.formattedDate}}</text>
+            </view>
+            <view class="tag-status {{item.isTimeout ? 'status-timeout' : (item.result === 'win' ? 'status-win' : 'status-lose')}}">
+              {{item.resultText}}
+            </view>
+          </view>
+
+          <!-- 底部：对局详情 -->
+          <view class="card-bottom">
+            <view class="players">
+              <text class="icon-user"></text>
+              <!-- 单人模式：只显示玩家昵称 -->
+              <block wx:if="{{item.isSingleMode}}">
+                <view class="player-name-box">
+                  <text class="player-name">{{item.player1Name}}</text>
+                  <text class="result-badge {{item.result === 'win' ? 'badge-win' : 'badge-lose'}}">{{item.result === 'win' ? '胜' : '败'}}</text>
+                </view>
+              </block>
+              <!-- 双人模式：显示双方 -->
+              <block wx:else>
+                <!-- P1 带胜负角标 -->
+                <view class="player-name-box">
+                  <text class="player-name">{{item.player1Name}}</text>
+                  <text class="result-badge {{item.p1Result === '胜' ? 'badge-win' : (item.p1Result === '平' ? 'badge-draw' : 'badge-lose')}}">{{item.p1Result}}</text>
+                </view>
+                <text class="vs">VS</text>
+                <!-- P2 带胜负角标 -->
+                <view class="player-name-box">
+                  <text class="player-name">{{item.player2Name}}</text>
+                  <text class="result-badge {{item.p2Result === '胜' ? 'badge-win' : (item.p2Result === '平' ? 'badge-draw' : 'badge-lose')}}">{{item.p2Result}}</text>
+                </view>
+              </block>
+            </view>
+            <view class="rounds-tag">{{item.guessCount}} 轮</view>
+          </view>
+        </view>
+      </scroll-view>
+    </block>
+
+    <!-- 底部提示 -->
+    <view wx:if="{{currentRecords.length > 0}}" class="bottom-hint">
+      <text wx:if="{{activeMode === 'online'}}" class="hint-text">仅展示最近 20 场对局</text>
+      <text wx:else class="hint-text">仅展示最近 50 场对局</text>
+    </view>
+
+    <!-- 空状态展示 -->
+    <block wx:else>
+      <view class="empty-state">
+        <view class="empty-icon-box">
+          <text class="empty-icon">🎮</text>
+        </view>
+        <view class="empty-title">暂无对局记录</view>
+        <view class="empty-desc">快去叫上小伙伴开始一局游戏吧！</view>
+      </view>
+    </block>
+
+  </view>
+</view>
+
+<!-- 操作菜单弹窗 -->
+<view wx:if="{{showActionMenu}}" class="action-menu-mask" bindtap="hideActionMenu">
+  <view class="action-menu" catchtap="preventBubble">
+    <view class="action-menu-title">对局操作</view>
+    <view class="action-menu-items">
+      <view class="action-menu-item {{selectedRecord.isFavorite ? 'cancel-favorite' : 'favorite'}}" bindtap="toggleFavorite">
+        <text class="action-text">{{selectedRecord.isFavorite ? '取消收藏' : '收藏置顶'}}</text>
+      </view>
+      <view wx:if="{{!isOnlineRecord || selectedRecord.isOnlineFavorite}}" class="action-menu-item delete" bindtap="showDeleteConfirm">
+        <text class="action-text">删除对局</text>
+      </view>
+    </view>
+    <view class="action-menu-cancel" bindtap="hideActionMenu">取消</view>
+  </view>
+</view>
+
+<!-- 删除确认弹窗 -->
+<view wx:if="{{showDeleteConfirm}}" class="confirm-mask">
+  <view class="confirm-dialog">
+    <view class="confirm-title">确认删除</view>
+    <view class="confirm-content">确定要删除这条对局记录吗？删除后无法恢复。</view>
+    <view class="confirm-buttons">
+      <view class="confirm-btn cancel" bindtap="hideDeleteConfirm">取消</view>
+      <view class="confirm-btn confirm" bindtap="confirmDelete">确认删除</view>
+    </view>
+  </view>
+</view>
+
+<!-- 数据迁移弹窗已取消 -->

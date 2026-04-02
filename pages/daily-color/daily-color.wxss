@@ -1,0 +1,514 @@
+/* 每日挑战 - 猜颜色页面样式 */
+
+/* 导入原页面的所有样式 */
+@import "../color-game/color-game.wxss";
+
+/* 猜测历史标题栏（在history-section内部） */
+.history-title-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16rpx 24rpx;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16rpx 16rpx 0 0;
+  margin: -24rpx -24rpx 16rpx -24rpx;
+}
+
+/* 小号模式标签 */
+.mode-badge-small {
+  padding: 8rpx 16rpx;
+  border-radius: 20rpx;
+  font-size: 20rpx;
+  font-weight: 600;
+}
+
+.mode-badge-small.mode-repeat {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4CAF50;
+}
+
+.mode-badge-small.mode-unique {
+  background: rgba(33, 150, 243, 0.15);
+  color: #2196F3;
+}
+
+/* 标题文字 */
+.history-title-text {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #1c2536;
+}
+
+/* 小号计时器标签 */
+.timer-badge-small {
+  display: flex;
+  align-items: center;
+  gap: 6rpx;
+  padding: 8rpx 16rpx;
+  background: rgba(255, 152, 0, 0.15);
+  border-radius: 20rpx;
+}
+
+.timer-icon-small {
+  font-size: 22rpx;
+}
+
+.timer-text-small {
+  font-size: 22rpx;
+  color: #FF9800;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+/* 旧的顶部栏样式（保留兼容） */
+.history-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 32rpx;
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  border-bottom: 1rpx solid rgba(0, 0, 0, 0.05);
+  z-index: 20;
+}
+
+.mode-badge {
+  padding: 10rpx 20rpx;
+  border-radius: 24rpx;
+  font-size: 22rpx;
+  font-weight: 600;
+}
+
+.mode-repeat {
+  background: rgba(76, 175, 80, 0.15);
+  color: #4CAF50;
+}
+
+.mode-unique {
+  background: rgba(33, 150, 243, 0.15);
+  color: #2196F3;
+}
+
+.history-main-title {
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #1c2536;
+}
+
+.timer-badge {
+  display: flex;
+  align-items: center;
+  gap: 8rpx;
+  padding: 10rpx 20rpx;
+  background: rgba(255, 152, 0, 0.15);
+  border-radius: 24rpx;
+}
+
+.timer-icon {
+  font-size: 24rpx;
+}
+
+.timer-text {
+  font-size: 24rpx;
+  color: #FF9800;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+/* 旧的顶部栏样式（保留兼容） */
+.daily-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 32rpx;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border-bottom: 1rpx solid rgba(255, 255, 255, 0.5);
+  z-index: 20;
+}
+
+.timer-display {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.timer-label {
+  font-size: 20rpx;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.timer-value {
+  font-size: 28rpx;
+  color: #1c2536;
+  font-weight: 700;
+  font-family: 'Courier New', monospace;
+}
+
+.daily-title {
+  font-size: 32rpx;
+  font-weight: 900;
+  color: #1c2536;
+  letter-spacing: 2rpx;
+}
+
+.quit-btn {
+  padding: 12rpx 24rpx;
+  background: rgba(255, 60, 40, 0.1);
+  border-radius: 24rpx;
+  font-size: 24rpx;
+  color: #ff3c28;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.quit-btn:active {
+  background: rgba(255, 60, 40, 0.2);
+  transform: scale(0.95);
+}
+
+/* 【测试用】答案显示区域 */
+.test-answer-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16rpx 32rpx;
+  background: rgba(255, 193, 7, 0.2);
+  border: 2rpx dashed #ffc107;
+  margin: 0 40rpx 20rpx;
+  border-radius: 16rpx;
+}
+
+.test-label {
+  font-size: 24rpx;
+  color: #f57c00;
+  font-weight: 700;
+  margin-right: 20rpx;
+}
+
+.test-colors {
+  display: flex;
+  gap: 16rpx;
+}
+
+.test-color {
+  width: 48rpx;
+  height: 48rpx;
+  border-radius: 50%;
+  border: 3rpx solid white;
+  box-shadow: 0 4rpx 8rpx rgba(0, 0, 0, 0.2);
+}
+
+/* ==================== 结算弹窗样式 ==================== */
+
+/* 弹窗遮罩层 */
+.result-modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8rpx);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 弹窗内容容器 */
+.result-modal-content {
+  width: 85%;
+  max-width: 600rpx;
+  background: white;
+  border-radius: 48rpx;
+  padding: 60rpx 40rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 40rpx 120rpx -60rpx rgba(0, 0, 0, 0.5);
+  animation: slide-up 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes slide-up {
+  from {
+    transform: translateY(80rpx);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* 奖杯区域 */
+.trophy-area {
+  position: relative;
+  margin-bottom: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.trophy-glow {
+  position: absolute;
+  inset: 0;
+  background: #fbbf24;
+  filter: blur(60rpx);
+  opacity: 0.3;
+  border-radius: 50%;
+  transform: scale(1.5);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1.5); }
+  50% { opacity: 0.5; transform: scale(1.6); }
+}
+
+.trophy-icon {
+  font-size: 120rpx;
+  position: relative;
+  z-index: 10;
+  filter: drop-shadow(0 8rpx 16rpx rgba(0, 0, 0, 0.2));
+  animation: trophy-bounce 1s ease infinite;
+}
+
+@keyframes trophy-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-16rpx); }
+}
+
+/* 闪烁星星 */
+.sparkle {
+  position: absolute;
+  font-size: 40rpx;
+  color: #fbbf24;
+  animation: sparkle 1.5s ease infinite;
+}
+
+.star-1 {
+  top: -20rpx;
+  right: -40rpx;
+  animation-delay: 0s;
+}
+
+.star-2 {
+  bottom: 0;
+  left: -40rpx;
+  font-size: 32rpx;
+  animation-delay: 0.5s;
+}
+
+@keyframes sparkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* 获胜者区域 */
+.winner-section {
+  text-align: center;
+  margin-bottom: 48rpx;
+  width: 100%;
+}
+
+.victory-title {
+  font-size: 56rpx;
+  font-weight: 900;
+  color: #1f2937;
+  letter-spacing: 4rpx;
+  margin-bottom: 24rpx;
+  display: block;
+}
+
+.fail-subtitle {
+  font-size: 28rpx;
+  color: #9ca3af;
+  margin-top: -16rpx;
+  margin-bottom: 24rpx;
+  display: block;
+}
+
+.winner-badge {
+  margin: 0 auto;
+  width: 70%;
+  padding: 24rpx 0;
+  border-radius: 28rpx;
+  box-shadow: 0 16rpx 40rpx rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.badge-p1 {
+  background: linear-gradient(to bottom right, #ff6b6b, #dc2626);
+}
+
+.winner-label-small {
+  font-size: 18rpx;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 6rpx;
+  margin-bottom: 4rpx;
+}
+
+.winner-name {
+  font-size: 44rpx;
+  font-weight: 900;
+  color: white;
+  letter-spacing: 4rpx;
+}
+
+/* 正确答案展示区 */
+.answer-section {
+  width: 100%;
+  background: #f9fafb;
+  border-radius: 36rpx;
+  padding: 36rpx 24rpx;
+  margin-bottom: 40rpx;
+  border: 2rpx solid #f3f4f6;
+}
+
+.answer-label {
+  font-size: 22rpx;
+  color: #9ca3af;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 6rpx;
+  margin-bottom: 24rpx;
+  display: block;
+}
+
+.answer-colors {
+  display: flex;
+  justify-content: center;
+  gap: 24rpx;
+}
+
+.answer-color {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  border: 4rpx solid white;
+  box-shadow: 0 8rpx 16rpx rgba(0, 0, 0, 0.15);
+}
+
+/* 颜色定义 */
+.answer-color.red {
+  background: radial-gradient(circle at 30% 30%, #fca5a5, #ef4444, #991b1b);
+}
+
+.answer-color.green {
+  background: radial-gradient(circle at 30% 30%, #6ee7b7, #10b981, #047857);
+}
+
+.answer-color.blue {
+  background: radial-gradient(circle at 30% 30%, #93c5fd, #3b82f6, #1e40af);
+}
+
+.answer-color.yellow {
+  background: radial-gradient(circle at 30% 30%, #fcd34d, #f59e0b, #b45309);
+}
+
+.answer-color.purple {
+  background: radial-gradient(circle at 30% 30%, #f0abfc, #d946ef, #86198f);
+}
+
+.answer-color.gray {
+  background: radial-gradient(circle at 30% 30%, #cbd5e1, #64748b, #334155);
+}
+
+/* 数据统计网格 */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24rpx;
+  width: 100%;
+  margin-bottom: 48rpx;
+}
+
+.stat-box {
+  background: #f9fafb;
+  border: 2rpx solid #f3f4f6;
+  border-radius: 28rpx;
+  padding: 28rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-num {
+  font-size: 44rpx;
+  font-weight: 900;
+  color: #f59e0b;
+  margin-bottom: 8rpx;
+}
+
+.stat-label {
+  font-size: 22rpx;
+  color: #9ca3af;
+  font-weight: 700;
+}
+
+/* 按钮区域 */
+.button-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.btn-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.btn-shadow {
+  position: absolute;
+  inset: 0;
+  border-radius: 24rpx;
+  transform: translateY(10rpx);
+  transition: transform 0.1s ease;
+}
+
+.btn-shadow-yellow {
+  background: #d97706;
+}
+
+.btn-shadow-gray {
+  background: #475569;
+}
+
+.btn-wrapper:active .btn-shadow {
+  transform: translateY(0);
+}
+
+.btn-main {
+  position: relative;
+  height: 88rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28rpx;
+  font-weight: 900;
+  color: white;
+  letter-spacing: 4rpx;
+  transform: translateY(0);
+  transition: transform 0.1s ease;
+}
+
+.btn-wrapper:active .btn-main {
+  transform: translateY(10rpx);
+}
+
+.btn-yellow {
+  background: linear-gradient(to bottom, #fbbf24, #f59e0b);
+}
+
+.btn-gray {
+  background: linear-gradient(to bottom, #64748b, #475569);
+}

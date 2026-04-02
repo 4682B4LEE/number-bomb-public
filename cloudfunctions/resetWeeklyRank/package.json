@@ -1,0 +1,9 @@
+{
+  "name": "resetWeeklyRank",
+  "version": "1.0.0",
+  "description": "每周重置排行榜数据",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

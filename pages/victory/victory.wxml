@@ -1,0 +1,97 @@
+<!-- 胜利结算页 - 红蓝主题区分玩家 -->
+<view class="container {{isP1Winner ? 'bg-p1' : 'bg-p2'}}">
+  
+  <!-- 圆点背景图案 -->
+  <view class="bg-pattern-dots {{isP1Winner ? 'dots-p1' : 'dots-p2'}}"></view>
+  
+  <!-- 彩带动画 -->
+  <view class="confetti-container">
+    <view wx:for="{{confettiList}}" wx:key="index" class="confetti {{item.color}}" style="left: {{item.left}}%; animation-delay: {{item.delay}}s; animation-duration: {{item.duration}}s;"></view>
+  </view>
+
+  <!-- 胜利宣告卡片 -->
+  <view class="victory-card nintendo-card animate-bounce-in">
+    <!-- 浮动胜利图标 -->
+    <view class="victory-icon-wrapper animate-float">
+      <view class="victory-icon-bg {{isP1Winner ? 'icon-p1' : 'icon-p2'}}">
+        <!-- 玩家1用星星，玩家2用皇冠 -->
+        <view wx:if="{{isP1Winner}}" class="icon-star">
+          <view class="star-shape"></view>
+        </view>
+        <view wx:else class="icon-crown">
+          <view class="crown-shape"></view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 卡片内容 -->
+    <view class="victory-content">
+      <text class="victory-title {{isP1Winner ? 'title-p1' : 'title-p2'}}">{{isP1Winner ? '胜利!' : '大获全胜!'}}</text>
+      
+      <view class="winner-badge {{isP1Winner ? 'badge-p1' : 'badge-p2'}}">
+        <text>{{isP1Winner ? 'PLAYER 1' : 'PLAYER 2'}}</text>
+      </view>
+      
+      <text class="winner-name">{{winnerName}}</text>
+      <text class="winner-subtitle">完美破解了密码!</text>
+    </view>
+  </view>
+
+  <!-- 统计数据卡片 -->
+  <view class="stats-card nintendo-card animate-slide-up">
+    <text class="stats-title">本局统计</text>
+    
+    <!-- 获胜者统计 -->
+    <view class="stat-row {{isP1Winner ? 'row-p1' : 'row-p2'}}">
+      <view class="stat-player">
+        <view class="stat-avatar {{isP1Winner ? 'avatar-p1' : 'avatar-p2'}}">
+          <text>{{isP1Winner ? 'P1' : 'P2'}}</text>
+        </view>
+        <text class="stat-name">{{winnerName}}</text>
+      </view>
+      <view class="stat-count">
+        <text class="stat-number {{isP1Winner ? 'num-p1' : 'num-p2'}}">{{winnerGuesses}}</text>
+        <text class="stat-unit">次猜测</text>
+      </view>
+    </view>
+
+    <!-- 失败者统计 -->
+    <view class="stat-row stat-loser">
+      <view class="stat-player">
+        <view class="stat-avatar avatar-loser">
+          <text>{{isP1Winner ? 'P2' : 'P1'}}</text>
+        </view>
+        <text class="stat-name loser-name">{{loserName}}</text>
+      </view>
+      <view class="stat-count">
+        <text class="stat-number loser-num">{{loserGuesses}}</text>
+        <text class="stat-unit loser-unit">次猜测</text>
+      </view>
+    </view>
+
+    <!-- 分割线 -->
+    <view class="divider"></view>
+
+    <!-- 密码揭晓 -->
+    <view class="secret-reveal">
+      <text class="reveal-label">正确密码 (The Code)</text>
+      <view class="secret-digits">
+        <view wx:for="{{secretDigits}}" wx:key="index" class="secret-digit">
+          {{item}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部按钮 -->
+  <button class="restart-btn nintendo-btn-primary animate-slide-up" bindtap="restartGame">
+    <view class="btn-icon">
+      <view class="refresh-icon"></view>
+    </view>
+    <text>再玩一局</text>
+  </button>
+  
+  <button class="home-btn nintendo-btn-secondary animate-slide-up" bindtap="goHome">
+    <text>返回首页</text>
+  </button>
+</view>

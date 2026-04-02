@@ -1,0 +1,9 @@
+{
+  "triggers": [
+    {
+      "name": "resetWeeklyRankTrigger",
+      "type": "timer",
+      "config": "0 0 0 * * 1"
+    }
+  ]
+}

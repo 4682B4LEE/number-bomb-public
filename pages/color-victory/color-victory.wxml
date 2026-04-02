@@ -1,0 +1,89 @@
+<!-- 猜颜色胜利页 - Victor Design -->
+<view class="container">
+  <!-- 背景纹理 -->
+  <view class="noise-bg"></view>
+  
+  <!-- 模糊背景层 -->
+  <view class="blur-bg"></view>
+
+  <!-- 核心卡片容器 -->
+  <view class="outer-card">
+    <!-- 内层白色卡片 -->
+    <view class="inner-card">
+      
+      <!-- 顶部金色光效背景 -->
+      <view class="gold-glow"></view>
+
+      <!-- 奖杯动画区 -->
+      <view class="trophy-area">
+        <!-- 背后光晕 -->
+        <view class="trophy-glow"></view>
+        
+        <!-- 奖杯图标 -->
+        <view class="trophy-icon">🏆</view>
+        
+        <!-- 闪烁星星 -->
+        <view class="sparkle star-1">✦</view>
+        <view class="sparkle star-2">✦</view>
+      </view>
+      
+      <!-- 标题与获胜者 -->
+      <view class="winner-section">
+        <text class="victory-title">胜利！</text>
+        
+        <!-- 获胜者 Badge -->
+        <view class="winner-badge {{isP1 ? 'badge-p1' : 'badge-p2'}}">
+          <text class="winner-label-small">WINNER</text>
+          <text class="winner-name">{{winnerName}}</text>
+        </view>
+      </view>
+
+      <!-- 正确答案展示区 -->
+      <view class="answer-section">
+        <text class="answer-label">正确答案</text>
+        <view class="answer-colors">
+          <view
+            wx:for="{{secretColors}}"
+            wx:key="index"
+            class="answer-color {{item}}"
+            style="animation-delay: {{index * 100}}ms"
+          ></view>
+        </view>
+      </view>
+
+      <!-- 数据统计网格 -->
+      <view class="stats-grid">
+        <view class="stat-box">
+          <text class="stat-num">{{guessCount}}</text>
+          <text class="stat-label">猜测次数</text>
+        </view>
+        <view class="stat-box">
+          <text class="stat-mode">{{gameModeText}}</text>
+          <text class="stat-label">游戏模式</text>
+        </view>
+      </view>
+
+      <!-- 底部操作按钮 (实体按键风格) -->
+      <view class="button-section">
+        <!-- 再来一局 (主按钮 - 黄色) -->
+        <view class="btn-wrapper" bindtap="restartGame">
+          <view class="btn-shadow btn-shadow-yellow"></view>
+          <view class="btn-main btn-yellow">
+            <text>再来一局</text>
+            <text class="btn-icon">↻</text>
+          </view>
+        </view>
+
+        <!-- 返回首页 (次要按钮 - 灰色) -->
+        <view class="btn-wrapper" bindtap="goHome">
+          <view class="btn-shadow btn-shadow-gray"></view>
+          <view class="btn-main btn-gray">
+            <text>返回首页</text>
+            <text class="btn-icon">⌂</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+  </view>
+</view>

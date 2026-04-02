@@ -1,0 +1,273 @@
+page { background-color: #f5f6f8; color: #333; font-family: -apple-system, sans-serif; }
+.bg-pattern { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-image: radial-gradient(#d1d1d1 2rpx, transparent 2rpx); background-size: 30rpx 30rpx; z-index: -1; }
+.page-container { padding: 40rpx; padding-bottom: 200rpx; position: relative; min-height: 100vh; box-sizing: border-box; overflow-x: hidden; }
+
+/* 头部 */
+.header { display: flex; align-items: center; margin-bottom: 40rpx; padding-top: 20rpx; flex-wrap: wrap; }
+.back-btn { width: 72rpx; height: 72rpx; background: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.05); margin-right: 30rpx; font-weight: bold; color: #666; font-size: 32rpx;}
+.page-title { font-size: 48rpx; font-weight: 900; color: #1c2536; }
+.header-tip {
+  font-size: 20rpx;
+  color: #999;
+  margin-left: auto;
+  max-width: 300rpx;
+  text-align: right;
+  line-height: 1.4;
+}
+
+/* 设置按钮样式 - 强制取消微信 button 默认限制 */
+.header-tip-btn {
+  font-size: 20rpx;
+  color: #667eea;
+  margin-left: auto;
+  max-width: 300rpx;
+  text-align: right;
+  line-height: 1.4;
+  background: transparent;
+  border: none;
+  padding: 0;
+
+  /* 👇 核心修复：强制取消微信 button 的默认宽度限制 */
+  width: auto !important;
+  min-width: 0 !important;
+
+  /* 👇 使用 flex 布局 */
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.header-tip-btn::after {
+  border: none;
+}
+
+/* 隐私提示文案 */
+.privacy-notice {
+  font-size: 20rpx;
+  color: #999;
+  margin-left: auto;
+  max-width: 300rpx;
+  text-align: right;
+  line-height: 1.4;
+}
+
+.privacy-notice-text {
+  font-size: 20rpx;
+  color: #999;
+  line-height: 1.4;
+}
+
+/* Tab 栏 */
+.tab-container { background: #eef0f4; border-radius: 40rpx; display: flex; padding: 8rpx; margin-bottom: 8rpx; position: relative; }
+.tab-item { flex: 1; text-align: center; padding: 24rpx 0; font-size: 28rpx; font-weight: bold; color: #666; border-radius: 32rpx; transition: color 0.3s; position: relative; z-index: 1; }
+.tab-item.active { color: #1c2536; }
+.tab-bg { position: absolute; top: 8rpx; bottom: 8rpx; width: calc(33.33% - 5.3rpx); background: white; border-radius: 32rpx; box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.05); transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); z-index: 0; }
+
+/* Tab 禁用状态 */
+.tab-disabled { opacity: 0.6; position: relative; }
+.soon-badge { 
+  display: block; 
+  font-size: 18rpx; 
+  color: #999; 
+  font-weight: normal;
+  margin-top: 4rpx;
+}
+
+/* Tab 小字标签 */
+.tab-badge {
+  display: block;
+  font-size: 18rpx;
+  color: #999;
+  font-weight: normal;
+  margin-top: 4rpx;
+}
+
+/* 下拉刷新提示 */
+.pull-refresh-tip {
+  text-align: center;
+  margin-bottom: 0;
+  padding: 2rpx 0;
+}
+.pull-refresh-text {
+  font-size: 20rpx;
+  color: #999;
+}
+
+/* 列表容器 */
+.rank-list-wrapper { display: none; animation: fadeIn 0.3s ease-out; }
+.rank-list-wrapper.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20rpx); } to { opacity: 1; transform: translateY(0); } }
+.list-card { background: white; border-radius: 48rpx; padding: 20rpx 40rpx; box-shadow: 0 16rpx 40rpx rgba(0,0,0,0.03); margin-bottom: 40rpx; }
+
+/* 单个列表项 */
+.rank-item { display: flex; align-items: center; padding: 30rpx 0; border-bottom: 2rpx solid #f0f0f0; }
+.rank-item:last-child { border-bottom: none; }
+
+/* 排名序号样式：前三名特殊渐变 */
+.rank-num { width: 60rpx; font-size: 36rpx; font-weight: 900; color: #999; text-align: center; margin-right: 30rpx; font-style: italic; }
+.rank-item.top-1 .rank-num { color: transparent; background: linear-gradient(135deg, #FFDF00, #D4AF37); -webkit-background-clip: text; font-size: 48rpx; }
+.rank-item.top-2 .rank-num { color: transparent; background: linear-gradient(135deg, #E0E0E0, #9E9E9E); -webkit-background-clip: text; font-size: 44rpx; }
+.rank-item.top-3 .rank-num { color: transparent; background: linear-gradient(135deg, #CD7F32, #A0522D); -webkit-background-clip: text; font-size: 40rpx; }
+
+/* 放弃挑战的样式 */
+.rank-item.quit-item { opacity: 0.7; }
+.quit-text { color: #ccc !important; }
+
+/* 用户信息 */
+.avatar { width: 88rpx; height: 88rpx; border-radius: 50%; background: #e0e4eb; margin-right: 30rpx; flex-shrink: 0; }
+.user-info { flex: 1; overflow: hidden; display: flex; flex-direction: column; justify-content: center;}
+.user-name { font-size: 30rpx; font-weight: bold; color: #333; margin-bottom: 8rpx; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.user-sub { font-size: 24rpx; color: #999; }
+
+/* 数据展示区 */
+.rank-data { display: flex; flex-direction: column; align-items: flex-end; justify-content: center; }
+.score-val { font-size: 36rpx; font-weight: 900; color: #1c2536; }
+.score-label { font-size: 22rpx; color: #999; margin-bottom: 12rpx; }
+
+/* 操作按钮 */
+.action-btn { background: #f0f4ff; color: #4d94ff; font-size: 24rpx; font-weight: bold; padding: 12rpx 28rpx; border-radius: 24rpx; border: none; margin: 0; line-height: 1.5; }
+.action-btn::after { border: none; }
+.btn-dark { background: #e8eaed; color: #1c2536; }
+
+/* 底部我的排名栏 */
+.my-rank-bar { 
+  position: fixed; 
+  bottom: 40rpx; 
+  left: 50%; 
+  transform: translateX(-50%); 
+  width: calc(100% - 80rpx); 
+  background: #1c2536; 
+  border-radius: 40rpx; 
+  display: flex; 
+  align-items: center; 
+  padding: 24rpx 32rpx; 
+  box-shadow: 0 20rpx 60rpx rgba(28,37,54,0.3); 
+  z-index: 100; 
+  box-sizing: border-box; 
+}
+.my-rank-bar .rank-num { 
+  color: white; 
+  font-style: normal; 
+  font-size: 36rpx; 
+  width: auto; 
+  margin-right: 20rpx;
+  flex-shrink: 0;
+}
+.my-rank-bar .avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  flex-shrink: 0;
+  background: #e0e4eb;
+}
+.my-rank-bar .user-info { 
+  flex: 1; 
+  min-width: 0;
+  margin-right: 16rpx;
+}
+.my-rank-bar .user-name { 
+  color: white; 
+  font-size: 28rpx;
+  margin-bottom: 4rpx;
+}
+.my-rank-bar .user-sub { 
+  color: #a0aec0; 
+  font-size: 22rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.share-btn { 
+  background: linear-gradient(135deg, #ffd633, #e6b800); 
+  color: #1c2536; 
+  font-size: 24rpx; 
+  font-weight: bold; 
+  padding: 12rpx 20rpx; 
+  border-radius: 28rpx; 
+  margin-left: auto; 
+  margin-right: 0; 
+  border: none; 
+  line-height: 1.5; 
+  box-shadow: 0 4rpx 12rpx rgba(255,214,51,0.3); 
+  flex-shrink: 0;
+  white-space: nowrap;
+  min-width: 140rpx;
+  max-width: 160rpx;
+}
+.share-btn::after { border: none; }
+
+/* 提示文本 */
+.list-tips { text-align: center; font-size: 24rpx; color: #aaa; padding: 30rpx 0 10rpx 0; font-weight: bold;}
+.text-blue { color: #4d94ff; }
+.text-dark { color: #1c2536; }
+
+/* scroll-view 容器 */
+.list-scroll-view {
+  height: calc(100vh - 400rpx);
+  padding-bottom: 20rpx;
+}
+
+/* 空状态提示 */
+.empty-tip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100rpx 40rpx;
+  color: #999;
+  font-size: 28rpx;
+}
+
+.empty-icon {
+  font-size: 80rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #666;
+  margin-bottom: 16rpx;
+}
+
+.empty-desc {
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 加载提示 */
+.loading-tip {
+  text-align: center;
+  padding: 30rpx 0;
+  color: #999;
+  font-size: 24rpx;
+}
+
+/* 每日挑战称号样式 */
+.daily-rank-data {
+  min-width: 160rpx;
+  max-width: 200rpx;
+}
+
+.score-text {
+  font-size: 24rpx;
+  font-weight: 700;
+  color: #1c2536;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* 称号样式 - 灰色 */
+.title-sub {
+  font-size: 22rpx;
+  font-weight: 600;
+  color: #999;
+}
+
+/* 突出显示数字 */
+.highlight-num {
+  font-size: 32rpx;
+  font-weight: 900;
+  color: #1c2536;
+}

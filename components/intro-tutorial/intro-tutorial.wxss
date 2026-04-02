@@ -1,0 +1,111 @@
+/* 引导式新手教程组件样式 */
+
+/* 容器：固定定位覆盖全屏 */
+.tutorial-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: auto;
+}
+
+/* 镂空高亮框：使用 box-shadow 实现遮罩效果 */
+.highlight-box {
+  position: absolute;
+  border-radius: 12px;
+  /* 核心技巧：巨大的 box-shadow 创建全屏遮罩，中间镂空 */
+  box-shadow: 0 0 0 5000px rgba(0, 0, 0, 0.7);
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+/* 气泡提示框 - 固定宽度，水平居中 */
+.bubble-box {
+  position: absolute;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px 20px;
+  width: 260px;
+  box-sizing: border-box;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  transition: top 0.3s ease;
+  /* 水平居中：left 50% 配合 transform translateX */
+  left: 50% !important;
+  transform: translateX(-50%);
+}
+
+/* 气泡内容区域 */
+.bubble-content {
+  margin-bottom: 16px;
+}
+
+/* 气泡文字 */
+.bubble-text {
+  font-size: 14px;
+  color: #333333;
+  line-height: 1.6;
+}
+
+/* 气泡底部区域 */
+.bubble-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 进度文字 */
+.progress-text {
+  font-size: 12px;
+  color: #999999;
+  text-align: center;
+}
+
+/* 按钮组 */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* 跳过按钮 */
+.skip-btn {
+  font-size: 14px;
+  color: #999999;
+  padding: 8px 16px;
+  background: transparent;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.skip-btn:active {
+  background: #f5f5f5;
+  color: #666666;
+}
+
+/* 下一步按钮 */
+.next-btn {
+  font-size: 14px;
+  color: #ffffff;
+  background: #2196F3;
+  padding: 8px 20px;
+  border-radius: 6px;
+  text-align: center;
+  flex: 1;
+  transition: all 0.2s ease;
+}
+
+.next-btn:active {
+  background: #1976D2;
+}
+
+/* 开始游戏按钮（最后一步的特殊样式） */
+.start-btn {
+  background: #4CAF50;
+}
+
+.start-btn:active {
+  background: #388E3C;
+}

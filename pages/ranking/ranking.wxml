@@ -1,0 +1,152 @@
+<view class="page-container">
+    <view class="bg-pattern"></view>
+
+    <!-- 头部 -->
+    <view class="header">
+        <view class="back-btn" bindtap="goBack">❮</view>
+        <view class="page-title">排行榜</view>
+        <view class="privacy-notice">
+  <text class="privacy-notice-text">*为保护隐私，您的个性化资料仅用于个人战绩展示。全服排行榜将统一采用匿名展示。</text>
+</view>
+    </view>
+  
+    <!-- Tab 切换 -->
+    <view class="tab-container" data-tab="{{currentTab}}">
+        <view class="tab-bg" style="transform: translateX({{ (currentTab - 1) * 100 }}%)"></view>
+        <!-- Tab 1：每日挑战榜 -->
+        <view class="tab-item {{currentTab === 1 ? 'active' : ''}}" bindtap="switchTab" data-index="1">
+            每日挑战
+            <text class="tab-badge">{{dailyGameType === 'number' ? '猜数字' : '猜颜色'}} · 每日零点重置</text>
+        </view>
+        <!-- Tab 2：全服胜场榜 -->
+        <view class="tab-item {{currentTab === 2 ? 'active' : ''}}" bindtap="switchTab" data-index="2">
+            全服胜场
+            <text class="tab-badge">每周一零点重置</text>
+        </view>
+        <!-- Tab 3：本周洗碗王 -->
+        <view class="tab-item {{currentTab === 3 ? 'active' : ''}}" bindtap="switchTab" data-index="3">
+            本周洗碗王
+            <text class="tab-badge">每周一零点重置</text>
+        </view>
+    </view>
+    
+    <!-- 下拉刷新提示 -->
+    <view class="pull-refresh-tip" wx:if="{{!isRefreshing}}">
+        <text class="pull-refresh-text">↓ 下拉可刷新列表</text>
+    </view>
+
+    <!-- 视图 1：每日挑战榜 -->
+    <view class="rank-list-wrapper {{currentTab === 1 ? 'active' : ''}}">
+        <scroll-view scroll-y="true" class="list-scroll-view" enhanced="true" show-scrollbar="true" bindscrolltolower="onScrollToLower">
+            <view class="list-card">
+                <view class="list-tips text-blue">
+                    🏆 {{dailyGameType === 'number' ? '猜数字' : '猜颜色'}} · {{dailyDateStr}} · 按次数少、用时短排名
+                </view>
+                
+                <block wx:for="{{dailyRankList}}" wx:key="id">
+                    <view class="rank-item {{index < 3 ? 'top-' + (index + 1) : ''}}">
+                        <view class="rank-num">{{item.rank}}</view>
+                        <image class="avatar" src="{{item.avatarUrl || defaultAvatar}}"></image>
+                        <view class="user-info">
+                            <view class="user-name" style="{{index === 0 ? 'color:#e6b800;' : ''}}">{{item.nickname}}</view>
+                            <view class="user-sub title-sub">{{item.title}}</view>
+                        </view>
+                        <view class="rank-data daily-rank-data">
+                            <view class="score-text"><text class="highlight-num">{{item.guessCount}}</text>次/ <text class="highlight-num">{{item.timeText}}</text></view>
+                        </view>
+                    </view>
+                </block>
+                
+                <!-- 加载更多提示 -->
+                <view wx:if="{{isLoading}}" class="loading-tip">加载中...</view>
+                <view wx:if="{{!hasMoreDaily && dailyRankList.length > 0}}" class="list-tips">仅显示今日前100名</view>
+
+                <!-- 空状态 -->
+                <view wx:if="{{!isLoading && dailyRankList.length === 0}}" class="empty-tip">
+                    <text class="empty-icon">🎯</text>
+                    <text class="empty-title">今日暂无挑战记录</text>
+                    <text class="empty-desc">快来成为第一个挑战者吧！</text>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+
+    <!-- 视图 2：全服胜场榜 -->
+    <view class="rank-list-wrapper {{currentTab === 2 ? 'active' : ''}}">
+        <scroll-view scroll-y="true" class="list-scroll-view" enhanced="true" show-scrollbar="true" bindscrolltolower="onScrollToLower">
+            <view class="list-card">
+                <view class="list-tips text-blue">🏆 累计胜场越多，排名越高</view>
+                
+                <block wx:for="{{globalRankList}}" wx:key="id">
+                    <view class="rank-item {{index < 3 ? 'top-' + (index + 1) : ''}}">
+                        <view class="rank-num">{{item.rank}}</view>
+                        <image class="avatar" src="{{item.avatarUrl || defaultAvatar}}"></image>
+                        <view class="user-info">
+                            <view class="user-name" style="{{index === 0 ? 'color:#e6b800;' : ''}}">{{item.nickname}}</view>
+                            <view class="user-sub">{{item.subText}}</view>
+                        </view>
+                        <view class="rank-data">
+                            <view class="score-label">总胜场</view>
+                            <view class="score-val">{{item.totalWin}}</view>
+                        </view>
+                    </view>
+                </block>
+                
+                <!-- 加载更多提示 -->
+                <view wx:if="{{isLoading}}" class="loading-tip">加载中...</view>
+                <view wx:if="{{!hasMoreGlobal && globalRankList.length > 0}}" class="list-tips">胜利 10 场可上榜，仅显示前 100 名</view>
+
+                <!-- 空状态 -->
+                <view wx:if="{{!isLoading && globalRankList.length === 0}}" class="empty-tip">
+                    <text>暂无数据，快去玩游戏吧！</text>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+
+    <!-- 视图 3：洗碗王榜 -->
+    <view class="rank-list-wrapper {{currentTab === 3 ? 'active' : ''}}">
+        <scroll-view scroll-y="true" class="list-scroll-view" enhanced="true" show-scrollbar="true" bindscrolltolower="onScrollToLower">
+            <view class="list-card">
+                <view class="list-tips text-dark">🍽 本周输局最多的"洗碗大户"们</view>
+
+                <block wx:for="{{loserRankList}}" wx:key="id">
+                    <view class="rank-item {{index < 3 ? 'top-' + (index + 1) : ''}}">
+                        <view class="rank-num">{{item.rank}}</view>
+                        <image class="avatar" src="{{item.avatarUrl || defaultAvatar}}"></image>
+                        <view class="user-info">
+                            <view class="user-name" style="{{index === 0 ? 'color:#e6b800;' : ''}}">{{item.nickname}}</view>
+                            <view class="user-sub">{{item.subText}}</view>
+                        </view>
+                        <view class="rank-data">
+                            <view class="score-label text-dark">洗碗次数</view>
+                            <view class="score-val text-dark">{{item.weeklyLoseCount}}</view>
+                        </view>
+                    </view>
+                </block>
+                
+                <!-- 加载更多提示 -->
+                <view wx:if="{{isLoading}}" class="loading-tip">加载中...</view>
+                <view wx:if="{{!hasMoreLoser && loserRankList.length > 0}}" class="list-tips">洗碗 10 次可上榜，仅显示前 100 名</view>
+
+                <!-- 空状态 -->
+                <view wx:if="{{!isLoading && loserRankList.length === 0}}" class="empty-tip">
+                    <text>本周还没有人洗碗，继续保持！</text>
+                </view>
+            </view>
+        </scroll-view>
+    </view>
+
+    <!-- 底部固定栏：我的排名 -->
+    <view class="my-rank-bar">
+        <view class="rank-num">{{currentMyRank.rank}}</view>
+        <image class="avatar" src="{{userInfo.avatarUrl || defaultAvatar}}"></image>
+        <view class="user-info">
+            <view class="user-name">{{userInfo.nickName || '我'}}</view>
+            <view class="user-sub">{{currentMyRank.subText}}</view>
+        </view>
+        
+        <!-- 炫耀一下按钮 -->
+        <button class="share-btn" open-type="share">炫耀一下</button>
+    </view>
+</view>

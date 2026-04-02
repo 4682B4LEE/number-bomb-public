@@ -1,0 +1,122 @@
+<view class="container" style="padding-top: {{statusBarHeight + 44}}px;">
+
+  <!-- 自定义顶部导航栏 -->
+  <view class="header" style="padding-top: {{statusBarHeight}}px;">
+    <view class="back-btn" bindtap="onBack">
+      <view class="back-arrow"></view>
+    </view>
+    <text class="header-title">{{ currentView === 'list' ? '意见与反馈' : (currentView === 'submit' ? '提交问题' : '反馈详情') }}</text>
+  </view>
+
+  <!-- 视图 1：反馈列表 -->
+  <block wx:if="{{currentView === 'list'}}">
+    <scroll-view scroll-y class="scroll-area list-view" refresher-enabled="true" refresher-triggered="{{isRefreshing}}" bindrefresherrefresh="onPullDownRefresh">
+      <view class="refresh-hint" wx:if="{{feedbacks.length > 0}}">
+        <text class="hint-text">下拉可刷新列表</text>
+      </view>
+      <view class="feedback-card hover-scale" wx:for="{{feedbacks}}" wx:key="id" bindtap="goToDetail" data-item="{{item}}">
+        <!-- 角标 -->
+        <view class="badge {{item.typeClass}}">{{item.type}}</view>
+        
+        <view class="content-preview">
+          <text class="text-content">{{item.content}}</text>
+        </view>
+        
+        <view class="card-footer">
+          <view class="time-info">
+            <text class="icon-text">🕒 {{item.time}}</text>
+          </view>
+          <view class="status-info">
+            <view wx:if="{{item.status === '已回复'}}" class="status-tag success">
+              <text>✅ 已回复</text>
+            </view>
+            <view wx:else class="status-tag pending">
+              <text>⏳ {{item.status}}</text>
+            </view>
+          </view>
+        </view>
+      </view>
+
+      <view wx:if="{{feedbacks.length === 0}}" class="empty-state">
+        <text class="empty-icon">💬</text>
+        <text>暂无历史反馈记录</text>
+      </view>
+    </scroll-view>
+
+    <!-- 底部悬浮按钮 -->
+    <view class="bottom-action-bar">
+      <view class="submit-btn main-btn hover-scale" bindtap="goToSubmit">
+        <text class="plus-icon">+</text> 提交新反馈
+      </view>
+    </view>
+  </block>
+
+  <!-- 视图 2：提交反馈 -->
+  <block wx:elif="{{currentView === 'submit'}}">
+    <scroll-view scroll-y class="scroll-area submit-view bg-white">
+      <!-- 版本号信息 -->
+      <view class="version-info">
+        <text class="version-label">当前版本</text>
+        <text class="version-number">{{appVersion}}</text>
+      </view>
+
+      <view class="form-group">
+        <text class="label">问题类型</text>
+        <picker bindchange="onTypeChange" value="{{typeIndex}}" range="{{typeArray}}">
+          <view class="picker-field input-field">
+            <text>{{typeArray[typeIndex]}}</text>
+            <view class="arrow-down"></view>
+          </view>
+        </picker>
+      </view>
+
+      <view class="form-group flex-1">
+        <text class="label">问题或建议内容</text>
+        <textarea class="textarea-field input-field" placeholder="请详细描述您遇到的问题或您的宝贵建议..." placeholder-class="placeholder-style" value="{{content}}" bindinput="onContentInput" maxlength="500"></textarea>
+      </view>
+
+      <view class="submit-action">
+        <view class="submit-btn confirm-btn hover-scale" bindtap="handleSubmit">
+          确认提交
+        </view>
+      </view>
+    </scroll-view>
+  </block>
+
+  <!-- 视图 3：反馈详情 -->
+  <block wx:elif="{{currentView === 'detail'}}">
+    <scroll-view scroll-y class="scroll-area detail-view">
+      
+      <!-- 用户提问卡片 -->
+      <view class="detail-card user-card">
+        <view class="detail-header {{selectedItem.typeClass}}">
+          <text class="type-title">ℹ️ {{selectedItem.type}}</text>
+          <text class="version-tag">{{selectedItem.version}}</text>
+        </view>
+        <view class="detail-body">
+          <text class="detail-content">{{selectedItem.content}}</text>
+          <view class="detail-footer">
+            <text>提交于 {{selectedItem.fullTime}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 官方回复卡片 -->
+      <view class="reply-section">
+        <view class="reply-title">
+          <view class="avatar-official"><text>官方</text></view>
+          <text class="reply-title-text">开发者回复</text>
+        </view>
+        <view class="reply-card">
+          <text wx:if="{{selectedItem.reply}}" class="reply-content">{{selectedItem.reply}}</text>
+          <view wx:else class="reply-empty">
+            <text class="empty-icon-small">⏳</text>
+            <text>正在快马加鞭处理中，请稍候...</text>
+          </view>
+        </view>
+      </view>
+
+    </scroll-view>
+  </block>
+
+</view>

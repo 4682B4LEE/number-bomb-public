@@ -1,0 +1,54 @@
+<!-- 玩家名称设置页 -->
+<view class="container bg-pattern">
+  <!-- 标题 -->
+  <view class="header">
+    <text class="page-title">创建角色档案</text>
+    <text class="page-subtitle">用彼此的昵称吧</text>
+  </view>
+
+  <!-- 输入卡片 -->
+  <view class="card nintendo-card">
+    <!-- 玩家1输入 -->
+    <view class="input-group">
+      <view class="input-label">
+        <view class="label-dot dot-p1"></view>
+        <text class="label-text">Player 1</text>
+      </view>
+      <input 
+        class="name-input" 
+        type="text"
+        value="{{p1Name}}"
+        bindinput="onP1Input"
+        placeholder="玩家1"
+        maxlength="10"
+      />
+    </view>
+
+    <!-- 玩家2输入 -->
+    <view class="input-group">
+      <view class="input-label">
+        <view class="label-dot dot-p2"></view>
+        <text class="label-text">Player 2</text>
+      </view>
+      <input 
+        class="name-input" 
+        type="text"
+        value="{{p2Name}}"
+        bindinput="onP2Input"
+        placeholder="玩家2"
+        maxlength="10"
+      />
+    </view>
+  </view>
+
+  <!-- 保存角色档案勾选框 -->
+  <view class="save-profile-option" bindtap="toggleSaveProfile">
+    <view class="checkbox {{saveProfile ? 'checked' : ''}}">
+      <view wx:if="{{saveProfile}}" class="checkmark">✓</view>
+    </view>
+    <text class="save-profile-text">保存角色档案</text>
+  </view>
+
+  <!-- 开始按钮 -->
+  <button class="start-btn btn-3d" bindtap="confirmNames">START GAME</button>
+</view>

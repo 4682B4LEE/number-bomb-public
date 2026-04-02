@@ -1,0 +1,239 @@
+<!-- 1. 加载中状态 (Loading Screen) -->
+<view class="loading-screen" wx:if="{{isLoading}}">
+  <view class="loading-icon-box">
+    <view class="icon-bounce">
+      <view class="icon-inner">🎮</view>
+    </view>
+    <view class="shadow-pulse"></view>
+  </view>
+  <view class="loading-text">数据读取中...</view>
+  <view class="loading-sub">请稍候，马上就来</view>
+</view>
+
+<!-- 2. 详情页主页面 -->
+<view class="page-container" wx:else>
+  <!-- 顶部背景装饰 -->
+  <view class="top-bg {{matchData.status === 'win' ? 'bg-win' : 'bg-lose'}}"></view>
+
+  <!-- 返回按钮 -->
+  <view class="back-btn" bindtap="goBack">
+    <view class="back-arrow">
+      <view class="arrow-line"></view>
+      <view class="arrow-head"></view>
+    </view>
+    <text class="back-text">返回</text>
+  </view>
+
+  <!-- 导航栏 -->
+  <view class="nav-bar">
+    <view class="nav-title">对局详情</view>
+  </view>
+
+  <!-- 主体内容 -->
+  <view class="content">
+
+    <!-- 顶部结果卡片 (Hero Card) -->
+    <view class="hero-card">
+      <view class="status-badge badge-win">
+        <text class="badge-icon">🏆</text>
+        <text>{{matchData.winnerName}} 游戏胜利</text>
+      </view>
+
+      <!-- 双人模式：显示双方 -->
+      <view wx:if="{{!matchData.isSingleMode}}" class="players-row">
+        <!-- P1 头像 -->
+        <view class="player-col">
+          <view class="avatar-wrapper">
+            <!-- 有头像显示头像，没有显示默认图标 -->
+            <block wx:if="{{matchData.players.p1Avatar}}">
+              <image class="avatar-img" src="{{matchData.players.p1Avatar}}" mode="aspectFill"></image>
+            </block>
+            <block wx:else>
+              <view class="avatar-box bg-blue">👤</view>
+            </block>
+            <!-- 先手角标 -->
+            <view wx:if="{{matchData.firstPlayer === 1}}" class="first-move-badge">先手</view>
+          </view>
+          <text class="player-name">{{matchData.players.p1}}</text>
+        </view>
+
+        <view class="vs-col">
+          <text class="vs-text">VS</text>
+          <view class="type-tag">{{matchData.type}}</view>
+        </view>
+
+        <!-- P2 头像 -->
+        <view class="player-col">
+          <view class="avatar-wrapper">
+            <!-- 有头像显示头像，没有显示默认图标 -->
+            <block wx:if="{{matchData.players.p2Avatar}}">
+              <image class="avatar-img" src="{{matchData.players.p2Avatar}}" mode="aspectFill"></image>
+            </block>
+            <block wx:else>
+              <view class="avatar-box bg-orange">👤</view>
+            </block>
+            <!-- 先手角标 -->
+            <view wx:if="{{matchData.firstPlayer === 2}}" class="first-move-badge">先手</view>
+          </view>
+          <text class="player-name">{{matchData.players.p2}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 猜数字：显示正确答案 -->
+    <block wx:if="{{matchData.gameType === 'number'}}">
+      <!-- 单人模式：只显示正确答案 -->
+      <view wx:if="{{matchData.isSingleMode}}" class="section-card single-answer-card">
+        <view class="section-title single-answer-title">
+          <text class="title-icon"></text>
+          <text>正确答案</text>
+        </view>
+        <view class="answer-row single-answer-row">
+          <view class="answer-key" wx:for="{{matchData.correctAnswerP2}}" wx:key="*this">{{item}}</view>
+        </view>
+      </view>
+
+      <!-- 双人模式：显示双方正确答案 -->
+      <block wx:else>
+        <!-- 正确答案区 - P1 -->
+        <view class="section-card">
+          <view class="section-title">
+            <text class="title-icon"></text>
+            <text>P1 正确答案</text>
+            <text class="player-label-p1">{{matchData.players.p1}}</text>
+          </view>
+          <view class="answer-row">
+            <view class="answer-key" wx:for="{{matchData.correctAnswerP1}}" wx:key="*this">{{item}}</view>
+          </view>
+        </view>
+
+        <!-- 正确答案区 - P2 -->
+        <view class="section-card">
+          <view class="section-title">
+            <text class="title-icon"></text>
+            <text>P2 正确答案</text>
+            <text class="player-label-p2">{{matchData.players.p2}}</text>
+          </view>
+          <view class="answer-row">
+            <view class="answer-key" wx:for="{{matchData.correctAnswerP2}}" wx:key="*this">{{item}}</view>
+          </view>
+        </view>
+      </block>
+    </block>
+
+    <!-- 猜颜色：只显示一个正确答案 -->
+    <block wx:if="{{matchData.gameType === 'color'}}">
+      <view class="section-card flex-col-center">
+        <view class="section-title">
+          <text class="title-icon"></text>
+          <text>正确答案</text>
+        </view>
+        <view class="color-answer-row">
+          <view class="color-pin {{item}}" wx:for="{{matchData.correctAnswer}}" wx:key="*this"></view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 猜测统计区 -->
+    <view class="stats-row {{matchData.isSingleMode ? 'single-stats-row' : ''}}">
+      <!-- 单人模式：只显示猜测次数 -->
+      <view wx:if="{{matchData.isSingleMode}}" class="stat-card border-left-blue single-stat-full">
+        <text class="stat-num">{{matchData.guessCount.p1}}</text>
+        <view class="stat-desc">猜测次数</view>
+      </view>
+
+      <!-- 双人模式：显示双方猜测次数 -->
+      <block wx:else>
+        <view class="stat-card border-left-blue">
+          <text class="stat-num">{{matchData.guessCount.p1}}</text>
+          <view class="stat-desc">P1 猜测次数</view>
+        </view>
+        <view class="stat-card border-right-orange">
+          <text class="stat-num">{{matchData.guessCount.p2}}</text>
+          <view class="stat-desc">P2 猜测次数</view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 对抗时间线 (猜测历史) -->
+    <view class="timeline-card">
+      <view class="timeline-title">
+        <text class="title-icon">🎮</text>
+        <text>对战记录</text>
+      </view>
+
+      <view class="timeline-container">
+        <!-- 中间时间线轴 -->
+        <view class="center-line"></view>
+
+        <block wx:for="{{matchData.history}}" wx:key="id">
+          <view class="timeline-row {{item.player === 'p1' ? 'row-left' : 'row-right'}}">
+
+            <!-- P1 气泡 (左侧) -->
+            <view class="bubble-container" wx:if="{{item.player === 'p1'}}">
+              <view class="chat-bubble bubble-p1">
+                <view class="bubble-header">
+                  <view class="player-tag tag-p1">P1</view>
+                  <view class="round-text">第 {{item.round}} 轮</view>
+                </view>
+                <!-- 猜数字显示文本 -->
+                <view wx:if="{{matchData.gameType === 'number'}}" class="guess-text text-right">{{item.guess}}</view>
+                <!-- 猜颜色显示颜色圆点 -->
+                <view wx:if="{{matchData.gameType === 'color'}}" class="guess-colors-row">
+                  <view class="color-pin-small {{color}}" wx:for="{{item.colorArray}}" wx:for-item="color" wx:key="*this"></view>
+                </view>
+                <view class="result-tags justify-end">
+                  <view wx:if="{{matchData.gameType === 'number'}}" class="res-tag tag-a">✔ {{item.result.a}}</view>
+                  <view wx:if="{{matchData.gameType === 'color'}}" class="res-tag tag-a">🔴 {{item.result.a}}</view>
+                  <view wx:if="{{matchData.gameType === 'color'}}" class="res-tag tag-b">⚪ {{item.result.b}}</view>
+                </view>
+              </view>
+            </view>
+
+            <!-- 中间圆点 -->
+            <view class="round-dot {{item.player === 'p1' ? 'dot-p1' : 'dot-p2'}}">{{item.round}}</view>
+
+            <!-- P2 气泡 (右侧) -->
+            <view class="bubble-container" wx:if="{{item.player === 'p2'}}">
+              <view class="chat-bubble bubble-p2">
+                <view class="bubble-header">
+                  <view class="round-text">第 {{item.round}} 轮</view>
+                  <view class="player-tag tag-p2">P2</view>
+                </view>
+                <!-- 猜数字显示文本 -->
+                <view wx:if="{{matchData.gameType === 'number'}}" class="guess-text">{{item.guess}}</view>
+                <!-- 猜颜色显示颜色圆点 -->
+                <view wx:if="{{matchData.gameType === 'color'}}" class="guess-colors-row">
+                  <view class="color-pin-small {{color}}" wx:for="{{item.colorArray}}" wx:for-item="color" wx:key="*this"></view>
+                </view>
+                <view class="result-tags">
+                  <view wx:if="{{matchData.gameType === 'number'}}" class="res-tag tag-a">✔ {{item.result.a}}</view>
+                  <view wx:if="{{matchData.gameType === 'color'}}" class="res-tag tag-a">🔴 {{item.result.a}}</view>
+                  <view wx:if="{{matchData.gameType === 'color'}}" class="res-tag tag-b">⚪ {{item.result.b}}</view>
+                </view>
+              </view>
+            </view>
+
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 对局时间信息 -->
+    <view class="time-info">
+      <text>🕒</text> 对局时间: {{matchData.time}}
+    </view>
+
+    <!-- 底部垫高，防止内容被悬浮按钮遮挡 -->
+    <view class="bottom-spacer"></view>
+
+  </view>
+
+  <!-- 底部悬浮返回按钮 -->
+  <view class="fixed-bottom">
+    <button class="action-btn" bindtap="goBack">
+      <text class="btn-icon">←</text> 返回记录
+    </button>
+  </view>
+
+</view>

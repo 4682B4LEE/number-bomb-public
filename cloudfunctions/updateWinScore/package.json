@@ -1,0 +1,9 @@
+{
+  "name": "updateWinScore",
+  "version": "1.0.0",
+  "description": "安全上报胜场",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

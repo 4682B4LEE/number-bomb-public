@@ -1,0 +1,144 @@
+/* 玩家名称设置页样式 */
+.header {
+  text-align: center;
+  margin-bottom: 80rpx;
+}
+
+.page-title {
+  display: block;
+  font-size: 48rpx;
+  font-weight: 900;
+  color: #1F2937;
+  margin-bottom: 16rpx;
+}
+
+.page-subtitle {
+  display: block;
+  font-size: 28rpx;
+  color: #9CA3AF;
+}
+
+.card {
+  width: 100%;
+  max-width: 600rpx;
+  padding: 64rpx 48rpx;
+  margin-bottom: 60rpx;
+}
+
+.input-group {
+  margin-bottom: 48rpx;
+}
+
+.input-group:last-child {
+  margin-bottom: 0;
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24rpx;
+}
+
+.label-dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+}
+
+.dot-p1 {
+  background-color: #E60012;
+}
+
+.dot-p2 {
+  background-color: #00B3E6;
+}
+
+.label-text {
+  font-size: 24rpx;
+  color: #6B7280;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2rpx;
+}
+
+.name-input {
+  width: 100%;
+  height: 120rpx;
+  background: #F3F4F6;
+  border: 4rpx solid transparent;
+  border-radius: 24rpx;
+  text-align: center;
+  font-size: 40rpx;
+  font-weight: 700;
+  color: #374151;
+  box-sizing: border-box;
+}
+
+.name-input:focus {
+  background: white;
+  border-color: #E60012;
+}
+
+.start-btn {
+  width: 100%;
+  max-width: 600rpx;
+  height: 120rpx;
+  background-color: #E60012;
+  color: white;
+  font-size: 40rpx;
+  font-weight: 900;
+  border-radius: 32rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8rpx 0 #99000C;
+  border: none;
+}
+
+.start-btn::after {
+  border: none;
+}
+
+.start-btn:active {
+  box-shadow: 0 0 0 #99000C;
+}
+
+/* 保存角色档案勾选框 */
+.save-profile-option {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40rpx;
+  padding: 20rpx;
+}
+
+.checkbox {
+  width: 40rpx;
+  height: 40rpx;
+  border: 4rpx solid #D1D5DB;
+  border-radius: 8rpx;
+  margin-right: 16rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  transition: all 0.2s ease;
+}
+
+.checkbox.checked {
+  background: #E60012;
+  border-color: #E60012;
+}
+
+.checkmark {
+  color: white;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.save-profile-text {
+  font-size: 28rpx;
+  color: #6B7280;
+  font-weight: 600;
+}

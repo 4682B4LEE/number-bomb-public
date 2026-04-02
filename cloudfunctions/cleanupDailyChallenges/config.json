@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "openapi": []
+  },
+  "triggers": [
+    {
+      "name": "cleanupDailyChallengesTrigger",
+      "type": "timer",
+      "config": "0 0 1 * * *"
+    }
+  ]
+}

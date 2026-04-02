@@ -1,0 +1,9 @@
+{
+  "name": "getDailyInfo",
+  "version": "1.0.0",
+  "description": "获取每日挑战信息",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

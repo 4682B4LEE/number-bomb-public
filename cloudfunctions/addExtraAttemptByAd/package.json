@@ -1,0 +1,9 @@
+{
+  "name": "addExtraAttemptByAd",
+  "version": "1.0.0",
+  "description": "用户观看广告后增加额外挑战次数",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "latest"
+  }
+}

@@ -1,0 +1,86 @@
+/* 过渡页样式 */
+.bg-p1 {
+  background-color: #FFF1F2;
+}
+
+.bg-p2 {
+  background-color: #F0F9FF;
+}
+
+.bg-decoration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(12deg) scale(1.5);
+  display: flex;
+  gap: 80rpx;
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.joycon {
+  width: 128rpx;
+  height: 256rpx;
+}
+
+.joycon.left {
+  border-radius: 64rpx 0 0 64rpx;
+}
+
+.joycon.right {
+  border-radius: 0 64rpx 64rpx 0;
+}
+
+.joycon-p1 {
+  background-color: #E60012;
+}
+
+.joycon-p2 {
+  background-color: #00B3E6;
+}
+
+.card {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  max-width: 600rpx;
+  padding: 80rpx 48rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.player-indicator {
+  padding: 16rpx 48rpx;
+  border-radius: 32rpx;
+  margin-bottom: 48rpx;
+}
+
+.indicator-p1 {
+  background-color: #E60012;
+}
+
+.indicator-p2 {
+  background-color: #00B3E6;
+}
+
+.player-text {
+  color: white;
+  font-size: 28rpx;
+  font-weight: 900;
+  letter-spacing: 4rpx;
+}
+
+.message {
+  font-size: 48rpx;
+  font-weight: 700;
+  color: #1F2937;
+  text-align: center;
+  margin-bottom: 64rpx;
+  line-height: 1.4;
+}
+
+.hint {
+  font-size: 24rpx;
+  color: #9CA3AF;
+}

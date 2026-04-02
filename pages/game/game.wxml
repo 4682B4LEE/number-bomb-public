@@ -1,0 +1,110 @@
+<!-- 游戏进行页 -->
+<view class="container {{isP1 ? 'bg-p1' : 'bg-p2'}}">
+  <!-- 单人模式胜利弹窗 -->
+  <view wx:if="{{showWinModal}}" class="win-modal">
+    <view class="win-modal-mask"></view>
+    <view class="win-modal-content">
+      <view class="win-icon">🏆</view>
+      <text class="win-title">恭喜猜对！</text>
+      <view class="win-info">
+        <text class="win-text">用了 {{playerGuesses.length}} 次猜中</text>
+        <text class="win-secret">正确答案是 {{correctAnswer}}</text>
+      </view>
+      <view class="win-buttons">
+        <button class="win-btn btn-home" bindtap="goHome">返回首页</button>
+        <button class="win-btn btn-again" bindtap="playAgain">再来一局</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 顶部信息栏 -->
+  <view class="header-bar">
+    <view class="player-badge {{isP1 ? 'badge-p1' : 'badge-p2'}}">
+      <text>{{currentPlayerName}}</text>
+    </view>
+    <text class="turn-text">{{isSingleMode ? '的单人挑战' : '的回合'}}</text>
+    <!-- 单人模式提示按钮 -->
+    <view wx:if="{{isSingleMode}}" class="hint-btn {{hintMode ? 'hint-active' : ''}}" bindtap="toggleHintMode">
+      <text class="hint-text">{{hintMode ? '关闭提示' : '提示'}}</text>
+    </view>
+  </view>
+
+  <!-- 当前玩家的猜测历史 -->
+  <view class="history-section">
+    <text class="history-title">{{currentPlayerName}} 的猜测历史</text>
+    <scroll-view class="history-list {{isSingleMode ? 'single-mode' : 'multi-mode'}}" scroll-y scroll-top="{{scrollTop}}">
+      <view 
+        wx:for="{{playerGuesses}}" 
+        wx:for-item="guessItem"
+        wx:for-index="guessIndex"
+        wx:key="guessIndex"
+        class="history-item"
+      >
+        <view class="guess-number">#{{guessItem.displayIndex}}</view>
+        <view class="guess-digits">
+          <view 
+            wx:for="{{guessItem.digits}}" 
+            wx:for-item="digit"
+            wx:for-index="digitIndex"
+            wx:key="digitIndex"
+            class="history-digit {{hintMode && guessItem.hints && guessItem.hints[digitIndex] === 'A' ? 'digit-correct' : ''}}"
+          >{{digit}}</view>
+        </view>
+        <view class="guess-score {{guessItem.score === digitCount ? 'score-perfect' : ''}}">
+          <text class="score-num">{{guessItem.a !== undefined ? guessItem.a : guessItem.score}}</text>
+          <text class="score-total">/{{digitCount}}</text>
+        </view>
+      </view>
+      <view wx:if="{{playerGuesses.length === 0}}" class="empty-history">
+        <text>还没有猜测记录</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 数字输入显示区 -->
+  <view class="input-section">
+    <view class="digits-display">
+      <view 
+        wx:for="{{displayDigits}}" 
+        wx:key="index"
+        class="digit-box {{item ? 'digit-box-filled' : 'digit-box-empty'}} {{isEditMode && editIndex === index ? 'digit-box-editing' : ''}}"
+        bindtap="onDigitTap"
+        data-index="{{index}}"
+      >
+        <text class="digit-text">{{item || ''}}</text>
+        <view wx:if="{{isEditMode && editIndex === index}}" class="edit-indicator"></view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数字键盘 -->
+  <view class="keypad">
+    <view class="keypad-row">
+      <view class="key" bindtap="onKeyPress" data-key="1">1</view>
+      <view class="key" bindtap="onKeyPress" data-key="2">2</view>
+      <view class="key" bindtap="onKeyPress" data-key="3">3</view>
+    </view>
+    <view class="keypad-row">
+      <view class="key" bindtap="onKeyPress" data-key="4">4</view>
+      <view class="key" bindtap="onKeyPress" data-key="5">5</view>
+      <view class="key" bindtap="onKeyPress" data-key="6">6</view>
+    </view>
+    <view class="keypad-row">
+      <view class="key" bindtap="onKeyPress" data-key="7">7</view>
+      <view class="key" bindtap="onKeyPress" data-key="8">8</view>
+      <view class="key" bindtap="onKeyPress" data-key="9">9</view>
+    </view>
+    <view class="keypad-row">
+      <view class="key key-clear" bindtap="onClear">C</view>
+      <view class="key" bindtap="onKeyPress" data-key="0">0</view>
+      <view class="key key-delete" bindtap="onDelete">←</view>
+    </view>
+    <button 
+      class="confirm-btn {{canConfirm ? (isP1 ? 'btn-p1' : 'btn-p2') : 'btn-disabled'}}" 
+      bindtap="onConfirm"
+      disabled="{{!canConfirm}}"
+    >
+      <text>确认猜测</text>
+    </button>
+  </view>
+</view>
