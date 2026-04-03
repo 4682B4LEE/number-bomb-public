@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎮 Number Bomb - 双人猜数对决
+# 🎮 Number Bomb - 谁输谁洗碗
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Platform](https://img.shields.io/badge/platform-WeChat%20Mini%20Program-brightgreen.svg)](https://developers.weixin.qq.com/miniprogram/dev/framework/)
